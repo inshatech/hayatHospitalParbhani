@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head id="head">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="HMS - Insha Technologies">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <meta name="theme-color" content="#0134d4">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black"></meta>
+
+  <!-- Title -->
+  <title>Settings - HMS</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" id="icon" href="#">
+  <link rel="apple-touch-icon" href="img/icons/icon-96x96.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="img/icons/icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="167x167" href="img/icons/icon-167x167.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="img/icons/icon-180x180.png">
+
+  <!-- Style CSS -->
+  <link rel="stylesheet" href="style.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+  <!-- Custom CSS 
+  <link rel="stylesheet" href="css/custom.css"> -->
+</head>
+<body>
+  <!-- Preloader -->
+  <div id="preloader"></div>
+  <!-- Internet Connection Status -->
+  <div class="internet-connection-status" id="internetStatus"></div>
+  <!-- Header Area -->
+  <div class="header-area bg-dark" id="headerArea"></div>
+  <!-- # Sidenav Left -->
+  <div id="sideNav"></div>
+  <div class="page-content-wrapper py-3">
+    <div class="container">
+      <!-- Setting Card-->
+      <div class="card mb-3 shadow-sm">
+        <div class="card-body direction-rtl">
+          <p class="mb-2">Settings</p>
+
+          <div class="single-setting-panel">
+            <div class="form-check form-switch mb-2">
+              <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" checked>
+              <label class="form-check-label" for="flexSwitchCheckDefault">Availability Status</label>
+            </div>
+          </div>
+
+          <div class="single-setting-panel">
+            <div class="form-check form-switch mb-2">
+              <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault2" checked>
+              <label class="form-check-label" for="flexSwitchCheckDefault2">Send Me Notifications</label>
+            </div>
+          </div>
+
+          <div class="single-setting-panel">
+            <div class="form-check form-switch mb-2">
+              <input class="form-check-input" type="checkbox" id="darkSwitch">
+              <label class="form-check-label" for="darkSwitch">Dark Mode</label>
+            </div>
+          </div>
+
+          <div class="single-setting-panel">
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" id="rtlSwitch">
+              <label class="form-check-label" for="rtlSwitch">RTL Mode</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Setting Card-->
+      <div class="card mb-3 shadow-sm">
+        <div class="card-body direction-rtl">
+          <p class="mb-2">Account Setup</p>
+
+          <div class="single-setting-panel">
+            <a href="profile.html">
+              <div class="icon-wrapper">
+                <i class="bi bi-person"></i>
+              </div>
+              Profile
+            </a>
+          </div>
+
+          <!-- <div class="single-setting-panel">
+            <a href="user-profile.html">
+              <div class="icon-wrapper bg-warning">
+                <i class="bi bi-pencil"></i>
+              </div>
+              Update Bio
+            </a>
+          </div>
+
+          <div class="single-setting-panel">
+            <a href="change-password.html">
+              <div class="icon-wrapper bg-info">
+                <i class="bi bi-lock"></i>
+              </div>
+              Change Password
+            </a>
+          </div>
+
+          <div class="single-setting-panel">
+            <a href="language.html">
+              <div class="icon-wrapper bg-success">
+                <i class="bi bi-globe2"></i>
+              </div>
+              Language
+            </a>
+          </div>
+
+          <div class="single-setting-panel">
+            <a href="privacy-policy.html">
+              <div class="icon-wrapper bg-danger">
+                <i class="bi bi-shield-lock"></i>
+              </div>
+              Privacy Policy
+            </a>
+          </div> -->
+        </div>
+      </div>
+
+      <!-- Setting Card-->
+      <div class="card shadow-sm">
+        <div class="card-body direction-rtl">
+          <p class="mb-2">Register &amp; Logout</p>
+
+          <!-- <div class="single-setting-panel">
+            <a href="register.html">
+              <div class="icon-wrapper bg-primary">
+                <i class="bi bi-person"></i>
+              </div>
+              Create New Account
+            </a>
+          </div> -->
+
+          <div class="single-setting-panel">
+            <a href="login.html">
+              <div class="icon-wrapper bg-danger">
+                <i class="bi bi-box-arrow-right"></i>
+              </div>
+              Logout
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  <!-- Footer Nav -->
+  <div class="footer-nav-area" id="footerNav"></div>
+  <!-- All JavaScript Files -->
+  <script src="./js/common/preloader.js"></script>
+  <script src="./js/common/headerArea.js"></script>
+  <script src="./js/common/sideNav.js"></script>
+  <script src="./js/common/footerNav.js"></script>
+
+  <script src="js/custom/config.js"></script>
+
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <script src="js/slideToggle.min.js"></script>
+  <script src="js/internet-status.js"></script>
+  <script src="js/tiny-slider.js"></script>
+  <script src="js/venobox.min.js"></script>
+  <script src="js/countdown.js"></script>
+  <script src="js/rangeslider.min.js"></script>
+  <script src="js/vanilla-dataTables.min.js"></script>
+  <script src="js/index.js"></script>
+  <script src="js/imagesloaded.pkgd.min.js"></script>
+  <script src="js/isotope.pkgd.min.js"></script>
+  <script src="js/dark-rtl.js"></script>
+  <script src="js/active.js"></script>
+
+  <script src="./js/common/nav.js"></script>
+  <script src="./js/custom/checkLogin.js"></script>
+  <script>
+    const icon  = "img/icons/favicon.png";
+    document.getElementById("icon").href = icon;
+    nav();
+  </script>
+</body>
+
+</html>

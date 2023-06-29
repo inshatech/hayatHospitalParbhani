@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head id="head">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="HMS - Insha Technologies">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <meta name="theme-color" content="#0134d4">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black"></meta>
+
+  <!-- Title -->
+  <title>Dashboard - HMS</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" id="icon" href="#">
+  <link rel="apple-touch-icon" href="img/icons/icon-96x96.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="img/icons/icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="167x167" href="img/icons/icon-167x167.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="img/icons/icon-180x180.png">
+
+  <!-- Style CSS -->
+  <link rel="stylesheet" href="style.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+  <!-- Custom CSS 
+<link rel="manifest" href="manifest.json" />  <link rel="stylesheet" href="css/custom.css"> -->
+</head>
+<body>
+  <!-- Preloader -->
+  <div id="preloader"></div>
+  <!-- Internet Connection Status -->
+  <div class="internet-connection-status" id="internetStatus"></div>
+  <!-- Header Area -->
+  <div class="header-area bg-dark" id="headerArea"></div>
+  <!-- # Sidenav Left -->
+  <div id="sideNav"></div>
+  <div class="page-content-wrapper">
+    <!-- Tiny Slider One Wrapper -->
+    <div class="tiny-slider-one-wrapper">
+      <div class="tiny-slider-one">
+        <!-- Single Hero Slide -->
+        <div>
+          <div class="single-hero-slide bg-overlay" style="background-image: url('./img/slider/1.jpg')"></div>
+        </div>
+
+        <!-- Single Hero Slide -->
+        <div>
+          <div class="single-hero-slide bg-overlay" style="background-image: url('./img/slider/5.jpg')"></div>
+        </div>
+
+        <!-- Single Hero Slide -->
+        <div>
+          <div class="single-hero-slide bg-overlay" style="background-image: url('./img/slider/4.jpg')"></div>
+        </div>
+
+        <!-- Single Hero Slide -->
+        <div>
+          <div class="single-hero-slide bg-overlay" style="background-image: url('./img/slider/2.jpg')"></div>
+        </div>
+
+        <!-- Single Hero Slide -->
+        <div>
+          <div class="single-hero-slide bg-overlay" style="background-image: url('./img/slider/3.jpg')"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pt-3"></div>
+    
+    <div class="container direction-rtl">
+      <div class="card mb-3">
+        <div class="card-body">
+          <div class="row g-3">
+            <!-- <div class="col-3">
+              <div class="feature-card mx-auto text-center home-link">
+                <a href="add-opd.html">
+                  <div class="card mx-auto bg-gray">
+                    <h3 class="fa-solid fa-person-circle-plus text-warning"></h3>
+                  </div>
+                  <p class="mb-0">Add OPD</p>
+                </a>
+              </div>
+            </div> -->
+
+            <div class="col-3">
+              <div class="feature-card mx-auto text-center home-link">
+                <a href="opd.html">
+                  <div class="card mx-auto bg-gray">
+                    <h3 class="fa-solid fa-stethoscope text-info"></h3>
+                  </div>
+                  <p class="mb-0">OPD&#39;s</p>
+                </a>
+              </div>
+            </div>
+
+            <div class="col-3">
+              <div class="feature-card mx-auto text-center home-link">
+                <div class="card mx-auto bg-gray">
+                  <h3 class="fa-solid fa-user-plus text-dark"></h3>
+                </div>
+                <p class="mb-0">Add IPD</p>
+              </div>
+            </div>
+
+            <div class="col-3">
+              <div class="feature-card mx-auto text-center home-link">
+                <div class="card mx-auto bg-gray">
+                  <h3 class="fa-solid fa-bed-pulse text-info"></h3>
+                </div>
+                <p class="mb-0">IPD&#39;s</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container direction-rtl">
+      <div class="card mb-3">
+        <div class="card-body">
+          <div class="row g-3">
+            <div class="col-3">
+              <div class="feature-card mx-auto text-center home-link">
+                <a href="add-fitness.html">
+                  <div class="card mx-auto bg-gray">
+                    <h3 class="fa-solid fa-heart-circle-check text-success"></h3>
+                  </div>
+                  <p class="mb-0">Add Fitness</p>
+                </a>
+              </div>
+            </div>
+
+            <div class="col-3">
+              <div class="feature-card mx-auto text-center home-link">
+                <a href="list-fitness.html">
+                  <div class="card mx-auto bg-gray">
+                    <h3 class="fa-solid fa-clipboard-list text-black"></h3>
+                  </div>
+                  <p class="mb-0">Fitness List</p>
+                </a>
+              </div>
+            </div>
+
+            <!-- <div class="col-3">
+              <div class="feature-card mx-auto text-center home-link">
+                <a href="add-bill.html">
+                  <div class="card mx-auto bg-gray">
+                    <h3 class="fa-solid fa-file-invoice-dollar text-warning"></h3>
+                  </div>
+                  <p class="mb-0">Add Bill</p>
+                </a>
+              </div>
+            </div> -->
+
+            <div class="col-3" hidden>
+              <div class="feature-card mx-auto text-center home-link">
+                <a href="bills.html">
+                  <div class="card mx-auto bg-gray">
+                    <h3 class="fa-solid fa-hand-holding-dollar text-danger"></h3>
+                  </div>
+                  <p class="mb-0">Bill's</p>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container direction-rtl">
+      <div class="card mb-3">
+        <div class="card-body">
+          <div class="row g-3">
+            <div class="col-3">
+              <div class="feature-card mx-auto text-center home-link">
+                <a href="add-discharge.html">
+                  <div class="card mx-auto bg-gray">
+                    <h3 class="fa-solid fa-truck-fast text-info"></h3>
+                  </div>
+                  <p class="mb-0">Add Discharge</p>
+                </a>
+              </div>
+            </div>
+
+            <div class="col-3">
+              <div class="feature-card mx-auto text-center home-link">
+                <a href="list-discharge.html">
+                  <div class="card mx-auto bg-gray">
+                    <h3 class="fa-solid fa-clipboard-check text-warning"></h3>
+                  </div>
+                  <p class="mb-0">Discharge List</p>
+                </a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pb-3"></div>
+  </div>
+  <!-- Footer Nav -->
+  <div class="footer-nav-area" id="footerNav"></div>
+  <!-- All JavaScript Files -->
+  <script src="./js/common/preloader.js"></script>
+  <script src="./js/common/headerArea.js"></script>
+  <script src="./js/common/sideNav.js"></script>
+  <script src="./js/common/footerNav.js"></script>
+
+  <script src="js/custom/config.js"></script>
+
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <script src="js/slideToggle.min.js"></script>
+  <script src="js/internet-status.js"></script>
+  <script src="js/tiny-slider.js"></script>
+  <script src="js/venobox.min.js"></script>
+  <script src="js/countdown.js"></script>
+  <script src="js/rangeslider.min.js"></script>
+  <script src="js/vanilla-dataTables.min.js"></script>
+  <script src="js/index.js"></script>
+  <script src="js/imagesloaded.pkgd.min.js"></script>
+  <script src="js/isotope.pkgd.min.js"></script>
+  <script src="js/dark-rtl.js"></script>
+  <script src="js/active.js"></script>
+  <!-- PWA -->
+  <script src="js/pwa.js"></script>
+
+  <script src="./js/common/nav.js"></script>
+  <script src="./js/custom/checkLogin.js"></script>
+  <script>
+    const icon  = "img/icons/favicon.png";
+    document.getElementById("icon").href = icon;
+    nav();
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head id="head">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="HMS - Insha Technologies">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <meta name="theme-color" content="#0134d4">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black"></meta>
+
+  <!-- Title -->
+  <title>Add Fitness - HMS</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" id="icon" href="#">
+  <link rel="apple-touch-icon" href="img/icons/icon-96x96.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="img/icons/icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="167x167" href="img/icons/icon-167x167.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="img/icons/icon-180x180.png">
+
+  <!-- Style CSS -->
+  <link rel="stylesheet" href="style.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/custom.css">
+</head>
+<body>
+  <!-- Preloader -->
+  <div id="preloader"></div>
+  <!-- Internet Connection Status -->
+  <div class="internet-connection-status" id="internetStatus"></div>
+  <!-- Header Area -->
+  <div class="header-area bg-dark" id="headerArea"></div>
+  <!-- # Sidenav Left -->
+  <div id="sideNav"></div>
+  <div class="page-content-wrapper py-3">
+    <div class="container">
+      <div class="element-heading">
+        <h6>General Information</h6>
+      </div>
+    </div>
+    <div class="container">
+      <div class="card">
+        <div class="card-body">
+          <form class="was-validated" name="form" id="form" action="#">
+            <div class="form-group">
+              <label class="form-label" for="referer">Referer</label>
+              <input class="form-control refererAutoComplete" autocomplete="off" id="referer" name="referer" type="text" placeholder="Doctor/Hospital" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="name">Patient Name</label>
+              <input class="form-control" id="name" type="text" placeholder="Patient Name" required>
+            </div>
+            <div class="row g-lg-2 mb-0">
+              <div class="col">
+                <div class="form-group">
+                  <label class="form-label" for="date">Date</label>
+                  <input class="form-control" id="date" type="date" required>
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-group">
+                  <label class="form-label" for="age">Age</label>
+                  <input name="age" id="age" class="form-control" type="number" aria-label="age" placeholder="Age" required>
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-group">
+                  <label class="form-label" for="sex">Gender</label>
+                  <select class="form-select" id="sex" name="sex" aria-label="Sex" placeholder="Sex" required>
+                    <option selected></option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row g-lg-2 mb-0">
+              <div class="col">
+                <div class="form-group">
+                  <label class="form-label" for="city">Address</label>
+                  <input class="form-control" id="city" type="text" placeholder="Address" required>
+                </div>
+              </div>
+              <div class="col" hidden>
+                <div class="form-group">
+                  <input name="address" id="address" class="form-control" type="text" placeholder="Address">
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-group">
+                  <label class="form-label" for="mobile">Mobile</label>
+                  <input name="mobile" id="mobile" class="form-control" type="tel" placeholder="Mobile">
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="postedFor">Posted For</label>
+              <input class="form-control" autocomplete="off" id="postedFor" type="text" placeholder="Posted For" required>
+            </div>
+          <!-- Form end at bottom -->
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="element-heading mt-3">
+        <h6>Patient Condition</h6>
+      </div>
+    </div>
+    <div class="container">
+      <div class="card">
+        <div class="card-body">
+          <div class="accordion accordion-style-three" id="accordionStyle3">
+            <!-- Single Accordion -->
+            <div class="accordion-item">
+              <div class="accordion-header" id="accordionSeven">
+                <h6 class="shadow-sm rounded border" data-bs-toggle="collapse" data-bs-target="#accordionStyleSeven" aria-expanded="true" aria-controls="accordionStyleSeven">Complaints?
+                  <svg class="bi bi-arrow-down-short" width="24" height="24" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"></path>
+                  </svg>
+                </h6>
+              </div>
+              <div class="accordion-collapse collapse" id="accordionStyleSeven" aria-labelledby="accordionSeven" data-bs-parent="#accordionStyle3">
+                <div class="accordion-body">
+                  <div class="row g-lg-2 mb-0">
+                    <div class="col">
+                      <div class="form-check">
+                        <input class="form-check-input form-check-danger" id="Chest_Pain" type="checkbox" name="complaints"  value="NO">
+                        <label class="form-check-label" for="Chest_Pain">Chest Pain</label>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="form-check">
+                        <input class="form-check-input form-check-danger" id="Palpitation" type="checkbox" name="complaints"  value="NO">
+                        <label class="form-check-label" for="Palpitation">Palpitation</label>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="form-check">
+                        <input class="form-check-input form-check-danger" id="Breathlessness" type="checkbox" name="complaints"  value="NO">
+                        <label class="form-check-label" for="Breathlessness">Breathlessness</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row g-lg-2 mb-0">
+                    <div class="col">
+                      <div class="form-check">
+                        <input class="form-check-input form-check-danger" id="Cough" type="checkbox" name="complaints"  value="NO">
+                        <label class="form-check-label" for="Cough">Cough</label>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="form-check">
+                        <input class="form-check-input form-check-danger" id="Dyspnea_on_Exertion" type="checkbox" name="complaints"  value="NO">
+                        <label class="form-check-label" for="Dyspnea_On_Exertion">Dyspnea on exertion</label>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="form-check">
+                        <input class="form-check-input form-check-danger" id="Angina_on_Exertion" type="checkbox" name="complaints"  value="NO">
+                        <label class="form-check-label" for="Angina_On_Exertion">Angina on Exertion</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input form-check-danger" id="Prolonged_Fever" type="checkbox" name="complaints"  value="NO">
+                    <label class="form-check-label" for="Prolonged_Fever">Prolonged Fever</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Single Accordion -->
+            <div class="accordion-item">
+              <div class="accordion-header" id="accordionEight">
+                <h6 class="shadow-sm rounded collapsed border" data-bs-toggle="collapse" data-bs-target="#accordionStyleEight" aria-expanded="false" aria-controls="accordionStyleEight">Past History Of
+                  <svg class="bi bi-arrow-down-short" width="24" height="24" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"></path>
+                  </svg>
+                </h6>
+              </div>
+              <div class="accordion-collapse collapse" id="accordionStyleEight" aria-labelledby="accordionEight" data-bs-parent="#accordionStyle3">
+                <div class="accordion-body">
+                  <div class="row g-lg-2 mb-0">
+                    <div class="col">
+                      <div class="form-check">
+                        <input class="form-check-input form-check-danger" id="HTN" type="checkbox" name="history"  value="NO">
+                        <label class="form-check-label" for="HTN">HTN</label>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="form-check">
+                        <input class="form-check-input form-check-danger" id="DM" type="checkbox" name="history"  value="NO">
+                        <label class="form-check-label" for="DM">DM</label>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="form-check">
+                        <input class="form-check-input form-check-danger" id="CAD/CVA" type="checkbox" name="history"  value="NO">
+                        <label class="form-check-label" for="CAD/CVA">CAD/CVA</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row g-lg-2 mb-0">
+                    <div class="col">
+                      <div class="form-check">
+                        <input class="form-check-input form-check-danger" id="KOCH" type="checkbox" name="history"  value="NO">
+                        <label class="form-check-label" for="KOCH">KOCH</label>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="form-check">
+                        <input class="form-check-input form-check-danger" id="CKD" type="checkbox" name="history"  value="NO">
+                        <label class="form-check-label" for="CKD">CKD</label>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="form-check">
+                        <input class="form-check-input form-check-danger" id="Asthma/COPD" type="checkbox" name="history"  value="NO">
+                        <label class="form-check-label" for="Asthma/COPD">Asthma/COPD</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Single Accordion -->
+            <div class="accordion-item">
+              <div class="accordion-header" id="accordionNine">
+                <h6 class="shadow-sm rounded collapsed border" data-bs-toggle="collapse" data-bs-target="#accordionStyleNine" aria-expanded="false" aria-controls="accordionStyleNine">Personal H/O
+                  <svg class="bi bi-arrow-down-short" width="24" height="24" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"></path>
+                  </svg>
+                </h6>
+              </div>
+              <div class="accordion-collapse collapse" id="accordionStyleNine" aria-labelledby="accordionNine" data-bs-parent="#accordionStyle3">
+                <div class="accordion-body">
+                  <div class="row g-lg-2 mb-0">
+                    <div class="col">
+                      <div class="form-check">
+                        <input class="form-check-input form-check-danger" id="Tobacco" type="checkbox" name="personal"  value="NO">
+                        <label class="form-check-label" for="Tobacco">Tobacco</label>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="form-check">
+                        <input class="form-check-input form-check-danger" id="Bidi/Cigarette" type="checkbox" name="personal"  value="NO">
+                        <label class="form-check-label" for="Bidi/Cigarette">Bidi/Cigarette</label>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="form-check">
+                        <input class="form-check-input form-check-danger" id="Alcohol" type="checkbox" name="personal"  value="NO">
+                        <label class="form-check-label" for="Alcohol">Alcohol</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row g-lg-2 mb-0">
+                    <div class="col">
+                      <div class="form-check">
+                        <input class="form-check-input form-check-danger" id="H/O_Hospitalization" type="checkbox" name="personal"  value="NO">
+                        <label class="form-check-label" for="H/O_Hospitalization">H/O Hospitalization</label>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="form-check">
+                        <input class="form-check-input form-check-danger" id="Any_Drug_Reaction" type="checkbox" name="personal"  value="NO">
+                        <label class="form-check-label" for="Any_Drug_Reaction">Any Drug Reaction</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Single Accordion -->
+            <div class="accordion-item">
+              <div class="accordion-header" id="accordionTen">
+                <h6 class="shadow-sm rounded collapsed border" data-bs-toggle="collapse" data-bs-target="#accordionStyleTen" aria-expanded="false" aria-controls="accordionStyleTen">Examination and Investigations
+                  <svg class="bi bi-arrow-down-short" width="24" height="24" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"></path>
+                  </svg>
+                </h6>
+              </div>
+              <div class="accordion-collapse collapse show" id="accordionStyleTen" aria-labelledby="accordionTen" data-bs-parent="#accordionStyle4">
+                <div class="accordion-body">
+                  <div class="row g-lg-2 mb-0">
+                    <div class="col">
+                      <div class="form-group">
+                        <label class="form-label" for="BP">Blood Pressure</label>
+                        <input name="bp" id="BP" class="form-control" type="text" placeholder="Blood Pressure" required>
+                      </div>
+                    </div>                    
+                    <div class="col">
+                      <div class="form-group">
+                        <label class="form-label" for="Pulse">Pulse</label>
+                        <input name="pulse" id="Pulse" class="form-control" type="text" placeholder="Pulse" required>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="form-group">
+                        <label class="form-label" for="Blood_Sugar">Blood Sugar</label>
+                        <input name="Blood_Sugar" id="Blood_Sugar" class="form-control" type="text" placeholder="Blood Sugar" required>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row g-lg-2 mb-0">
+                    <div class="col">
+                      <div class="form-group">
+                        <label class="form-label" for="ECG">ECG</label>
+                        <input name="ECG" id="ECG" class="form-control" type="text" placeholder="ECG" required>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="form-group">
+                        <label class="form-label" for="Temp">Temp.</label>
+                        <input name="Temp" id="Temp" value="AFEBRILE" class="form-control" type="text" placeholder="Temp." required>
+                      </div>
+                    </div>                    
+                  </div>
+                  <div class="row g-lg-2 mb-0">
+                    <div class="col">
+                      <div class="form-check">
+                        <input class="form-check-input form-check-danger" id="Pallor" type="checkbox" name="examination"  value="NO">
+                        <label class="form-check-label" for="Pallor">Pallor</label>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="form-check">
+                        <input class="form-check-input form-check-danger" id="Icterus" type="checkbox" name="examination"  value="NO">
+                        <label class="form-check-label" for="Icterus">Icterus</label>
+                      </div>                      
+                    </div>
+                    <div class="col">
+                      <div class="form-check">
+                        <input class="form-check-input form-check-danger" id="EdemaFeet" type="checkbox" name="examination"  value="NO">
+                        <label class="form-check-label" for="EdemaFeet">EdemaFeet</label>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="form-check">
+                        <input class="form-check-input form-check-danger" id="LAP" type="checkbox" name="examination"  value="NO">
+                        <label class="form-check-label" for="LAP">LAP</label>
+                      </div>
+                    </div>                    
+                  </div>
+                  <div class="row g-lg-2 mb-0">
+                    <div class="col">
+                      <div class="form-check">
+                        <input class="form-check-input form-check-danger" id="Clubbing" type="checkbox" name="examination"  value="NO">
+                        <label class="form-check-label" for="Clubbing">Clubbing</label>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="form-check">
+                        <input class="form-check-input form-check-danger" id="Cyanosis" type="checkbox" name="examination"  value="NO">
+                        <label class="form-check-label" for="Cyanosis">Cyanosis</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="element-heading mt-3">
+        <h6>Opinion</h6>
+      </div>
+    </div>
+    <div class="container">
+      <div class="card">
+        <div class="card-body">
+          <div class="form-group">
+            <textarea class="form-control" id="Opinion" autocomplete="off" name="textarea" cols="3" rows="5" placeholder="Opinion..." required></textarea>
+          </div>
+          <button class="btn btn-success  w-100 d-flex align-items-center justify-content-center" id="add-btn" type="button">Add Fitness</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Nav -->
+  <div class="footer-nav-area" id="footerNav"></div>
+  <!-- All JavaScript Files -->
+  <script src="./js/common/preloader.js"></script>
+  <script src="./js/common/headerArea.js"></script>
+  <script src="./js/common/sideNav.js"></script>
+  <script src="./js/common/footerNav.js"></script>
+
+  <script src="js/custom/config.js"></script>
+
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <script src="js/slideToggle.min.js"></script>
+  <script src="js/internet-status.js"></script>
+  <script src="js/tiny-slider.js"></script>
+  <script src="js/venobox.min.js"></script>
+  <script src="js/countdown.js"></script>
+  <script src="js/rangeslider.min.js"></script>
+  <script src="js/vanilla-dataTables.min.js"></script>
+  <script src="js/index.js"></script>
+  <script src="js/imagesloaded.pkgd.min.js"></script>
+  <script src="js/isotope.pkgd.min.js"></script>
+  <script src="js/dark-rtl.js"></script>
+  <script src="js/active.js"></script>
+  <script src="js/form-autocomplete.js"></script>
+  
+  <script src="./js/common/nav.js"></script>
+  <script src="./js/custom/checkLogin.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <script>
+    const icon  = "img/icons/favicon.png";
+    document.getElementById("icon").href = icon;
+    nav();
+  </script>
+  <script src="./js/custom/fitness.js"></script>
+</body>
+
+</html>

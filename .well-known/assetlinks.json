@@ -1,0 +1,6 @@
+[{
+        "relation": ["delegate_permission/common.handle_all_urls"],
+        "target" : { "namespace": "android_app", "package_name": "com.inshatech.hospinex",
+                     "sha256_cert_fingerprints": ["21:76:3F:CD:AA:A6:C9:49:0A:6C:DE:30:83:09:39:CA:03:E4:61:06:5F:19:0C:1E:26:D7:5A:47:85:E1:42:7A"] }
+      }
+]
