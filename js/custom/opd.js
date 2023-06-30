@@ -321,7 +321,6 @@ const loadData = async() => {
   try {
     let response = await fetch(`${url}get-opd`, {
       method: "POST",
-      keepalive: true,
       headers: {
         Accept: "*/*",
         Authorization: localStorage.getItem("jwtTempToken"),
