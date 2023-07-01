@@ -358,7 +358,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
   let url_string  = window.location.href; 
   let url         = new URL(url_string);
   let currentDate = new Date();
-  document.getElementById("date").value = `${currentDate.getFullYear()}-${String(currentDate.getMonth()+1).padStart(2,"0")}-${currentDate.getDate()}`;
+  document.getElementById("date").value = `${currentDate.getFullYear()}-${String(currentDate.getMonth()+1).padStart(2,"0")}-${String(currentDate.getDate()+1).padStart(2,"0")}`;
   document.getElementById("add-btn").value = "Generate Discharge";
   loadingStatus(true);
   if (url.searchParams.get("certId")) {

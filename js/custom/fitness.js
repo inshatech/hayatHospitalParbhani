@@ -200,6 +200,8 @@ const addFitness = async(referer, name, date, age, sex, city, address, mobile, p
  * @returns None
  */
 document.getElementsByTagName("body")[0].onload = async () => {
+  let currentDate = new Date();
+  document.getElementById("date").value = `${currentDate.getFullYear()}-${String(currentDate.getMonth()+1).padStart(2,"0")}-${String(currentDate.getDate()+1).padStart(2,"0")}`;
   autoComplete();
 };
 
