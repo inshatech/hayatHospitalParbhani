@@ -14,7 +14,7 @@ const loadCertificate = async(cert_id) =>{
   let data = await response.json();
   if (data.status == 'ok') {
     document.getElementById('title').innerHTML    = `Update Discharge Certificate for ${data.data[0].name} Date: ${data.data[0].date}`;
-    document.getElementById("date").innerHTML     = `Date: ${data.data[0].dateTimeStamp}`;
+    document.getElementById("date").innerHTML     = `Date: ${data.data[0].date}`;
     document.getElementById("name").innerHTML     = `Patient's Name: ${data.data[0].name}`;
     document.getElementById("age-sex").innerHTML  = `Age/Sex: ${data.data[0].age}/${data.data[0].sex}`;
     document.getElementById("city").innerHTML     = `Address: ${data.data[0].address}`;
@@ -43,7 +43,7 @@ const loadCertificate = async(cert_id) =>{
     for (const key in conditionOD) {
       if (conditionOD.hasOwnProperty.call(conditionOD, key)) {
         const element = conditionOD[key];
-        cod += `${key} = ${element} | `;
+        cod += `${key} ${element} `;
       }
     }
 
