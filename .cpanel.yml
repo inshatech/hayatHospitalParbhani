@@ -2,4 +2,4 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/inshate2/public_html/hospinex.inshatech.com
-    - /bin/cp -R images $DEPLOYPATH
+    - /bin/cp -r * $DEPLOYPATH
