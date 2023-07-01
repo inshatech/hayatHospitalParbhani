@@ -15,12 +15,15 @@ function appendOpd(opd) {
   for (key of Object.keys(opdServices)){
     totalAmount = totalAmount + parseInt(opdServices[key])
   }
-
   document.getElementById("opd-parent-div").innerHTML += `
     <div id='opd-div${opd.opd_id}' class="card-body direction-rtl">
       <div id='opd-header-div${opd.opd_id}' class='opd-header-div'>
-      <input onclick="CheckBox(${opd.opd_id})" class="form-check-input form-check-danger" id="checkbox${opd.opd_id}" type="checkbox" value="${opd.opd_id}" aria-label="Checkbox for following text input">
-      ${opd.opd_id}
+      D${opd.srNo}
+      <div class="form-check">
+        <input onclick="CheckBox(${opd.opd_id})" class="form-check-input form-check-danger" id="checkbox${opd.opd_id}" type="checkbox" value="${opd.opd_id}" aria-label="Checkbox for following text input" disabled>
+        <label class="form-check-label" for="checkbox${opd.opd_id}">Delete</label>
+      </div>
+      #${opd.opd_id}
       </div>
       <div class='name-div'>
         <h6 class='h6-name-tag' >${opd["patient_details"].name}</h6>
@@ -346,7 +349,7 @@ const loadData = async() => {
         }
         document.getElementById("collection").innerHTML = `Total Amount: ${totalAmount}/-`;
         document.getElementById("form").reset();
-        document.getElementById("opd-parent-div").firstElementChild.firstElementChild.innerHTML += '<span class="m-1 badge rounded-pill bg-primary">New</span>'
+        document.getElementById("opd-parent-div").firstElementChild.firstElementChild.innerHTML += '<span class="m-1 badge rounded-pill bg-success">New</span>'
         setTimeout(() => {
           document.getElementById("opd-parent-div").firstElementChild.firstElementChild.lastElementChild.remove()
         }, 10000);
