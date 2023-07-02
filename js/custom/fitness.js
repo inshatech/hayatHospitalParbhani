@@ -213,9 +213,13 @@ document.getElementsByTagName("body")[0].onload = async () => {
  */
 const autoComplete = async ()=>{
   try {
-    let referer = new Array();
-    let postedFor = new Array();
-    let opinion = new Array();
+    let referer     = new Array();
+    let postedFor   = new Array();
+    let opinion     = new Array();
+    let BP          = new Array();
+    let Pulse       = new Array();
+    let Blood_Sugar = new Array();
+    let ECG         = new Array(); 
 
     let response = await fetch(`${url}getFitness`, {
       method: "POST",
@@ -226,6 +230,7 @@ const autoComplete = async ()=>{
     });
 
     let data = await response.json();
+    console.log(data);
     if (data.status == 'ok') {
       const fitnessList = data.data;
       for (i = 0; i < fitnessList.length; i++) {
@@ -238,14 +243,32 @@ const autoComplete = async ()=>{
         if (opinion.indexOf(fitnessList[i].opinion) === -1){
           opinion.push(fitnessList[i].opinion);
         }
+
+        let objExamination = JSON.parse(data.data[i].examination);
+        if (BP.indexOf(objExamination.BP) === -1) {
+          BP.push(objExamination.BP);
+        }
+        if (Pulse.indexOf(objExamination.Pulse) === -1) {
+          Pulse.push(objExamination.Pulse);
+        }
+        if (Blood_Sugar.indexOf(objExamination.Blood_Sugar) === -1) {
+          Blood_Sugar.push(objExamination.Blood_Sugar);
+        }
+        if (ECG.indexOf(objExamination.ECG) === -1) {
+          ECG.push(objExamination.ECG);
+        }
       }
     }else if(data.message == 'Authorization failed!'){
       window.location = './login.html';
     }
-    
     autocomplete(document.getElementById("referer"), referer);
     autocomplete(document.getElementById("Opinion"), opinion);
     autocomplete(document.getElementById("postedFor"), postedFor);
+
+    autocomplete(document.getElementById("BP"), BP);
+    autocomplete(document.getElementById("Pulse"), Pulse);
+    autocomplete(document.getElementById("Blood_Sugar"), Blood_Sugar);
+    autocomplete(document.getElementById("ECG"), ECG);
   } catch (error) {
     console.log(error);
   }
