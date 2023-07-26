@@ -57,8 +57,22 @@
         </div>
         <form name="form" id="form" class="was-validated" action="#">
           <div class="modal-body" id="add-opd-modal-body">
-            <div class="form-group mb-3">
-              <input name="name" class="form-control" type="text" aria-label="First name" placeholder="Patient Name" required>
+            <div class="row g-lg-2 mb-0">
+              <div class="col">
+                <div class="form-group mb-3">
+                  <input name="srNo" id="srNo" pattern="[0-9]{1,5}" class="form-control" type="text" placeholder="Sr No" required>
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-group mb-3">
+                  <input name="date" id="date" class="form-control" type="date" placeholder="Date" required>
+                </div>
+              </div>              
+            </div>
+            <div class="row g-lg-2 mb-0">
+              <div class="form-group mb-3">
+                <input name="name" class="form-control" type="text" aria-label="First name" placeholder="Patient Name" required>
+              </div>
             </div>
             <div class="row g-lg-2 mb-0">
               <div class="col">
@@ -243,7 +257,7 @@
   <script src="./js/common/nav.js"></script>
   <script src="./js/custom/checkLogin.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>
+  <!-- <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script> -->
   <script>
     const icon  = "img/icons/favicon.png";
     document.getElementById("icon").href = icon;

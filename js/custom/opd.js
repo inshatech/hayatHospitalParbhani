@@ -18,7 +18,7 @@ function appendOpd(opd) {
   document.getElementById("opd-parent-div").innerHTML += `
     <div id='opd-div${opd.opd_id}' class="card-body direction-rtl">
       <div id='opd-header-div${opd.opd_id}' class='opd-header-div'>
-      D${opd.srNo}
+      Sr.No: ${opd.srNo}
       <div class="form-check">
         <input onclick="CheckBox(${opd.opd_id})" class="form-check-input form-check-danger" id="checkbox${opd.opd_id}" type="checkbox" value="${opd.opd_id}" aria-label="Checkbox for following text input" disabled>
         <label class="form-check-label" for="checkbox${opd.opd_id}">Delete</label>
@@ -186,12 +186,17 @@ document.getElementById("add-sticky-btn").onclick = () => {
   document.getElementById("add-btn").innerHTML = `<i class="fa-regular fa-paper-plane"></i> Add OPD`;
   document.getElementById("add-btn").value = `Add OPD`;
   document.getElementById("add-btn").className = 'btn btn-success';
+
+  document.getElementById("srNo").disabled = false;
+  document.getElementById("date").disabled = false;
   document.getElementsByName("name")[0].disabled = false;
   document.getElementsByName("age")[0].disabled = false;
   document.getElementsByName("sex")[0].disabled = false;
   document.getElementsByName("city")[0].disabled = false;
   document.getElementsByName("address")[0].disabled = false;
   document.getElementsByName("mobile")[0].disabled = false;
+  let currentDate = new Date();
+  document.getElementById("date").value = `${currentDate.getFullYear()}-${String(currentDate.getMonth()+1).padStart(2,"0")}-${String(currentDate.getDate()).padStart(2,"0")}`;
 }
 /**
  * Attaches an event listener to the "add-btn" element that triggers when the button is clicked.
@@ -208,6 +213,8 @@ document.getElementById("add-btn").onclick = async (e) => {
       let serviceCount = document.getElementById("serviceTable").tBodies[0].rows.length
       if (valid && serviceCount > 1) {
         e.preventDefault();
+        let srNo = document.getElementById("srNo").value;
+        let date = document.getElementById("date").value;
         let name = document.getElementsByName("name")[0].value;
         let age = document.getElementsByName("age")[0].value;
         let sex = document.getElementsByName("sex")[0].value;
@@ -242,7 +249,7 @@ document.getElementById("add-btn").onclick = async (e) => {
           confirmButtonText: `Yes, ${btnText} it!`
         }).then ((result) => {
           if (result.isConfirmed) {
-            btnValue === "Add OPD" ? addOPD(name, age, sex, services, city, address, mobile):updateOPD(updateOpdId, services);
+            btnValue === "Add OPD" ? addOPD(srNo, date, name, age, sex, services, city, address, mobile):updateOPD(updateOpdId, services);
           }
         })
       }            
@@ -263,33 +270,39 @@ document.getElementById("add-btn").onclick = async (e) => {
  * @param {string} mobile - The mobile number of the patient.
  * @returns None
  */
-const addOPD = async(name, age, sex, services, city, address, mobile)=>{
+const addOPD = async(srNo, date, name, age, sex, services, city, address, mobile)=>{
   try {
     document.getElementById("add-btn").innerHTML = `
       <div id="spinner" class="spinner-border spinner-border-sm text-sucess mx-2"  role="status">
       <span class="visually-hidden">Loading...</span>
       </div>Processing...
     `;
-    let date = new Date();
-    let month = date.getMonth() + 1
-    let day = date.getDate()
+    // let date = new Date();
+    // let month = date.getMonth() + 1
+    // let day = date.getDate()
     let response = await fetch(`${url}opd`, {
       method: "POST",
       headers: {
         Authorization: localStorage.getItem("jwtTempToken"),
       },
       body: JSON.stringify({
+        srNo: srNo,
+        date: date, //`${date.getFullYear()}-${month}-${day}`,
         name: name,
         age: age,
-        date: `${date.getFullYear()}-${month}-${day}`,
         sex: sex,
+        state: 10,
         city: city,
         address: address,
         mobile: mobile,
         services: services,
+        other_info: "",
+        employee_id: 1,
+        doctor_id: 1
       }),
     });
     let data = await response.json();
+    console.log(data);
     let opd_id = data.opd_id;
     if (data.status == 'ok') {
       Swal.fire({
@@ -572,18 +585,28 @@ document.getElementById("delete-all-opds-btn").onclick = () => {
   });
 };
 
+const dbDateFormatter = async(date) => {
+  const dateArray = date.split("-");
+  const formattedDate = `${dateArray[2]}-${dateArray[1]}-${dateArray[0]}`;
+  return formattedDate;
+}
+
 /**
  * Displays the details of an OPD record in a modal window.
  * @param {number} opd_id - The ID of the OPD record to display.
  * @returns None
  */
-function viewDetails(opd_id) {
+const viewDetails = async(opd_id) => {
+
   updateOpdId = opd_id;
   document.getElementById("add-btn").innerHTML = '<i class="fa-regular fa-paper-plane"></i> Update OPD';
   document.getElementById("add-btn").value = "Update OPD";
   document.getElementById("add-btn").className = "btn btn-warning text-white";
   document.getElementById("addOpdModalLabel").innerHTML = "OPD Details";
   let opd = allOpds[opd_id];
+  
+  document.getElementById("srNo").value = opd.srNo;
+  document.getElementById("date").value = await dbDateFormatter(opd.date);
   document.getElementsByName("name")[0].value = opd["patient_details"].name;
   document.getElementsByName("age")[0].value = opd["patient_details"].age;
   document.getElementsByName("sex")[0].value = opd["patient_details"].sex;
@@ -591,6 +614,8 @@ function viewDetails(opd_id) {
   document.getElementsByName("address")[0].value = opd["patient_details"].address;
   document.getElementsByName("mobile")[0].value = opd["patient_details"].mobile;
 
+  document.getElementById("srNo").disabled = true;
+  document.getElementById("date").disabled = true;
   document.getElementsByName("name")[0].disabled = true;
   document.getElementsByName("age")[0].disabled = true;
   document.getElementsByName("sex")[0].disabled = true;
