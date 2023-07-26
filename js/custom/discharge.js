@@ -7,6 +7,7 @@ document.getElementById("add-btn").addEventListener("click", async(e)=>{
       if (valid) {
         e.preventDefault();
 
+        let srNo = document.getElementById("srNo").value;
         let name = document.getElementById("name").value;
         let date = document.getElementById("date").value;
         let age = document.getElementById("age").value;
@@ -57,7 +58,7 @@ document.getElementById("add-btn").addEventListener("click", async(e)=>{
           confirmButtonText: `Yes, ${conditionLabel} it!`
         }).then ((result) => {
           if (result.isConfirmed) {
-            btnValue === "Generate Discharge" ? generateDischarge(name, date, age, sex, address, city, doa, dod, bedNo, tod, diagnosis, clinicalNotes, investigation, treatmentGiven, conditionOD): updateDischarge(cert_id, name, date, age, sex, address, city, doa, dod, bedNo, tod, diagnosis, clinicalNotes, investigation, treatmentGiven, conditionOD);
+            btnValue === "Generate Discharge" ? generateDischarge(srNo, name, date, age, sex, address, city, doa, dod, bedNo, tod, diagnosis, clinicalNotes, investigation, treatmentGiven, conditionOD): updateDischarge(cert_id, srNo, name, date, age, sex, address, city, doa, dod, bedNo, tod, diagnosis, clinicalNotes, investigation, treatmentGiven, conditionOD);
           }
         })
 
@@ -68,7 +69,7 @@ document.getElementById("add-btn").addEventListener("click", async(e)=>{
   }
 });
 
-const generateDischarge = async(name, date, age, sex, address, city, doa, dod, bedNo, tod, diagnosis, clinicalNotes, investigation, treatmentGiven, conditionOD)=>{
+const generateDischarge = async(srNo, name, date, age, sex, address, city, doa, dod, bedNo, tod, diagnosis, clinicalNotes, investigation, treatmentGiven, conditionOD)=>{
   document.getElementById("add-btn").innerHTML = `
     <div id="spinner" class="spinner-border spinner-border-sm text-sucess mx-2"  role="status">
     <span class="visually-hidden">Loading...</span>
@@ -79,7 +80,8 @@ const generateDischarge = async(name, date, age, sex, address, city, doa, dod, b
     headers: {
       Authorization: localStorage.getItem("jwtTempToken"),
     },
-    body: JSON.stringify({
+    body: JSON.stringify({ 
+      srNo:srNo,
       date:date,
       patient_id:"",
       name:name,
@@ -97,7 +99,7 @@ const generateDischarge = async(name, date, age, sex, address, city, doa, dod, b
       treatmentGiven:treatmentGiven,
       conditionOD:conditionOD,
       employee_id:localStorage.getItem("user_id"),
-      doctor_id: "",
+      doctor_id: 10,
     }),
   });
   let data = await response.json();
@@ -128,7 +130,7 @@ const generateDischarge = async(name, date, age, sex, address, city, doa, dod, b
   document.getElementById("add-btn").innerHTML = `Generate Discharge`;
 }
 
-const updateDischarge = async(cert_id, name, date, age, sex, address, city, doa, dod, bedNo, tod, diagnosis, clinicalNotes, investigation, treatmentGiven, conditionOD) => {
+const updateDischarge = async(cert_id, srNo, name, date, age, sex, address, city, doa, dod, bedNo, tod, diagnosis, clinicalNotes, investigation, treatmentGiven, conditionOD) => {
   document.getElementById("add-btn").innerHTML = `
     <div id="spinner" class="spinner-border spinner-border-sm text-sucess mx-2"  role="status">
     <span class="visually-hidden">Loading...</span>
@@ -141,6 +143,7 @@ const updateDischarge = async(cert_id, name, date, age, sex, address, city, doa,
     },
     body: JSON.stringify({
       certId:cert_id,
+      srNo:srNo,
       date:date,
       patient_id:"",
       name:name,
@@ -158,11 +161,10 @@ const updateDischarge = async(cert_id, name, date, age, sex, address, city, doa,
       treatmentGiven:treatmentGiven,
       conditionOD:conditionOD,
       employee_id:localStorage.getItem("user_id"),
-      doctor_id: "",
+      doctor_id: 10,
     }),
   });
   let data = await response.json();
-  console.log(data);
   if (data.status == 'ok') {
     Swal.fire({
       title:'Success!',
@@ -223,9 +225,9 @@ const loadCertificate = async(cert_id) =>{
       let oldDate = data.data[0].date;
       const dateArray = oldDate.split("-");
       const date = new Date(`${dateArray[2]}-${dateArray[1]}-${dateArray[0]}`);
-  
-      document.getElementById("date").valueAsDate     = date;    
       
+      document.getElementById("srNo").value     = data.data[0].srNo;
+      document.getElementById("date").valueAsDate     = date;    
       document.getElementById("name").value     = `${data.data[0].name}`;
       document.getElementById("age").value      = `${data.data[0].age}`;
       document.getElementById("sex").value      = `${data.data[0].sex}`;

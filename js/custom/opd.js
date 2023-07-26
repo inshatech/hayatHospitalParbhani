@@ -302,7 +302,6 @@ const addOPD = async(srNo, date, name, age, sex, services, city, address, mobile
       }),
     });
     let data = await response.json();
-    console.log(data);
     let opd_id = data.opd_id;
     if (data.status == 'ok') {
       Swal.fire({

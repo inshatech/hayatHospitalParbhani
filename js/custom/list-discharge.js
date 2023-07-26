@@ -63,7 +63,6 @@ document.getElementsByTagName("body")[0].onload = async () => {
     });
 
     let data = await response.json();
-    console.log(data);
     if (data.status == 'ok') {
       document.getElementById("processing").style.display = "none";
       const dischargeList = data.data;
