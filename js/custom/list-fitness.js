@@ -25,11 +25,18 @@ function appendRecords(fitnessCertificate){
         <span class="otherDetails">${fitnessCertificate.mobile}</span>
         <div class="otherDetails">${fitnessCertificate.dateTimeStamp} ${fitnessCertificate.referer}</div>
       </div>
-      <a href="./templates/fitness.html?fitnessId=${fitnessCertificate.fitness_id}">
-        <span class="btn m-1 btn-dark">
-          <i class="fa-solid fa-print"></i>
-        </span>
-      </a>
+      <div>
+        <a href="./add-fitness.html?fitnessId=${fitnessCertificate.fitness_id}">
+          <span class="btn m-1 btn-info">
+          <i class="fa-solid fa-pen-to-square"></i>
+          </span>
+        </a>
+        <a href="./templates/fitness.html?fitnessId=${fitnessCertificate.fitness_id}">
+          <span class="btn m-1 btn-dark">
+            <i class="fa-solid fa-print"></i>
+          </span>
+        </a>
+      </div>
     </li>
   `;
 }

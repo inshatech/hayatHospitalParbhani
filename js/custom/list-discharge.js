@@ -26,16 +26,16 @@ function appendRecords(dischargeCertificate){
         <div class="otherDetails">${dischargeCertificate.dateTimeStamp} ${dischargeCertificate.timeAgo}</div>
       </div>
       <div>
-      <a href="./add-discharge.html?certId=${dischargeCertificate.cert_id}">
-        <span class="btn m-1 btn-info">
-        <i class="fa-solid fa-pen-to-square"></i>
-        </span>
-      </a>
-      <a href="./templates/discharge-certificate.html?certId=${dischargeCertificate.cert_id}">
-        <span class="btn m-1 btn-dark">
-          <i class="fa-solid fa-print"></i>
-        </span>
-      </a>
+        <a href="./add-discharge.html?certId=${dischargeCertificate.cert_id}">
+          <span class="btn m-1 btn-info">
+          <i class="fa-solid fa-pen-to-square"></i>
+          </span>
+        </a>
+        <a href="./templates/discharge-certificate.html?certId=${dischargeCertificate.cert_id}">
+          <span class="btn m-1 btn-dark">
+            <i class="fa-solid fa-print"></i>
+          </span>
+        </a>
       </div>
     </li>
   `;
