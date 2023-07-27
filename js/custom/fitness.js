@@ -1,3 +1,5 @@
+let fitness_id;
+
 /**
  * Attaches an event listener to the "add-btn" element that triggers when the button is clicked.
  * The function retrieves data from various form elements and creates an object with the data.
@@ -105,17 +107,28 @@ document.getElementById("add-btn").onclick = async (e) => {
         //Opinion
         let opinion = document.getElementById("Opinion").value;
 
+        const btnValue = e.target.value;
+        let conditionLabel;
+
+        if (btnValue === "Add Fitness") {
+          conditionLabel = "Add";
+          btnColor = '#00b894'
+        }else{
+          conditionLabel = "Update";
+          btnColor = '#E0A800';
+        }
+
         Swal.fire({
           title: 'Are you sure?',
-          text: "You wan't add Fitness!",
+          text: `You want to ${conditionLabel} fitness!`,
           icon: 'warning',
           showCancelButton: true,
-          confirmButtonColor: '#00b894',
+          confirmButtonColor: btnColor,
           cancelButtonColor: '#ea4c62',
-          confirmButtonText: 'Yes, add it!'
+          confirmButtonText: `Yes, ${conditionLabel} it!`
         }).then((result) => {
           if (result.isConfirmed) {
-            addFitness(referer, name, date, age, sex, city, address, mobile, postedFor, complaints, history, personal, examination, other, opinion);
+            btnValue === "Add Fitness" ? addFitness(referer, name, date, age, sex, city, address, mobile, postedFor, complaints, history, personal, examination, other, opinion): updateFitness(fitness_id, referer, name, date, age, sex, city, address, mobile, postedFor, complaints, history, personal, examination, other, opinion);
           }
         })
       }
@@ -150,6 +163,7 @@ const addFitness = async (referer, name, date, age, sex, city, address, mobile, 
     },
     body: JSON.stringify({
       referer: referer,
+      patient_id:"",
       name: name,
       date: date,
       age: age,
@@ -163,7 +177,9 @@ const addFitness = async (referer, name, date, age, sex, city, address, mobile, 
       personal: personal,
       examination: examination,
       other: other,
-      opinion: opinion
+      opinion: opinion,
+      employee_id:localStorage.getItem("user_id"),
+      doctor_id: 10
     }),
   });
   let data = await response.json();
@@ -179,6 +195,66 @@ const addFitness = async (referer, name, date, age, sex, city, address, mobile, 
         document.getElementById("form").reset();
         autoComplete();
         let fitness_id = data.fitness_id;
+        location.assign(`./templates/fitness.html?fitnessId=${fitness_id}`);
+      }
+    })
+  } else {
+    Swal.fire({
+      title: 'Error Occurred!',
+      text: data.message,
+      icon: 'error',
+      confirmButtonColor: '#ea4c62',
+      confirmButtonText: 'Okay'
+    })
+  }
+  document.getElementById("add-btn").innerHTML = `Add Fitness`;
+}
+
+const updateFitness = async(fitness_id, referer, name, date, age, sex, city, address, mobile, postedFor, complaints, history, personal, examination, other, opinion)=>{
+  document.getElementById("add-btn").innerHTML = `
+    <div id="spinner" class="spinner-border spinner-border-sm text-sucess mx-2"  role="status">
+    <span class="visually-hidden">Loading...</span>
+    </div>Processing...
+  `;
+  let response = await fetch(`${url}fitness`, {
+    method: "PUT",
+    headers: {
+      Authorization: localStorage.getItem("jwtTempToken"),
+    },
+    body: JSON.stringify({
+      fitness_id:fitness_id,
+      referer: referer,
+      patient_id:"",
+      name: name,
+      date: date,
+      age: age,
+      sex: sex,
+      city: city,
+      address: address,
+      mobile: mobile,
+      postedFor: postedFor,
+      complaints: complaints,
+      history: history,
+      personal: personal,
+      examination: examination,
+      other: other,
+      opinion: opinion,
+      employee_id:localStorage.getItem("user_id"),
+      doctor_id: 10,
+    }),
+  });
+  let data = await response.json();
+  if (data.status == 'ok') {
+    Swal.fire({
+      title: 'Success!',
+      text: 'Fitness update successfully!',
+      icon: 'success',
+      confirmButtonColor: '#00b894',
+      confirmButtonText: 'Okay Print!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        document.getElementById("form").reset();
+        autoComplete();
         location.assign(`./templates/fitness.html?fitnessId=${fitness_id}`);
       }
     })
@@ -256,7 +332,7 @@ const loadCertificate = async (fitness_id) => {
       await setCheckBox(data.data[0].history, "history");
       await setCheckBox(data.data[0].personal, "personal");
       await setCheckBox(data.data[0].examination, "examination");
-
+      
       const examination = JSON.parse(data.data[0].examination);
 
       document.getElementById("BP").value = examination.BP;

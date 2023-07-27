@@ -50,7 +50,7 @@ document.getElementById("add-btn").addEventListener("click", async(e)=>{
 
         Swal.fire({
           title: 'Are you sure?',
-          text: `You want ${conditionLabel} discharge!`,
+          text: `You want to ${conditionLabel} discharge!`,
           icon: 'warning',
           showCancelButton: true,
           confirmButtonColor: btnColor,
