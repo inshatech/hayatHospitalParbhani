@@ -193,6 +193,7 @@ const addFitness = async (referer, name, date, age, sex, city, address, mobile, 
     }).then((result) => {
       if (result.isConfirmed) {
         document.getElementById("form").reset();
+        document.getElementById("add-btn").value = "Add Fitness";
         autoComplete();
         let fitness_id = data.fitness_id;
         location.assign(`./templates/fitness.html?fitnessId=${fitness_id}`);
@@ -254,6 +255,7 @@ const updateFitness = async(fitness_id, referer, name, date, age, sex, city, add
     }).then((result) => {
       if (result.isConfirmed) {
         document.getElementById("form").reset();
+        document.getElementById("add-btn").value = "Add Fitness";
         autoComplete();
         location.assign(`./templates/fitness.html?fitnessId=${fitness_id}`);
       }
@@ -383,6 +385,7 @@ const loadCertificate = async (fitness_id) => {
 document.getElementsByTagName("body")[0].onload = async () => {
   let url_string = window.location.href;
   let url = new URL(url_string);
+  document.getElementById("add-btn").value = "Add Fitness";
 
   let currentDate = new Date();
   document.getElementById("date").value = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, "0")}-${String(currentDate.getDate()).padStart(2, "0")}`;
