@@ -83,7 +83,7 @@ const loadReceipt = async(opdId) =>{
     document.getElementById("mobile").innerHTML = `Mobile: ${data.data[0].patient_details.mobile}`;
     document.getElementById("bill-no").innerHTML = `Bill No: ${billNo}`;
     document.getElementById("patient-id").innerHTML = `Patient Id: ${patientId}`;
-    document.getElementById("daySrNO").innerHTML = `DSR-No: ${data.data[0].srNo}`;
+    document.getElementById("daySrNO").innerHTML = data.data[0].srNo;
 
     let tbody = document.getElementById('table').getElementsByTagName('tbody')[0];
     const services = JSON.parse(data.data[0].services);
