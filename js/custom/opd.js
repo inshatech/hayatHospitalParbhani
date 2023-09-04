@@ -420,6 +420,7 @@ const updateOPD = async(updateOpdId, services)=>{
         DeleteRows(services); 
         location.assign(`./templates/opd-receipt.html?opdId=${updateOpdId}`);
       }else{
+        $('#addOPD').modal('hide');
         loadData();
       }
     })
