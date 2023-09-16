@@ -205,6 +205,11 @@ const referDiv = (value=0)=>{
   }
 }
 
+const getTwentyFourHourTime = async(amPmString) => {
+  var d = new Date("1/1/2013 " + amPmString); 
+  return d.getHours() + ':' + d.getMinutes();
+}
+
 const loadCertificate = async(cert_id) =>{
   try {
     let response = await fetch(`${url}get-certificate`, {
@@ -236,14 +241,16 @@ const loadCertificate = async(cert_id) =>{
   
       let old_doa = data.data[0].doa;
       const doaArray = old_doa.split("-");
-      const [doaYear, doaTime] = doaArray[2].split(" ");
-      let doa = `${doaYear}-${doaArray[1]}-${doaArray[0]}T${doaTime}`;
+      const [doaYear, doaTime, doaTT] = doaArray[2].split(" ");
+      let doa24time =  await getTwentyFourHourTime(`${doaTime} ${doaTT}`);
+      let doa = `${doaYear}-${doaArray[1]}-${doaArray[0]}T${doa24time}`;
       document.getElementById("doa").value      = doa;
   
       let old_dod = data.data[0].dod;
       const dodArray = old_dod.split("-");
-      const [dodYear, dodTime] = dodArray[2].split(" ");
-      let dod = `${dodYear}-${dodArray[1]}-${dodArray[0]}T${dodTime}`;
+      const [dodYear, dodTime, dodTT] = dodArray[2].split(" ");
+      let dod24time =  await getTwentyFourHourTime(`${doaTime} ${doaTT}`);
+      let dod = `${dodYear}-${dodArray[1]}-${dodArray[0]}T${dod24time}`;
       document.getElementById("dod").value      = dod;
   
       let objTod = JSON.parse(data.data[0].tod);
@@ -303,6 +310,12 @@ const loadingStatus = (state) => {
     document.getElementById("form").setAttribute("hidden", true);
   }
 }
+// document.getElementById("diagnosis").onchange = ()=>{
+//   if (e.keyCode == 13) {
+//     e.preventDefault();
+//     this.value = this.value.substring(0, this.selectionStart) + "" + "\n" + this.value.substring(this.selectionEnd, this.value.length);
+//   }
+// }
 
 const autoComplete = async ()=>{
   try {
