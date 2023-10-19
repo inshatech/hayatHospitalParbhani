@@ -1,0 +1,112 @@
+Date.prototype.getCurrentTime = function () {
+  return (
+    (this.getHours() < 10 ? "0" : "") +
+    (this.getHours() > 12 ? this.getHours() - 12 : this.getHours()) +
+    "-" +
+    (this.getMinutes() < 10 ? "0" : "") +
+    this.getMinutes() +
+    "-" +
+    (this.getSeconds() < 10 ? "0" : "") +
+    this.getSeconds() +
+    (this.getHours() > 12 ? " PM" : " AM")
+  );
+};
+
+let today = new Date(); //date object
+let current_date = today.getDate();
+let current_month = today.getMonth() + 1; //Month starts from 0
+let current_year = today.getFullYear();
+let current_time = today.getCurrentTime();
+let date_time = current_date + "-" + current_month + "-" + current_year + " @ " + current_time;
+
+document.getElementsByTagName("body")[0].onload = async () => {
+  loadingStatus(true);
+};
+
+document.getElementById("date-search-btn").onclick = async () => {
+  let from = document.getElementById("inputDateFrom").value;
+  let to = document.getElementById("inputDateTo").value;
+  let type = document.getElementById("type").value;
+
+  if (from != "" && to != "") {
+    loadingStatus(false);
+    if (type === "opd-report") {
+      opdReport(from, to);
+    } else if (to === "ipd-report") {
+    }
+  }
+};
+
+const opdReport = async (from, to) => {
+  let response = await fetch(`${url}get-opd`, {
+    method: "POST",
+    headers: {
+      Authorization: localStorage.getItem("jwtTempToken"),
+    },
+    body: JSON.stringify({
+      between_dates: {
+        start_date: from,
+        end_date: to,
+      },
+    }),
+  });
+
+  let data = await response.json();
+  let opdData = data.data;
+  let all_opd = new Array();
+  if (data.status == "ok") {
+    for (key of Object.keys(opdData)) {
+      let fee = 0;
+      let { opd_id, srNo, patient_details, services, dateTimeStamp } =
+        opdData[key];
+      let allServices = JSON.parse(services);
+      for (key of Object.keys(allServices)) {
+        fee = fee + parseInt(allServices[key]);
+      }
+      let opd = {
+        "OPD Id": opd_id,
+        "Sr.No.": srNo,
+        Name: patient_details.name,
+        Age: patient_details.age,
+        Sex: patient_details.sex,
+        Address: patient_details.address,
+        Mobile: patient_details.mobile,
+        "Date & Time": dateTimeStamp,
+        Services: JSON.stringify(allServices),
+        Fees: fee,
+      };
+      all_opd.push(opd);
+    }
+    let reportName = `IPD Report From date: ${from} to ${to} generated on ${date_time}`;
+    let pageName = "IPD Report";
+    exportExcel(all_opd, reportName, pageName);
+  } else {
+    Swal.fire({
+      title: "Error Occurred!",
+      text: data.message,
+      icon: "error",
+      confirmButtonColor: "#ea4c62",
+      confirmButtonText: "Okay",
+    });
+  }
+  loadingStatus(true);
+};
+
+const exportExcel = async (arrayData, reportName, pageName) => {
+  const xls = new XlsExport(arrayData, pageName);
+  xls.exportToXLS(reportName + ".xls");
+};
+
+const loadingStatus = (state) => {
+  if (state) {
+    document.getElementById(
+      "date-search-btn"
+    ).innerHTML = `<i class="fa-solid fa-download"></i> Download Now`;
+  } else {
+    document.getElementById(
+      "date-search-btn"
+    ).innerHTML = `<div id="spinner" class="spinner-border spinner-border-sm text-success mx-2"  role="status">
+    <span class="visually-hidden">Downloading...</span>
+    </div>`;
+  }
+};
