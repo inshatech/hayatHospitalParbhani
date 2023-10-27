@@ -207,7 +207,8 @@ const referDiv = (value=0)=>{
 
 const getTwentyFourHourTime = async(amPmString) => {
   var d = new Date("1/1/2013 " + amPmString); 
-  return d.getHours() + ':' + d.getMinutes();
+  console.log(amPmString, d, d.getHours() + ':' + d.getMinutes());
+  return d.getHours() + ':' + (d.getMinutes() < 10 ? '0' : '') + d.getMinutes();
 }
 
 const loadCertificate = async(cert_id) =>{
@@ -240,17 +241,21 @@ const loadCertificate = async(cert_id) =>{
       document.getElementById("bedNo").value    = `${data.data[0].bedNo}`;
   
       let old_doa = data.data[0].doa;
+      console.log(old_doa);
       const doaArray = old_doa.split("-");
       const [doaYear, doaTime, doaTT] = doaArray[2].split(" ");
       let doa24time =  await getTwentyFourHourTime(`${doaTime} ${doaTT}`);
       let doa = `${doaYear}-${doaArray[1]}-${doaArray[0]}T${doa24time}`;
+      console.log(doa);
       document.getElementById("doa").value      = doa;
   
       let old_dod = data.data[0].dod;
+      console.log(old_dod);
       const dodArray = old_dod.split("-");
       const [dodYear, dodTime, dodTT] = dodArray[2].split(" ");
-      let dod24time =  await getTwentyFourHourTime(`${doaTime} ${doaTT}`);
+      let dod24time =  await getTwentyFourHourTime(`${dodTime} ${dodTT}`);
       let dod = `${dodYear}-${dodArray[1]}-${dodArray[0]}T${dod24time}`;
+      console.log(dod);
       document.getElementById("dod").value      = dod;
   
       let objTod = JSON.parse(data.data[0].tod);

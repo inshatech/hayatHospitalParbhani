@@ -20,7 +20,7 @@ function appendRecords(dischargeCertificate){
   document.getElementById("recordsPlace").innerHTML += `
     <li class="list-group-item d-flex align-items-center justify-content-between">
       <div>
-        ${dischargeCertificate.cert_id} - ${dischargeCertificate.name} 
+        ${dischargeCertificate.srNo} - ${dischargeCertificate.name} 
         <span class="otherDetails">${dischargeCertificate.age}/${dischargeCertificate.sex}</span>
         <span class="otherDetails">${dischargeCertificate.bedNo}</span>
         <div class="otherDetails">${dischargeCertificate.dateTimeStamp} ${dischargeCertificate.timeAgo}</div>
