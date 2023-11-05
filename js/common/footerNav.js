@@ -20,7 +20,7 @@ document.getElementById("footerNav").innerHTML = `
         <li  id="ipd">
           <a href="list-ipds.html">
             <i class="fa-solid fa-bed-pulse"></i>
-            <span>IPD</span>
+            <span>IPD's</span>
           </a>
         </li>
 

@@ -22,13 +22,13 @@ document.getElementById("sideNav").innerHTML = `
         <!-- Sidenav Nav -->
         <ul class="sidenav-nav ps-0">
           <li>
-            <a href="home.html"><i class="fa-solid fa-house-flag"></i> Home</a>
+            <a href="index.html"><i class="fa-solid fa-house-flag"></i> Home</a>
           </li>
           <li>
             <a href="opd.html"><i class="fa-solid fa-stethoscope"></i> OPD&#39;s</a>
           </li>
           <li>
-            <a href="ipd.html"><i class="fa-solid fa-bed-pulse"></i> IPD&#39;s</a>
+            <a href="list-ipds.html"><i class="fa-solid fa-bed-pulse"></i> IPD&#39;s</a>
           </li>
           <li>
             <a href="settings.html"><i class="fa-solid fa-sliders"></i> Settings</a>

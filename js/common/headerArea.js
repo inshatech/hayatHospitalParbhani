@@ -1,6 +1,6 @@
 let pathName  = window.location.pathname.replace('/','');
 let headerArea;
-if (pathName == 'settings.html' || pathName == 'opd.html') {
+if (pathName == 'settings.html' || pathName == 'opd.html' || pathName == 'add-fitness.html' || pathName == 'list-fitness.html' || pathName == 'add-ipd.html' || pathName == 'list-ipds.html' || pathName == 'add-discharge.html' || pathName == 'list-discharge.html') {
   let path  = pathName.replace('.html', '');
   let title = path.toUpperCase()
   headerArea = `
