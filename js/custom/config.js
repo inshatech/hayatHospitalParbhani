@@ -1,4 +1,4 @@
-const url = 'https://hms.inshatech.com/'; //http://localhost/hayat-api/
+const url = 'http://localhost/hayat-api/'; //http://localhost/hayat-api/
 
 let jwtToken;
 let jwtTokenTime;
