@@ -216,7 +216,7 @@ const askDeleteBed = ()=>{
     }else{
       Swal.fire({
         title:'Error Occurred!',
-        text:"Please select bed number",
+        text:"Please select bed.",
         icon:'error',
         confirmButtonColor: '#ea4c62',
         confirmButtonText: 'Okay'
