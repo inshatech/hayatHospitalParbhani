@@ -331,7 +331,7 @@ const loadBeds = async() => {
     });  
     let data = await response.json();
     const bedNo  = document.getElementById("bedNo");
-    bedNo.innerHTML = "";
+    bedNo.innerHTML = "<option selected></option>";
     if (data.status == "ok") {
       data.data.forEach((bed) => {
         let bedOpt = document.createElement('option');
