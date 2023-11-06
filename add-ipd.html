@@ -27,6 +27,15 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <!-- Custom CSS -->
   <link rel="stylesheet" href="css/custom.css">
+  <style>
+    .bed
+      {
+        display: flex;
+        align-content: space-between;
+        align-self: auto;
+        gap: 5px;
+      }
+  </style>
 </head>
 <body>
   <!-- Preloader -->
@@ -67,21 +76,18 @@
                 </div>
               </div>
             </div>
-            <div class="row g-lg-2 mb-0">
-              <div class="col">
-                <div class="form-group">
-                  <label class="form-label" for="bedNo">Bed</label>
-                  <select class="form-select" id="bedNo" name="bedNo" aria-label="Bed" placeholder="Bed" required>
-                    <option selected></option>
-                  </select>
-                </div>
+            <div class="form-group">
+              <label class="form-label" for="bedNo">Bed</label>
+              <div class="bed">
+                <select class="form-select" id="bedNo" name="bedNo" aria-label="Bed" placeholder="Bed" required>
+                  <option selected></option>
+                </select>
+                <button class="btn m-1 btn-sm btn-secondary" type="button" onclick="addBedPopUp();"><i class="fa-solid fa-circle-plus"></i></button>
               </div>
-              <div class="col">
-                <div class="form-group">
-                  <label class="form-label" for="doa"> Date Time of Admission</label>
-                  <input class="form-control" id="doa" type="datetime-local" required>
-                </div>
-              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="doa"> Date Time of Admission</label>
+              <input class="form-control" id="doa" type="datetime-local" required>
             </div>
             <div class="form-group">
               <label class="form-label" for="name">Patient Name</label>
@@ -135,6 +141,35 @@
     </div>
   </div>
 
+  <!-- Bed Modal -->
+  <div class="modal fade" id="bedModel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="bedModelLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title" id="bedModelLabel">Add New Bed</h6>
+          <button class="btn btn-close p-1 ms-auto" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form class="was-validated" name="form" id="form" action="#">
+            <div class="form-group mb-3">
+              <label class="form-label" for="bed_no">Bed No</label>
+              <input name="bed_no" id="bed_no" pattern="[0-9]{1,5}" class="form-control mb-1" type="text" placeholder="Bed No" required>
+            </div>
+            <div class="form-group mb-3">
+              <label class="form-label" for="bed_name">Bed Name</label>
+              <input name="bed_name" id="bed_name" class="form-control mb-1" type="text" placeholder="Bed Name" required>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-sm btn-danger" type="button" data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i> Close</button>
+          <button class="btn btn-sm btn-success" type="button" id="addBed-btn"><i class="fa-solid fa-right-from-bracket"></i> Yes! Add</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Footer Nav -->
   <div class="footer-nav-area" id="footerNav"></div>
   <!-- All JavaScript Files -->
@@ -163,7 +198,7 @@
   <script src="./js/common/nav.js"></script>
   <script src="./js/custom/checkLogin.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  
+  <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
   <script>
     const icon  = "img/icons/favicon.png";
     document.getElementById("icon").href = icon;

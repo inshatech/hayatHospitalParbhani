@@ -163,6 +163,80 @@ const update_IPD = async(ipd_id, srNo, name, date, age, sex, address, city, doa,
   document.getElementById("add-btn").value = "Add IPD";
 }
 
+const addBedPopUp = () => {
+  $('#bedModel').modal('show');
+} 
+
+document.getElementById("addBed-btn").addEventListener("click", async(e)=>{
+  try {
+    if (window.navigator.onLine) {
+      let valid = document.forms["form"][1].checkValidity();
+      if (valid) {
+        e.preventDefault();
+        let bed_no  = document.getElementById("bed_no").value;
+        let bed_name    = document.getElementById("bed_name").value;
+
+        Swal.fire({
+          title: 'Are you sure?',
+          text: `You want to add ${bed_name}`,
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#E0A800',
+          cancelButtonColor: '#ea4c62',
+          confirmButtonText: `Yes, Add it!`
+        }).then ((result) => {
+          if (result.isConfirmed) {
+            addBed(bed_no, bed_name);
+          }
+        })
+      }
+    }
+  } catch (error) {
+    console.log(error);
+  }
+})
+
+const addBed = async(bed_no, bed_name) => {
+  try {
+    const response = await fetch(`${url}icu`, {
+      method: 'POST',
+      headers: {
+        Accept: "*/*",
+        Authorization: localStorage.getItem("jwtTempToken"),
+      },
+      body: JSON.stringify({
+        bedNo: bed_no,
+        description:bed_name,
+      }),
+    });
+    let data = await response.json();
+    if (data.status == 'ok') {
+      Swal.fire({
+        title:'Success!',
+        text: data.message,
+        icon: 'success',
+        confirmButtonColor: '#00b894',
+        confirmButtonText: 'Okay!',
+      }).then ((result) => {
+        if (result.isConfirmed) {
+          loadBeds();
+          $('#bedModel').modal('hide');
+        }
+      })   
+    }else{
+      Swal.fire({
+        title:'Error Occurred!',
+        text:data.message,
+        icon:'error',
+        confirmButtonColor: '#ea4c62',
+        confirmButtonText: 'Okay'
+      })
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 const getTwentyFourHourTime = async(amPmString) => {
   var d = new Date("1/1/2013 " + amPmString); 
   return d.getHours() + ':' + (d.getMinutes() < 10 ? '0' : '') + d.getMinutes();
@@ -257,6 +331,7 @@ const loadBeds = async() => {
     });  
     let data = await response.json();
     const bedNo  = document.getElementById("bedNo");
+    bedNo.innerHTML = "";
     if (data.status == "ok") {
       data.data.forEach((bed) => {
         let bedOpt = document.createElement('option');
