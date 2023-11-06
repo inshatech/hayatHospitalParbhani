@@ -33,7 +33,7 @@
         display: flex;
         align-content: space-between;
         align-self: auto;
-        gap: 5px;
+        gap: 3px;
       }
   </style>
 </head>
@@ -82,7 +82,8 @@
                 <select class="form-select" id="bedNo" name="bedNo" aria-label="Bed" placeholder="Bed" required>
                   <option selected></option>
                 </select>
-                <button class="btn m-1 btn-sm btn-secondary" type="button" onclick="addBedPopUp();"><i class="fa-solid fa-circle-plus"></i></button>
+                <button class="btn m-1 btn-sm btn-success" type="button" onclick="addBedPopUp();"><i class="fa-solid fa-plus"></i></button>
+                <button class="btn m-1 btn-sm btn-danger" type="button" onclick="askDeleteBed();"><i class="fa-solid fa-trash-can"></i></button>
               </div>
             </div>
             <div class="form-group">

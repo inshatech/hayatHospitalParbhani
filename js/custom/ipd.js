@@ -196,6 +196,77 @@ document.getElementById("addBed-btn").addEventListener("click", async(e)=>{
   }
 })
 
+const askDeleteBed = ()=>{
+  try {
+    const bed_id = document.getElementById('bedNo').value;
+    if (!bed_id == "") {
+      Swal.fire({
+        title: 'Are you sure?',
+        text: `You want to delete this bed?`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#E0A800',
+        cancelButtonColor: '#ea4c62',
+        confirmButtonText: `Yes, Add it!`
+      }).then ((result) => {
+        if (result.isConfirmed) {
+          deleteBed(bed_id);
+        }
+      })
+    }else{
+      Swal.fire({
+        title:'Error Occurred!',
+        text:"Please select bed number",
+        icon:'error',
+        confirmButtonColor: '#ea4c62',
+        confirmButtonText: 'Okay'
+      })
+    }
+    
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+const deleteBed = async(bed_id)=> {
+  try {
+    const response = await fetch(`${url}icu`, {
+      method: 'DELETE',
+      headers: {
+        Accept: "*/*",
+        Authorization: localStorage.getItem("jwtTempToken"),
+      },
+      body: JSON.stringify({
+        bed_id: bed_id,
+      }),
+    });
+    let data = await response.json();
+    if (data.status == 'ok') {
+      Swal.fire({
+        title:'Success!',
+        text: data.message,
+        icon: 'success',
+        confirmButtonColor: '#00b894',
+        confirmButtonText: 'Okay!',
+      }).then ((result) => {
+        if (result.isConfirmed) {
+          loadBeds();
+        }
+      })   
+    }else{
+      Swal.fire({
+        title:'Error Occurred!',
+        text:data.message,
+        icon:'error',
+        confirmButtonColor: '#ea4c62',
+        confirmButtonText: 'Okay'
+      })
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 const addBed = async(bed_no, bed_name) => {
   try {
     const response = await fetch(`${url}icu`, {

@@ -130,7 +130,7 @@ const getBedInfo = async(bedNo) => {
         Authorization: localStorage.getItem("jwtTempToken"),
       },
       body: JSON.stringify({
-        bedNo: bedNo,
+        bed_id: bedNo,
       }),
     });
     let data = await response.json();
