@@ -42,7 +42,7 @@ document.getElementById("sideNav").innerHTML = `
             </div>
           </li>
           <li>
-            <a href="login.html"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+            <a href="#logout" onclick="logout();"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
           </li>
         </ul>
 

@@ -61,3 +61,21 @@ window.onload = async ()=>{
         console.log(error);
     }
 };
+
+const logout = () => {
+    Swal.fire({
+        title: "Are you sure?",
+        text: `You want to logout?`,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#E0A800",
+        cancelButtonColor: "#ea4c62",
+        confirmButtonText: `Yes, Logout!`,
+    }).then((result) => {
+        if (result.isConfirmed) {
+            localStorage.clear();
+            sessionStorage.clear();
+            window.location = 'index.html';
+        }
+    });
+};

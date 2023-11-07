@@ -217,9 +217,20 @@
               <div class="feature-card mx-auto text-center home-link">
                 <a href="list-discharge.html">
                   <div class="card mx-auto bg-gray">
-                    <h3 class="fa-solid fa-clipboard-check text-warning"></h3>
+                    <h3 class="fa-solid fa-clipboard-check text-danger"></h3>
                   </div>
                   <p class="mb-0">Discharge List</p>
+                </a>
+              </div>
+            </div>
+
+            <div class="col-3">
+              <div class="feature-card mx-auto text-center home-link">
+                <a href="#logout" onclick="logout();">
+                  <div class="card mx-auto bg-gray">
+                    <h3 class="fa-solid fa-power-off text-warning"></h3>
+                  </div>
+                  <p class="mb-0">Logout</p>
                 </a>
               </div>
             </div>
@@ -256,6 +267,7 @@
   <script src="js/active.js"></script>
   <!-- PWA -->
   <script src="js/pwa.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <script src="./js/common/nav.js"></script>
   <script src="./js/custom/checkLogin.js"></script>
