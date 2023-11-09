@@ -276,7 +276,7 @@ const addBed = async(bed_no, bed_name) => {
         Authorization: localStorage.getItem("jwtTempToken"),
       },
       body: JSON.stringify({
-        bedNo: bed_no,
+        bed_id: bed_no,
         description:bed_name,
       }),
     });

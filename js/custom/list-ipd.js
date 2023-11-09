@@ -16,13 +16,14 @@ const todaysDate = ()=>{
  * @param {Object} ipd - The fitness certificate object to append to the list.
  * @returns None
  */
-const appendRecords = async(ipd) => {
-  const bedInfo = await getBedInfo(ipd.bedNo);
+const appendRecords = async(ipd, bedInfo) => {
   document.getElementById("recordsPlace").innerHTML += `
-    <div class="alert unread custom-alert-2 alert-info" role="alert">
-      <i class="mt-0">${ipd.srNo}</i>
+    <div class="alert unread custom-alert-1 alert-dark" >
+      <!-- <i class="mt-0"></i> -->
       <div class="alert-text w-75">
-        <h6 class="text-truncate">${ipd.patient_details.name}</h6>
+        <span class="text-info fw-bold text-truncate">${ipd.patient_details.name}</span>
+        <br>
+        <span class="text-danger fw-bold">Sr.No: ${ipd.srNo}</span>
         <span class="text-truncate">ADM: ${ipd.doa}</span>
         <br>
         <span>DC: ${ipd.dod == null ? '-' : ipd.dod}</span>
@@ -32,7 +33,7 @@ const appendRecords = async(ipd) => {
         </div>
       </div>
       <div class="w-25 text-end">
-        <span class="text-truncate"><span class="badge ${ipd.status == 'admitted' ? 'bg-danger':'bg-success'} rounded-pill mb-2 d-inline-block">${ipd.status == "discharge" ? "discharged":ipd.status}</span>
+        <span class="badge ${ipd.status == 'admitted' ? 'bg-danger':'bg-success'} rounded-pill mb-2 d-inline-block">${ipd.status == "discharge" ? "discharged":ipd.status}</span>
         <br>
         <span class="text-truncate">#${ipd.ipd_id}</span>
         <br>
@@ -176,12 +177,13 @@ const loadIPD = async () =>{
           </div>Processing...
         </div>
       `;
-      document.getElementById("processing").style.display = "none";
       ipd_list = {};
-      for (const ipd of ipdList) {
+      for await (const ipd of ipdList) {
         ipd_list[ipd.ipd_id] = ipd;
-        appendRecords(ipd);
+        const bedInfo = await getBedInfo(ipd.bedNo);
+        appendRecords(ipd, bedInfo);
       }
+      document.getElementById("processing").style.display = "none";
     }else if(data.message != 'Authorization failed!'){
       document.getElementById("processing").style.display = "none";
       document.getElementById("recordsPlace").innerHTML +=`
@@ -243,9 +245,6 @@ document.getElementById("date-search-btn").onclick = async () => {
   let from = document.getElementById("inputDateFrom").value;
   let to = document.getElementById("inputDateTo").value;
   if (from != "" && to != "") {
-    document.getElementById("date-search-btn").innerHTML = `<div id="spinner" class="spinner-border spinner-border-sm text-success mx-2"  role="status">
-    <span class="visually-hidden">Loading...</span>
-    </div>`;
     let response = await fetch(`${url}get-ipd`, {
       method: "POST",
       headers: {
@@ -262,13 +261,22 @@ document.getElementById("date-search-btn").onclick = async () => {
     let data = await response.json();
     let ipdList = data.data;
     document.getElementById("recordsPlace").innerHTML = "";
+      document.getElementById("recordsPlace").innerHTML = `
+        <div class="processing-div align-center" id="processing">
+          <div id="spinner" class="spinner-border spinner-border-sm text-sucess mx-2"  role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>Processing...
+        </div>
+      `;
     document.getElementById("date-search-btn").innerHTML = `<i class="fa-solid fa-magnifying-glass  "></i> Search`;
     if (data.status == "ok") {
-      for (key of Object.keys(ipdList)) {
+      for await (key of Object.keys(ipdList)) {
         let ipd = ipdList[key];
         ipd_list[ipd.ipd_id] = ipd;
-        appendRecords(ipd);
+        const bedInfo = await getBedInfo(ipd.bedNo);
+        appendRecords(ipd, bedInfo);
       }
+      document.getElementById("processing").style.display = "none";
     } else {
       Swal.fire({
         title:'Error Occurred!',
