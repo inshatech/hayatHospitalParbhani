@@ -16,7 +16,7 @@ const todaysDate = ()=>{
  * @param {Object} ipd - The fitness certificate object to append to the list.
  * @returns None
  */
-const appendRecords = async(ipd, bedInfo) => {
+const appendRecords = async(ipd) => {
   document.getElementById("recordsPlace").innerHTML += `
     <div class="alert unread custom-alert-1 alert-dark" >
       <!-- <i class="mt-0"></i> -->
@@ -39,7 +39,7 @@ const appendRecords = async(ipd, bedInfo) => {
         <br>
         <span class="text-truncate">${ipd.patient_details.age}/${ipd.patient_details.sex}</span>
         <br>
-        <span>${bedInfo[0].description}</span>
+        <span>${ipd.bedDetails.description}</span>
       </div>
     </div>
   `;
@@ -122,25 +122,6 @@ const discharge = async(ipd_id, dod) => {
   }
 }
 
-const getBedInfo = async(bedNo) => {
-  try {
-    let response = await fetch(`${url}get-icu`, {
-      method: "POST",
-      headers: {
-        Accept: "*/*",
-        Authorization: localStorage.getItem("jwtTempToken"),
-      },
-      body: JSON.stringify({
-        bed_id: bedNo,
-      }),
-    });
-    let data = await response.json();
-    return data.data;
-  } catch (error) {
-    console.log(error);
-  }
-}
-
 /**
  * Sets an onload event listener on the body element of the document. When the body is loaded,
  * sends a POST request to the server to retrieve fitness data for the current date. If the request
@@ -180,8 +161,7 @@ const loadIPD = async () =>{
       ipd_list = {};
       for await (const ipd of ipdList) {
         ipd_list[ipd.ipd_id] = ipd;
-        const bedInfo = await getBedInfo(ipd.bedNo);
-        appendRecords(ipd, bedInfo);
+        appendRecords(ipd);
       }
       document.getElementById("processing").style.display = "none";
     }else if(data.message != 'Authorization failed!'){
@@ -273,8 +253,7 @@ document.getElementById("date-search-btn").onclick = async () => {
       for await (key of Object.keys(ipdList)) {
         let ipd = ipdList[key];
         ipd_list[ipd.ipd_id] = ipd;
-        const bedInfo = await getBedInfo(ipd.bedNo);
-        appendRecords(ipd, bedInfo);
+        appendRecords(ipd);
       }
       document.getElementById("processing").style.display = "none";
     } else {
