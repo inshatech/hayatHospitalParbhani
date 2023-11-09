@@ -225,6 +225,9 @@ document.getElementById("date-search-btn").onclick = async () => {
   let from = document.getElementById("inputDateFrom").value;
   let to = document.getElementById("inputDateTo").value;
   if (from != "" && to != "") {
+    document.getElementById("date-search-btn").innerHTML = `<div id="spinner" class="spinner-border spinner-border-sm text-success mx-2"  role="status">
+    <span class="visually-hidden">Loading...</span>
+    </div>`;
     let response = await fetch(`${url}get-ipd`, {
       method: "POST",
       headers: {
@@ -241,13 +244,6 @@ document.getElementById("date-search-btn").onclick = async () => {
     let data = await response.json();
     let ipdList = data.data;
     document.getElementById("recordsPlace").innerHTML = "";
-      document.getElementById("recordsPlace").innerHTML = `
-        <div class="processing-div align-center" id="processing">
-          <div id="spinner" class="spinner-border spinner-border-sm text-sucess mx-2"  role="status">
-            <span class="visually-hidden">Loading...</span>
-          </div>Processing...
-        </div>
-      `;
     document.getElementById("date-search-btn").innerHTML = `<i class="fa-solid fa-magnifying-glass  "></i> Search`;
     if (data.status == "ok") {
       for await (key of Object.keys(ipdList)) {
