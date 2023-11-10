@@ -18,7 +18,7 @@ const todaysDate = ()=>{
  */
 const appendRecords = async(ipd) => {
   document.getElementById("recordsPlace").innerHTML += `
-    <div class="alert unread custom-alert-1 alert-dark" >
+    <div class="alert unread custom-alert-1 alert-dark bg-white" >
       <!-- <i class="mt-0"></i> -->
       <div class="alert-text w-100">
         <div class="card-ipd-head">
