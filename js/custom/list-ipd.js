@@ -165,6 +165,7 @@ const loadIPD = async () =>{
         appendRecords(ipd);
       }
       document.getElementById("processing").style.display = "none";
+      document.getElementById("totalIPDs").innerText = ` ${data.count}`;
     }else if(data.message != 'Authorization failed!'){
       document.getElementById("processing").style.display = "none";
       document.getElementById("recordsPlace").innerHTML +=`

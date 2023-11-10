@@ -48,6 +48,10 @@
     .ipd-body-right{
       margin-top: 20px;
     }
+    .inline{
+      display: flex;
+      justify-content: space-between;
+    }
   </style>
   
 </head>
@@ -104,8 +108,9 @@
     </div>
     <!-- Heading -->
     <div class="container">
-      <div class="element-heading mt-3">
+      <div class="element-heading mt-3 inline">
         <h6>Available IPDs</h6>
+        <i class="fa-solid fa-bed-pulse text-info fw-bold" id="totalIPDs"></i>
       </div>
     </div>
     <div class="container">
