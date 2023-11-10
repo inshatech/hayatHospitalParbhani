@@ -3,7 +3,7 @@ let discharge_list = {};
  * Returns today's date in the format of "YYYY-MM-DD".
  * @returns {string} - today's date in the format of "YYYY-MM-DD".
  */
-const todaysDate = ()=>{
+const todaysDate = () => {
   let date = new Date();
   let month = date.getMonth() + 1
   let day = date.getDate();
@@ -16,28 +16,34 @@ const todaysDate = ()=>{
  * @param {Object} dischargeCertificate - The fitness certificate object to append to the list.
  * @returns None
  */
-function appendRecords(dischargeCertificate){
+function appendRecords(dischargeCertificate) {
   document.getElementById("recordsPlace").innerHTML += `
-    <li class="list-group-item d-flex align-items-center justify-content-between">
-      <div>
-        ${dischargeCertificate.srNo} - ${dischargeCertificate.name} 
-        <span class="otherDetails">${dischargeCertificate.age}/${dischargeCertificate.sex}</span>
-        <span class="otherDetails">${dischargeCertificate.bedNo}</span>
-        <div class="otherDetails">${dischargeCertificate.dateTimeStamp} ${dischargeCertificate.timeAgo}</div>
-      </div>
-      <div>
-        <a href="./add-discharge.html?certId=${dischargeCertificate.cert_id}">
-          <span class="btn m-1 btn-info">
-          <i class="fa-solid fa-pen-to-square"></i>
-          </span>
-        </a>
-        <a href="./templates/discharge-certificate.html?certId=${dischargeCertificate.cert_id}">
-          <span class="btn m-1 btn-dark">
-            <i class="fa-solid fa-print"></i>
-          </span>
-        </a>
-      </div>
-    </li>
+    <div class="alert unread custom-alert-1 alert-dark bg-white" >
+      <!-- <i class="mt-0"></i> -->
+      <div class="alert-text w-100">
+        <div class="card-ipd-head">
+          <div class="text-danger fw-bold">${dischargeCertificate.srNo}</div>
+          <div class="text-black">#${dischargeCertificate.cert_id}</div>
+          <div class="text-danger fw-bold">${dischargeCertificate.bedNo}</div>
+        </div>
+        <div class="ipd-body">
+          <div class="ipd-body-left">
+            <span class="text-info fw-bold text-truncate">${dischargeCertificate.name}</span>
+            <span class="text-truncate">A: ${dischargeCertificate.doa}</span>
+            <span>D: ${dischargeCertificate.dod == null ? '-' : dischargeCertificate.dod}</span>
+            <span>T: ${dischargeCertificate.dateTimeStamp} (${dischargeCertificate.timeAgo})</span>
+          </div>
+          <div class="ipd-body-right">
+            <span class="text-truncate text-info fw-bold">${dischargeCertificate.age}/${dischargeCertificate.sex == 'Female' ? "F" : "M"}</span>
+            <!-- <span class="text-truncate fw-bold text-black-50">${dischargeCertificate.mobile}</span> -->
+          </div>
+        </div>
+        <div>
+          <a class="btn m-1 btn-info" href="./add-discharge.html?certId=${dischargeCertificate.cert_id}"><i class="fa-solid fa-pen-to-square"></i> Update</a>
+          <a class="btn m-1 btn-success" href="./templates/discharge-certificate.html?certId=${dischargeCertificate.cert_id}"><i class="fa-solid fa-print"></i> Print</a>
+        </div>
+      </div
+    </div>
   `;
 }
 
@@ -70,15 +76,16 @@ document.getElementsByTagName("body")[0].onload = async () => {
         discharge_list[dischargeCertificate.cert_id] = dischargeCertificate;
         appendRecords(dischargeCertificate);
       }
-    }else if(data.message != 'Authorization failed!'){
+      document.getElementById("totalCounts").innerText = ` ${data.count}`;
+    } else if (data.message != 'Authorization failed!') {
       document.getElementById("processing").style.display = "none";
-      document.getElementById("recordsPlace").innerHTML +=`
+      document.getElementById("recordsPlace").innerHTML += `
         <div class='noRecords'>
           <img src="./img/bg-img/box.png" alt="image">
           <p>No records found!</p>
         </div>
       `;
-    }else{
+    } else {
       window.location = './login.html';
     }
   } catch (error) {
@@ -157,11 +164,12 @@ document.getElementById("date-search-btn").onclick = async () => {
         discharge_list[dischargeCertificate.cert_id] = dischargeCertificate;
         appendRecords(dischargeCertificate);
       }
+      document.getElementById("totalCounts").innerText = ` ${data.count}`;
     } else {
       Swal.fire({
-        title:'Error Occurred!',
-        text:data.message,
-        icon:'error',
+        title: 'Error Occurred!',
+        text: data.message,
+        icon: 'error',
         confirmButtonColor: '#ea4c62',
         confirmButtonText: 'Okay'
       })

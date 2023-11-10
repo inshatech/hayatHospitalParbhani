@@ -18,26 +18,32 @@ const todaysDate = ()=>{
  */
 function appendRecords(fitnessCertificate){
   document.getElementById("recordsPlace").innerHTML += `
-    <li class="list-group-item d-flex align-items-center justify-content-between">
-      <div>
-        ${fitnessCertificate.fitness_id} - ${fitnessCertificate.name} 
-        <span class="otherDetails">${fitnessCertificate.age}/${fitnessCertificate.sex}</span>
-        <span class="otherDetails">${fitnessCertificate.mobile}</span>
-        <div class="otherDetails">${fitnessCertificate.dateTimeStamp} ${fitnessCertificate.referer}</div>
-      </div>
-      <div>
-        <a href="./add-fitness.html?fitnessId=${fitnessCertificate.fitness_id}">
-          <span class="btn m-1 btn-info">
-          <i class="fa-solid fa-pen-to-square"></i>
-          </span>
-        </a>
-        <a href="./templates/fitness.html?fitnessId=${fitnessCertificate.fitness_id}">
-          <span class="btn m-1 btn-dark">
-            <i class="fa-solid fa-print"></i>
-          </span>
-        </a>
-      </div>
-    </li>
+    <div class="alert unread custom-alert-1 alert-dark bg-white" >
+      <!-- <i class="mt-0"></i> -->
+      <div class="alert-text w-100">
+        <div class="card-ipd-head">
+          <div class="text-black">#${fitnessCertificate.fitness_id}</div>
+          <div class="text-danger fw-bold">${fitnessCertificate.mobile}</div>
+          <span class="text-truncate text-info fw-bold">${fitnessCertificate.age}/${fitnessCertificate.sex == 'Female' ? "F" : "M"}</span>
+        </div>
+        <div class="ipd-body">
+          <div class="ipd-body-left">
+            <span class="text-info fw-bold text-truncate">${fitnessCertificate.name}</span>
+            <span class="text-truncate">R: ${fitnessCertificate.referer == null ? '-' : fitnessCertificate.referer}</span>
+            <span class="text-truncate">P: ${fitnessCertificate.postedFor}</span>
+            <span class="text-truncate">T: ${fitnessCertificate.dateTimeStamp}</span>
+          </div>
+          <div class="ipd-body-right">
+          <!-- <span class="text-truncate text-info fw-bold">${fitnessCertificate.age}/${fitnessCertificate.sex == 'Female' ? "F" : "M"}</span>
+            <span class="text-truncate fw-bold text-black-50">${fitnessCertificate.mobile}</span> -->
+          </div>
+        </div>
+        <div>
+          <a class="btn m-1 btn-info" href="./add-fitness.html?fitnessId=${fitnessCertificate.fitness_id}"><i class="fa-solid fa-pen-to-square"></i> Update</a>
+          <a class="btn m-1 btn-success" href="./templates/fitness.html?fitnessId=${fitnessCertificate.fitness_id}"><i class="fa-solid fa-print"></i> Print</a>
+        </div>
+      </div
+    </div>
   `;
 }
 

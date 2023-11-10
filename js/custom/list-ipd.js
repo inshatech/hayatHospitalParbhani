@@ -3,7 +3,7 @@ let ipd_list = {};
  * Returns today's date in the format of "YYYY-MM-DD".
  * @returns {string} - today's date in the format of "YYYY-MM-DD".
  */
-const todaysDate = ()=>{
+const todaysDate = () => {
   let date = new Date();
   let month = date.getMonth() + 1
   let day = date.getDate();
@@ -16,7 +16,7 @@ const todaysDate = ()=>{
  * @param {Object} ipd - The fitness certificate object to append to the list.
  * @returns None
  */
-const appendRecords = async(ipd) => {
+const appendRecords = async (ipd) => {
   document.getElementById("recordsPlace").innerHTML += `
     <div class="alert unread custom-alert-1 alert-dark bg-white" >
       <!-- <i class="mt-0"></i> -->
@@ -25,7 +25,7 @@ const appendRecords = async(ipd) => {
           <div class="text-danger fw-bold">${ipd.srNo}</div>
           <div class="text-black">#${ipd.ipd_id}</div>
           <div class="text-danger fw-bold">${ipd.bedDetails.description}</div>
-          <div class="badge ${ipd.status == 'admitted' ? 'bg-success':'bg-danger'} rounded-pill mb-2 d-inline-block">${ipd.status == "discharge" ? "":""}</div>
+          <div class="badge ${ipd.status == 'admitted' ? 'bg-success' : 'bg-danger'} rounded-pill mb-2 d-inline-block">${ipd.status == "discharge" ? "" : ""}</div>
         </div>
         <div class="ipd-body">
           <div class="ipd-body-left">
@@ -34,33 +34,34 @@ const appendRecords = async(ipd) => {
             <span>D: ${ipd.dod == null ? '-' : ipd.dod}</span>
           </div>
           <div class="ipd-body-right">
-            <span class="text-truncate text-info fw-bold">${ipd.patient_details.age}/${ipd.patient_details.sex == 'Female'? "F":"M"}</span>
+            <span class="text-truncate text-info fw-bold">${ipd.patient_details.age}/${ipd.patient_details.sex == 'Female' ? "F" : "M"}</span>
+            <span class="text-truncate fw-bold text-black-50">${ipd.patient_details.mobile}</span>
           </div>
         </div>
         <div>
           <!-- <a class="btn m-1 btn-sm btn-info" href="./add-ipd.html?ipdID=${ipd.ipd_id}">Edit</a> -->
-          <button class="btn m-1 btn-sm btn-success"${ipd.status == "discharge" ? "hidden":""} id="${ipd.ipd_id}" onclick="dischargePopUp(${"id"}, ${"name"});" name="${ipd.patient_details.name}">Discharge</button>
+          <button class="btn m-1 btn-sm btn-success"${ipd.status == "discharge" ? "hidden" : ""} id="${ipd.ipd_id}" onclick="dischargePopUp(${"id"}, ${"name"});" name="${ipd.patient_details.name}">Discharge</button>
         </div>
       </div
     </div>
   `;
 }
 
-const dischargePopUp = (ipd_id, name)=>{
+const dischargePopUp = (ipd_id, name) => {
   document.getElementById("ipd_id").value = ipd_id;
   document.getElementById("name").value = name;
   $('#dischargeModel').modal('show');
 }
 
-document.getElementById("discharge-btn").addEventListener("click", async(e)=>{
+document.getElementById("discharge-btn").addEventListener("click", async (e) => {
   try {
     if (window.navigator.onLine) {
       let valid = document.forms["form"].checkValidity();
       if (valid) {
         e.preventDefault();
-        let ipd_id  = document.getElementById("ipd_id").value;
-        let name    = document.getElementById("name").value;
-        let dod     = document.getElementById("dod").value;
+        let ipd_id = document.getElementById("ipd_id").value;
+        let name = document.getElementById("name").value;
+        let dod = document.getElementById("dod").value;
 
         Swal.fire({
           title: 'Are you sure?',
@@ -70,7 +71,7 @@ document.getElementById("discharge-btn").addEventListener("click", async(e)=>{
           confirmButtonColor: '#E0A800',
           cancelButtonColor: '#ea4c62',
           confirmButtonText: `Yes, Discharge it!`
-        }).then ((result) => {
+        }).then((result) => {
           if (result.isConfirmed) {
             discharge(ipd_id, dod);
           }
@@ -82,7 +83,7 @@ document.getElementById("discharge-btn").addEventListener("click", async(e)=>{
   }
 })
 
-const discharge = async(ipd_id, dod) => {
+const discharge = async (ipd_id, dod) => {
   try {
     const response = await fetch(`${url}ipd`, {
       method: 'PATCH',
@@ -92,28 +93,28 @@ const discharge = async(ipd_id, dod) => {
       },
       body: JSON.stringify({
         ipd_id: ipd_id,
-        dod:dod,
+        dod: dod,
       }),
     });
     let data = await response.json();
     if (data.status == 'ok') {
       Swal.fire({
-        title:'Success!',
+        title: 'Success!',
         text: data.message,
         icon: 'success',
         confirmButtonColor: '#00b894',
         confirmButtonText: 'Okay!',
-      }).then ((result) => {
+      }).then((result) => {
         if (result.isConfirmed) {
           loadIPD();
           $('#dischargeModel').modal('hide');
         }
-      })   
-    }else{
+      })
+    } else {
       Swal.fire({
-        title:'Error Occurred!',
-        text:data.message,
-        icon:'error',
+        title: 'Error Occurred!',
+        text: data.message,
+        icon: 'error',
         confirmButtonColor: '#ea4c62',
         confirmButtonText: 'Okay'
       })
@@ -135,7 +136,7 @@ document.getElementsByTagName("body")[0].onload = async () => {
   loadIPD();
 }
 
-const loadIPD = async () =>{
+const loadIPD = async () => {
   try {
     let response = await fetch(`${url}get-ipd`, {
       method: "POST",
@@ -165,16 +166,16 @@ const loadIPD = async () =>{
         appendRecords(ipd);
       }
       document.getElementById("processing").style.display = "none";
-      document.getElementById("totalIPDs").innerText = ` ${data.count}`;
-    }else if(data.message != 'Authorization failed!'){
+      document.getElementById("totalCounts").innerText = ` ${data.count}`;
+    } else if (data.message != 'Authorization failed!') {
       document.getElementById("processing").style.display = "none";
-      document.getElementById("recordsPlace").innerHTML +=`
+      document.getElementById("recordsPlace").innerHTML += `
         <div class='noRecords'>
           <img src="./img/bg-img/box.png" alt="image">
           <p>No records found!</p>
         </div>
       `;
-    }else{
+    } else {
       window.location = './login.html';
     }
   } catch (error) {
@@ -198,7 +199,7 @@ document.getElementById("search-box").onkeyup = () => {
         String(ipd_list[key]['patient_details'].sex).toLowerCase().search(query) != -1 ||
         String(ipd_list[key]['patient_details'].city).toLowerCase().search(query) != -1 ||
         String(ipd_list[key].date).search(query) != -1 ||
-        String(ipd_list[key].bedNo).toLowerCase().search(query) != -1 
+        String(ipd_list[key].bedNo).toLowerCase().search(query) != -1
       ) {
         searched.push(ipd_list[key]);
       }
@@ -262,11 +263,12 @@ document.getElementById("date-search-btn").onclick = async () => {
         appendRecords(ipd);
       }
       document.getElementById("processing").style.display = "none";
+      document.getElementById("totalCounts").innerText = ` ${data.count}`;
     } else {
       Swal.fire({
-        title:'Error Occurred!',
-        text:data.message,
-        icon:'error',
+        title: 'Error Occurred!',
+        text: data.message,
+        icon: 'error',
         confirmButtonColor: '#ea4c62',
         confirmButtonText: 'Okay'
       })

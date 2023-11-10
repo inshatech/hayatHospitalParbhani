@@ -1,19 +1,19 @@
-.i{
+.i {
     font-size: 1.2rem;
     color: rgba(82, 82, 243, 0.911);
 }
 
-.d-none{
+.d-none {
     display: none;
 }
 
-.center{
+.center {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.sub-card-body{
+.sub-card-body {
     display: flex;
     justify-content: space-between;
     width: 100%;
@@ -21,25 +21,25 @@
     font-size: 0.8rem;
 }
 
-.card-column div{
+.card-column div {
     display: flex;
     flex-direction: column;
     margin: 0.5rem 0;
 }
 
-.card-body{
+.card-body {
     background-color: white;
     margin: 0.3rem 0;
     /* border: 1px solid; */
 }
 
-.h6-name-tag{
+.h6-name-tag {
     /* background: blue; */
     padding: 0.5rem;
     border-radius: 0.5rem;
 }
 
-.name-div{
+.name-div {
     display: flex;
     color: black;
     align-items: center;
@@ -47,53 +47,54 @@
     border-bottom: 3px solid rgba(0, 0, 255, 0.353);
 }
 
-.name-div label{
+.name-div label {
     font-size: 0.8rem;
 }
 
-.opd-card-label{
+.opd-card-label {
     color: black;
 }
 
-.opd-header-div{
+.opd-header-div {
     display: flex;
     justify-content: space-between;
 }
 
-#opd-parent-div{
+#opd-parent-div {
     background-color: transparent;
 }
-.processing-div{
+
+.processing-div {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.services-subdiv{
+.services-subdiv {
     display: flex;
     flex-direction: column;
     height: fit-content;
     margin-bottom: 1rem;
 }
 
-.services-div{
+.services-div {
     display: flex;
     flex-direction: column;
 }
 
-.services-header{
+.services-header {
     display: flex;
     justify-content: space-between;
     width: 100%;
 }
 
-.service-select-div{
+.service-select-div {
     margin: 0 0 1rem 0;
     border-bottom: 4px solid #cff2ff;
     border-radius: 0.4rem;
 }
 
-.delete-footer-div{
+.delete-footer-div {
     display: flex;
     position: fixed;
     padding: 0.5rem 1rem;
@@ -106,33 +107,35 @@
     align-self: center;
 }
 
-.delete-all-opds-btn{
+.delete-all-opds-btn {
     position: sticky;
     bottom: 1rem;
     z-index: 8;
 }
 
-#delete-all-opds-btn{
+#delete-all-opds-btn {
     background-color: #ea4c62;
     color: white;
     bottom: 8.5rem;
 }
 
-.main-opd-container{
+.main-opd-container {
     display: flex;
     flex-direction: column;
 }
 
-.date-search-div{
+.date-search-div {
     width: 100%;
     padding: 0.5rem;
     display: flex;
     justify-content: space-between;
 
 }
+
 .date-search-div input {
     margin: 0 1rem;
 }
+
 .date-search-div a {
     margin: 0 1rem;
     background-color: transparent;
@@ -142,25 +145,57 @@
     margin: 0;
     border: none;
 }
+
 .date-search-div i {
     color: blue;
 }
 
-.profile-edit-btn-div{
+.profile-edit-btn-div {
     display: flex;
 }
-.profile-edit-btn-div button{
+
+.profile-edit-btn-div button {
     margin: 0 1rem;
 }
 
-.services-subdiv th,td,tr{
+.services-subdiv th,
+td,
+tr {
     margin: 1rem;
     padding: 0.5rem 1rem;
 }
-.noRecords{
+
+.noRecords {
     display: block;
     margin-top: 150px !important;
     margin-left: auto;
     margin-right: auto;
     width: 40%;
+}
+
+.card-ipd-head {
+    display: flex;
+    justify-content: space-between;
+}
+
+.ipd-body {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.ipd-body-left {
+    display: flex;
+    flex-direction: column;
+}
+
+.ipd-body-right {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.inline {
+    display: flex;
+    justify-content: space-between;
 }
