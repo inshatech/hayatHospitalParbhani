@@ -76,6 +76,7 @@ document.getElementsByTagName("body")[0].onload = async () => {
         fitness_list[fitnessCertificate.fitness_id] = fitnessCertificate;
         appendRecords(fitnessCertificate);
       }
+      document.getElementById("totalCounts").innerText = ` ${data.count}`;
     }else if(data.message != 'Authorization failed!'){
       document.getElementById("processing").style.display = "none";
       document.getElementById("recordsPlace").innerHTML +=`
@@ -163,6 +164,7 @@ document.getElementById("date-search-btn").onclick = async () => {
         fitness_list[fitnessCertificate.fitness_id] = fitnessCertificate;
         appendRecords(fitnessCertificate);
       }
+      document.getElementById("totalCounts").innerText = ` ${data.count}`;
     } else {
       Swal.fire({
         title:'Error Occurred!',

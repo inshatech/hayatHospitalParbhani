@@ -1,7 +1,7 @@
-let pathName  = window.location.pathname.replace('/','');
+let pathName = window.location.pathname.replace('/', '');
 let headerArea;
 if (pathName == 'settings.html' || pathName == 'opd.html' || pathName == 'add-fitness.html' || pathName == 'list-fitness.html' || pathName == 'add-ipd.html' || pathName == 'list-ipds.html' || pathName == 'add-discharge.html' || pathName == 'list-discharge.html') {
-  let path  = pathName.replace('.html', '');
+  let path = pathName.replace('.html', '');
   let title = path.toUpperCase()
   headerArea = `
     <!-- Dark mode switching -->
@@ -44,7 +44,7 @@ if (pathName == 'settings.html' || pathName == 'opd.html' || pathName == 'add-fi
       </div>
     </div>
   `;
-}else{
+} else {
   headerArea = `
   <div class="container">
     <!-- Header Content -->
@@ -52,7 +52,7 @@ if (pathName == 'settings.html' || pathName == 'opd.html' || pathName == 'add-fi
 
       <!-- Logo Wrapper -->
       <div class="logo-wrapper">
-        <a href="home.html">
+        <a href="index.html">
           <img src="img/logo/logo.png" alt="">
         </a>
       </div>
