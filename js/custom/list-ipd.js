@@ -20,27 +20,28 @@ const appendRecords = async(ipd) => {
   document.getElementById("recordsPlace").innerHTML += `
     <div class="alert unread custom-alert-1 alert-dark" >
       <!-- <i class="mt-0"></i> -->
-      <div class="alert-text w-75">
-        <span class="text-info fw-bold text-truncate">${ipd.patient_details.name}</span>
-        <br>
-        <span class="text-danger fw-bold">Sr.No: ${ipd.srNo}</span>
-        <span class="text-truncate">ADM: ${ipd.doa}</span>
-        <br>
-        <span>DC: ${ipd.dod == null ? '-' : ipd.dod}</span>
+      <div class="alert-text w-100">
+        <div class="card-ipd-head">
+          <div class="text-danger fw-bold">${ipd.srNo}</div>
+          <div class="text-black">#${ipd.ipd_id}</div>
+          <div class="text-danger fw-bold">${ipd.bedDetails.description}</div>
+          <div class="badge ${ipd.status == 'admitted' ? 'bg-success':'bg-danger'} rounded-pill mb-2 d-inline-block">${ipd.status == "discharge" ? "":""}</div>
+        </div>
+        <div class="ipd-body">
+          <div class="ipd-body-left">
+            <span class="text-info fw-bold text-truncate">${ipd.patient_details.name}</span>
+            <span class="text-truncate">A: ${ipd.doa}</span>
+            <span>D: ${ipd.dod == null ? '-' : ipd.dod}</span>
+          </div>
+          <div class="ipd-body-right">
+            <span class="text-truncate text-info fw-bold">${ipd.patient_details.age}/${ipd.patient_details.sex == 'Female'? "F":"M"}</span>
+          </div>
+        </div>
         <div>
           <!-- <a class="btn m-1 btn-sm btn-info" href="./add-ipd.html?ipdID=${ipd.ipd_id}">Edit</a> -->
           <button class="btn m-1 btn-sm btn-success"${ipd.status == "discharge" ? "hidden":""} id="${ipd.ipd_id}" onclick="dischargePopUp(${"id"}, ${"name"});" name="${ipd.patient_details.name}">Discharge</button>
         </div>
-      </div>
-      <div class="w-25 text-end">
-        <span class="badge ${ipd.status == 'admitted' ? 'bg-danger':'bg-success'} rounded-pill mb-2 d-inline-block">${ipd.status == "discharge" ? "discharged":ipd.status}</span>
-        <br>
-        <span class="text-truncate">#${ipd.ipd_id}</span>
-        <br>
-        <span class="text-truncate">${ipd.patient_details.age}/${ipd.patient_details.sex}</span>
-        <br>
-        <span>${ipd.bedDetails.description}</span>
-      </div>
+      </div
     </div>
   `;
 }
@@ -222,6 +223,14 @@ document.getElementById("search-box").onkeyup = () => {
  * @returns None
  */
 document.getElementById("date-search-btn").onclick = async () => {
+  document.getElementById("recordsPlace").innerHTML = "";
+  document.getElementById("recordsPlace").innerHTML = `
+    <div class="processing-div align-center" id="processing">
+      <div id="spinner" class="spinner-border spinner-border-sm text-sucess mx-2"  role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>Processing...
+    </div>
+  `;
   let from = document.getElementById("inputDateFrom").value;
   let to = document.getElementById("inputDateTo").value;
   if (from != "" && to != "") {
@@ -243,9 +252,9 @@ document.getElementById("date-search-btn").onclick = async () => {
 
     let data = await response.json();
     let ipdList = data.data;
-    document.getElementById("recordsPlace").innerHTML = "";
     document.getElementById("date-search-btn").innerHTML = `<i class="fa-solid fa-magnifying-glass  "></i> Search`;
     if (data.status == "ok") {
+      ipd_list = {};
       for await (key of Object.keys(ipdList)) {
         let ipd = ipdList[key];
         ipd_list[ipd.ipd_id] = ipd;
