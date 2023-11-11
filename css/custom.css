@@ -194,6 +194,10 @@ tr {
     display: flex;
     flex-direction: column;
 }
+.ipd-buttons{
+    display: flex;
+    justify-content: space-between;
+}
 
 .inline {
     display: flex;

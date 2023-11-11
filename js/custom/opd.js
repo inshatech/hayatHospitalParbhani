@@ -12,57 +12,33 @@ let updateOpdId;
 function appendOpd(opd) {
   let opdServices = JSON.parse(opd.services);
   let totalAmount = 0;
-  for (key of Object.keys(opdServices)){
+  for (key of Object.keys(opdServices)) {
     totalAmount = totalAmount + parseInt(opdServices[key])
   }
   document.getElementById("opd-parent-div").innerHTML += `
-    <div id='opd-div${opd.opd_id}' class="card-body direction-rtl">
-      <div id='opd-header-div${opd.opd_id}' class='opd-header-div'>
-      Sr.No: ${opd.srNo}
-      <div class="form-check">
-        <input onclick="CheckBox(${opd.opd_id})" class="form-check-input form-check-danger" id="checkbox${opd.opd_id}" type="checkbox" value="${opd.opd_id}" aria-label="Checkbox for following text input" disabled>
-        <label class="form-check-label" for="checkbox${opd.opd_id}">Delete</label>
-      </div>
-      #${opd.opd_id}
-      </div>
-      <div class='name-div'>
-        <h6 class='h6-name-tag' >${opd["patient_details"].name}</h6>
-        <label for="">Age : ${opd["patient_details"].age}</label>
-        <label for="">Sex : ${opd["patient_details"].sex}</label>
-      </div>
-      <div class="sub-card-body">
-        <div class="card-column">
-          <div>
-            <label for="">City</label>
-            <label class='opd-card-label' for="">${opd["patient_details"].city}</label>
+    <div class="alert unread custom-alert-1 alert-dark bg-white" >
+      <!-- <i class="mt-0"></i> -->
+      <div class="alert-text w-100">
+        <div class="card-ipd-head">
+          <div class="text-black fw-bold">${opd.srNo}</div>
+          <div class="text-danger fw-bold">#${opd.opd_id}</div>
+          <span class="text-truncate text-info fw-bold">${opd.patient_details.age}/${opd.patient_details.sex == 'Female' ? "F" : "M"}</span>
+        </div>
+        <div class="ipd-body">
+          <div class="ipd-body-left">
+            <span class="text-info fw-bold text-truncate">${opd.patient_details.name}</span>
+            <span class="text-truncate">A: ${opd.patient_details.address == null ? '-' : opd.patient_details.address}</span>
+            <span class="text-truncate">T: ${opd.dateTimeStamp}</span>
           </div>
-          <div>
-            <label for="">Address</label>
-            <label class='opd-card-label' for="">${opd["patient_details"].address}</label>
+          <div class="ipd-body-right">
+            <span class="text-truncate fw-bolder text-dark">Rs: ${totalAmount}/-</span>
           </div>
         </div>
-        <div class="card-column">
-          <div>
-            <label for="">Date</label>
-            <label class='opd-card-label' for="">${opd.date}</label>
-          </div>
-          <div>
-            <label for="">Fees</label>
-            <label class='opd-card-label' for="">${totalAmount}/-</label>
-          </div>
+        <div class="ipd-buttons">
+          <button onclick='viewDetails(${opd.opd_id})' id='viewDetailsBtn' type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#addOPD"><i class="fa-regular fa-eye"></i> View OPD</button>
+          <a onclick='printOpd(${opd.opd_id})' class="btn btn-success"><i class="fa-solid fa-print"></i> Print OPD</a>
         </div>
-        <div class="card-column">
-          <div>
-            <label for="">Mobile</label>
-            <label class='opd-card-label' for="">${opd["patient_details"].mobile}</label>
-          </div>
-        </div>
-      </div>
-      <div class="sub-card-body">
-        <button onclick='viewDetails(${opd.opd_id})' id='viewDetailsBtn' type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#addOPD"><i class="fa-regular fa-eye"></i> View OPD</button>
-        <!-- <a onclick='deleteOpd(${opd.opd_id})' class="btn btn-danger">Delete</a> -->
-        <a onclick='printOpd(${opd.opd_id})' class="btn btn-success"><i class="fa-solid fa-print"></i> Print OPD</a>
-      </div>
+      </div
     </div>
   `;
 }
@@ -76,18 +52,18 @@ const printOpd = (opd_id) => {
     confirmButtonColor: '#00b894',
     cancelButtonColor: '#ea4c62',
     confirmButtonText: 'Okay Print!'
-  }).then ((result) => {
+  }).then((result) => {
     if (result.isConfirmed) {
       location.assign(`./templates/opd-receipt.html?opdId=${opd_id}`);
     }
-  }) 
+  })
 }
 
 /**
  * Returns today's date in the format of "YYYY-MM-DD".
  * @returns {string} - today's date in the format of "YYYY-MM-DD".
  */
-const todaysDate = ()=>{
+const todaysDate = () => {
   let date = new Date();
   let month = date.getMonth() + 1
   let day = date.getDate();
@@ -113,10 +89,10 @@ document.getElementsByTagName("body")[0].onload = () => {
  * The total amount is then set as the value of an input field with id "total-amount".
  * @returns None
  */
-const servicesCalculation = ()=>{
+const servicesCalculation = () => {
   let table = document.getElementById("serviceTable");
   let sumVal = 0;
-  for(var i = 2; i < table.rows.length; i++){
+  for (var i = 2; i < table.rows.length; i++) {
     sumVal = sumVal + parseInt(table.rows[i].cells[1].innerHTML);
   }
   document.getElementById("total-amount").value = sumVal;
@@ -126,10 +102,10 @@ const servicesCalculation = ()=>{
  * Adds a new service to the service table with the given service and amount.
  * @returns None
  */
-function addService(){
+function addService() {
   let service = document.getElementsByName('service')[0].value;
   let amount = document.getElementsByName('amount')[0].value;
-  if (service != '' && amount != ''){
+  if (service != '' && amount != '') {
     const services = document.getElementById("serviceTable");
     let row = services.insertRow(-1);
     let c1 = row.insertCell(0);
@@ -142,22 +118,22 @@ function addService(){
   }
 }
 
-document.getElementsByName('service')[0].addEventListener("change", ()=>{
+document.getElementsByName('service')[0].addEventListener("change", () => {
   let service = document.getElementsByName('service')[0].value;
   let amount
   if (service == 'OPD') {
     amount = 200
-  }else if (service == 'ECG') {
+  } else if (service == 'ECG') {
     amount = 300
-  }else if (service == 'SUGAR') {
+  } else if (service == 'SUGAR') {
     amount = 50
-  }else if (service == 'FOLLOW UP') {
+  } else if (service == 'FOLLOW UP') {
     amount = 100
-  }else if (service == 'FITNESS RAHAT') {
+  } else if (service == 'FITNESS RAHAT') {
     amount = 500
-  }else if (service == 'FITNESS SPT') {
+  } else if (service == 'FITNESS SPT') {
     amount = 500
-  }else if (service == 'OTHERS') {
+  } else if (service == 'OTHERS') {
     amount = '';
   }
   document.getElementsByName('amount')[0].value = amount;
@@ -169,7 +145,7 @@ document.getElementsByName('service')[0].addEventListener("change", ()=>{
  * the services.
  * @returns None
  */
-function removeService(){
+function removeService() {
   document.activeElement.parentElement.parentElement.remove();
   servicesCalculation();
 }
@@ -196,7 +172,7 @@ document.getElementById("add-sticky-btn").onclick = () => {
   document.getElementsByName("address")[0].disabled = false;
   document.getElementsByName("mobile")[0].disabled = false;
   let currentDate = new Date();
-  document.getElementById("date").value = `${currentDate.getFullYear()}-${String(currentDate.getMonth()+1).padStart(2,"0")}-${String(currentDate.getDate()).padStart(2,"0")}`;
+  document.getElementById("date").value = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, "0")}-${String(currentDate.getDate()).padStart(2, "0")}`;
 }
 /**
  * Attaches an event listener to the "add-btn" element that triggers when the button is clicked.
@@ -220,7 +196,7 @@ document.getElementById("add-btn").onclick = async (e) => {
         let sex = document.getElementsByName("sex")[0].value;
         let services = {};
         let table = document.getElementById("serviceTable");
-        for(var i = 2; i < table.rows.length; i++){
+        for (var i = 2; i < table.rows.length; i++) {
           services[table.rows[i].cells[0].innerHTML] = table.rows[i].cells[1].innerHTML;
         }
         let city = document.getElementsByName("city")[0].value;
@@ -234,7 +210,7 @@ document.getElementById("add-btn").onclick = async (e) => {
         if (btnValue === "Add OPD") {
           btnText = "Add OPD";
           btnColor = '#00b894'
-        }else{
+        } else {
           btnText = "Update OPD";
           btnColor = '#E0A800';
         }
@@ -247,13 +223,13 @@ document.getElementById("add-btn").onclick = async (e) => {
           confirmButtonColor: btnColor,
           cancelButtonColor: '#ea4c62',
           confirmButtonText: `Yes, ${btnText} it!`
-        }).then ((result) => {
+        }).then((result) => {
           if (result.isConfirmed) {
-            btnValue === "Add OPD" ? addOPD(srNo, date, name, age, sex, services, city, address, mobile):updateOPD(updateOpdId, services);
+            btnValue === "Add OPD" ? addOPD(srNo, date, name, age, sex, services, city, address, mobile) : updateOPD(updateOpdId, services);
           }
         })
-      }            
-    }        
+      }
+    }
   } catch (error) {
     console.log(error);
   }
@@ -270,7 +246,7 @@ document.getElementById("add-btn").onclick = async (e) => {
  * @param {string} mobile - The mobile number of the patient.
  * @returns None
  */
-const addOPD = async(srNo, date, name, age, sex, services, city, address, mobile)=>{
+const addOPD = async (srNo, date, name, age, sex, services, city, address, mobile) => {
   try {
     document.getElementById("add-btn").innerHTML = `
       <div id="spinner" class="spinner-border spinner-border-sm text-sucess mx-2"  role="status">
@@ -305,24 +281,24 @@ const addOPD = async(srNo, date, name, age, sex, services, city, address, mobile
     let opd_id = data.opd_id;
     if (data.status == 'ok') {
       Swal.fire({
-        title:'Success!',
+        title: 'Success!',
         text: 'OPD added successfully!',
         icon: 'success',
         confirmButtonColor: '#00b894',
         confirmButtonText: 'Okay Print!',
-      }).then ((result) => {
+      }).then((result) => {
         if (result.isConfirmed) {
           let services = document.getElementById("serviceTable");
-          DeleteRows(services); 
+          DeleteRows(services);
           location.assign(`./templates/opd-receipt.html?opdId=${opd_id}`);
         }
       })
       loadData();
-    }else{
+    } else {
       Swal.fire({
-        title:'Error Occurred!',
-        text:data.message,
-        icon:'error',
+        title: 'Error Occurred!',
+        text: data.message,
+        icon: 'error',
         confirmButtonColor: '#ea4c62',
         confirmButtonText: 'Okay'
       })
@@ -332,7 +308,7 @@ const addOPD = async(srNo, date, name, age, sex, services, city, address, mobile
   }
 }
 
-const loadData = async() => {
+const loadData = async () => {
   try {
     let response = await fetch(`${url}get-opd`, {
       method: "POST",
@@ -346,7 +322,7 @@ const loadData = async() => {
     });
 
     let data = await response.json();
-    if(data.status != 'false'){
+    if (data.status != 'false') {
       let opds = data.data;
       document.getElementById("opd-parent-div").innerHTML = "";
       if (opds.length > 0) {
@@ -355,25 +331,26 @@ const loadData = async() => {
           allOpds[opd["opd_id"]] = opd;
           appendOpd(opd);
           let opdServices = JSON.parse(opd.services);
-          for (key of Object.keys(opdServices)){
+          for (key of Object.keys(opdServices)) {
             totalAmount = totalAmount + parseInt(opdServices[key])
           }
         }
-        document.getElementById("collection").innerHTML = `Total Amount: ${totalAmount}/-`;
+        document.getElementById("totalCounts").innerText = ` ${data.count}`;
+        document.getElementById("collection").innerText = ` ${totalAmount}/-`;
         document.getElementById("form").reset();
         document.getElementById("opd-parent-div").firstElementChild.firstElementChild.innerHTML += '<span class="m-1 badge rounded-pill bg-success">New</span>'
         setTimeout(() => {
           document.getElementById("opd-parent-div").firstElementChild.firstElementChild.lastElementChild.remove()
         }, 10000);
       }
-    } else if(data.message != 'Authorization failed!'){
-      document.getElementById("opd-parent-div").innerHTML =`
+    } else if (data.message != 'Authorization failed!') {
+      document.getElementById("opd-parent-div").innerHTML = `
         <div class='noRecords'>
           <img src="./img/bg-img/box.png" alt="image">
           <p>No records found!</p>
         </div>
       `;
-    }else{
+    } else {
       window.location = 'login.html';
     }
   } catch (error) {
@@ -381,7 +358,7 @@ const loadData = async() => {
   }
 }
 
-const updateOPD = async(updateOpdId, services)=>{
+const updateOPD = async (updateOpdId, services) => {
   document.getElementById("add-btn").innerHTML = `
     <div id="spinner" class="spinner-border spinner-border-sm text-sucess mx-2"  role="status">
     <span class="visually-hidden">Loading...</span>
@@ -403,32 +380,32 @@ const updateOPD = async(updateOpdId, services)=>{
   let data = await response.json();
   if (data.status == 'ok') {
     Swal.fire({
-      title:'Success!',
+      title: 'Success!',
       text: 'OPD update successfully!',
       icon: 'success',
       confirmButtonColor: '#E0A800',
       confirmButtonText: 'Okay Print!',
       showCancelButton: true,
       cancelButtonColor: '#ea4c62',
-    }).then ((result) => {
+    }).then((result) => {
       document.getElementById("add-btn").innerHTML = `<i class="fa-regular fa-paper-plane"></i> Add OPD`;
       document.getElementById("add-btn").value = `Add OPD`;
       document.getElementById("add-btn").className = 'btn btn-success';
       $("#addOPD").modal("hide");
       if (result.isConfirmed) {
         let services = document.getElementById("serviceTable");
-        DeleteRows(services); 
+        DeleteRows(services);
         location.assign(`./templates/opd-receipt.html?opdId=${updateOpdId}`);
-      }else{
+      } else {
         $('#addOPD').modal('hide');
         loadData();
       }
     })
-  }else{
+  } else {
     Swal.fire({
-      title:'Error Occurred!',
-      text:data.message,
-      icon:'error',
+      title: 'Error Occurred!',
+      text: data.message,
+      icon: 'error',
       confirmButtonColor: '#ea4c62',
       confirmButtonText: 'Okay'
     })
@@ -463,7 +440,7 @@ function CheckBox(opd_id) {
         ).innerHTML = `${opdsForDelete.length} item selected`;
         if (opdsForDelete.length === 0) {
           document.getElementsByClassName("delete-footer-div")[0].style.bottom = "-3rem";
-          document.getElementById("delete-all-opds-btn-div").style.display ="inline-block";
+          document.getElementById("delete-all-opds-btn-div").style.display = "inline-block";
           document.getElementById("add-sticky-btn").style.display = "inline-block";
         }
       }
@@ -504,21 +481,21 @@ document.getElementById("footer-delete-btn").onclick = () => {
 
           let data = await response;
           if (data.status == 200) {
-            opdsForDelete.forEach((value) => {document.getElementById("opd-div" + value).remove();});
+            opdsForDelete.forEach((value) => { document.getElementById("opd-div" + value).remove(); });
             document.getElementsByClassName("delete-footer-div")[0].style.bottom = "-3rem";
             opdsForDelete = [];
             Swal.fire({
-              title:'Success!',
+              title: 'Success!',
               text: 'OPDs deleted successfully',
               icon: 'success',
               confirmButtonColor: '#00b894',
               confirmButtonText: 'Okay'
             })
-          }else{
+          } else {
             Swal.fire({
-              title:'Error Occurred!',
-              text:data.message,
-              icon:'error',
+              title: 'Error Occurred!',
+              text: data.message,
+              icon: 'error',
               confirmButtonColor: '#ea4c62',
               confirmButtonText: 'Okay'
             })
@@ -570,13 +547,13 @@ document.getElementById("delete-all-opds-btn").onclick = () => {
               <img src="./img/bg-img/box.png" alt="image">
               <p>No records found!</p>
             </div>`;
-            Swal.fire({
-              title:'Deleted!',
-              text: 'OPDs deleted successfully',
-              icon: 'success',
-              confirmButtonColor: '#00b894',
-              confirmButtonText: 'Okay'
-            })
+          Swal.fire({
+            title: 'Deleted!',
+            text: 'OPDs deleted successfully',
+            icon: 'success',
+            confirmButtonColor: '#00b894',
+            confirmButtonText: 'Okay'
+          })
         }
       } catch {
         window.location = "login.html";
@@ -585,7 +562,7 @@ document.getElementById("delete-all-opds-btn").onclick = () => {
   });
 };
 
-const dbDateFormatter = async(date) => {
+const dbDateFormatter = async (date) => {
   const dateArray = date.split("-");
   const formattedDate = `${dateArray[2]}-${dateArray[1]}-${dateArray[0]}`;
   return formattedDate;
@@ -596,7 +573,7 @@ const dbDateFormatter = async(date) => {
  * @param {number} opd_id - The ID of the OPD record to display.
  * @returns None
  */
-const viewDetails = async(opd_id) => {
+const viewDetails = async (opd_id) => {
 
   updateOpdId = opd_id;
   document.getElementById("add-btn").innerHTML = '<i class="fa-regular fa-paper-plane"></i> Update OPD';
@@ -604,7 +581,7 @@ const viewDetails = async(opd_id) => {
   document.getElementById("add-btn").className = "btn btn-warning text-white";
   document.getElementById("addOpdModalLabel").innerHTML = "OPD Details";
   let opd = allOpds[opd_id];
-  
+
   document.getElementById("srNo").value = opd.srNo;
   document.getElementById("date").value = await dbDateFormatter(opd.date);
   document.getElementsByName("name")[0].value = opd["patient_details"].name;
@@ -626,7 +603,7 @@ const viewDetails = async(opd_id) => {
   let services = document.getElementById("serviceTable");
   DeleteRows(services);
   let jsonServices = JSON.parse(opd.services)
-  for (key of Object.keys(jsonServices)){
+  for (key of Object.keys(jsonServices)) {
     let row = services.insertRow(-1);
     let c1 = row.insertCell(0);
     let c2 = row.insertCell(1);
@@ -681,11 +658,11 @@ document.getElementById("search-box").onkeyup = () => {
     for (opd of searched) {
       appendOpd(opd);
       let opdServices = JSON.parse(opd.services);
-      for (key of Object.keys(opdServices)){
+      for (key of Object.keys(opdServices)) {
         totalAmount = totalAmount + parseInt(opdServices[key])
       }
     }
-    document.getElementById("collection").innerHTML = `Total Amount: ${totalAmount}/-`;;
+    document.getElementById("collection").innerText = ` ${totalAmount}/-`;;
   } else {
     document.getElementById("opd-parent-div").innerHTML = "";
     let totalAmount = 0;
@@ -693,11 +670,11 @@ document.getElementById("search-box").onkeyup = () => {
       let opd = allOpds[key];
       appendOpd(opd);
       let opdServices = JSON.parse(opd.services);
-      for (key of Object.keys(opdServices)){
+      for (key of Object.keys(opdServices)) {
         totalAmount = totalAmount + parseInt(opdServices[key])
       }
     }
-    document.getElementById("collection").innerHTML = `Total Amount: ${totalAmount}/-`;;
+    document.getElementById("collection").innerText = ` ${totalAmount}/-`;;
   }
 };
 
@@ -732,7 +709,7 @@ function deleteOpd(opd_id) {
         if (data.status === 200) {
           document.getElementById("opd-div" + opd_id).remove();
           Swal.fire({
-            title:'Deleted!',
+            title: 'Deleted!',
             text: 'OPDs deleted successfully',
             icon: 'success',
             confirmButtonColor: '#00b894',
@@ -782,16 +759,17 @@ document.getElementById("date-search-btn").onclick = async () => {
         allOpds[opd["opd_id"]] = opd;
         appendOpd(opd);
         let opdServices = JSON.parse(opd.services);
-        for (key of Object.keys(opdServices)){
+        for (key of Object.keys(opdServices)) {
           totalAmount = totalAmount + parseInt(opdServices[key])
         }
+        document.getElementById("totalCounts").innerText = ` ${data.count}`;
       }
-      document.getElementById("collection").innerHTML = `Total Amount: ${totalAmount}/-`;;
+      document.getElementById("collection").innerText = ` ${totalAmount}/-`;
     } else {
       Swal.fire({
-        title:'Error Occurred!',
-        text:data.message,
-        icon:'error',
+        title: 'Error Occurred!',
+        text: data.message,
+        icon: 'error',
         confirmButtonColor: '#ea4c62',
         confirmButtonText: 'Okay'
       })
