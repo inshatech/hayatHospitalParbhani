@@ -41,7 +41,7 @@ const appendRecords = async (ipd) => {
         <div class="ipd-buttons">
           <!-- <a class="btn m-1 btn-sm btn-info" href="./add-ipd.html?ipdID=${ipd.ipd_id}">Edit</a> -->
           <button class="btn btn-success"${ipd.status == "discharge" ? "hidden" : ""} id="${ipd.ipd_id}" onclick="dischargePopUp(${"id"}, ${"name"});" name="${ipd.patient_details.name}"><i class="fa-solid fa-right-from-bracket"></i> Discharge</button>
-          <a class="btn btn-dark" href="./dd.html?ipdID=${ipd.ipd_id}"> D/D Timeline</a>
+          <a class="btn btn-dark" href="./dd.html?ipdID=${ipd.ipd_id}"><i class="fa-solid fa-file-prescription"></i> D/D Timeline</a>
         </div>
       </div
     </div>

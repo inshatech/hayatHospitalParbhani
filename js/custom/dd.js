@@ -128,7 +128,9 @@ const loadTreatment = async(ipd_id)=>{
     } else {
       window.location = './login.html';
     }
+    loadingStatus(false);
   } catch (error) {
+    loadingStatus(false);
     console.log(error);
   }
 }
@@ -200,5 +202,4 @@ document.addEventListener("DOMContentLoaded", ()=>{
     loadPatient(ipd_id);
     loadTreatment(ipd_id);
   }
-  loadingStatus(false);
 });

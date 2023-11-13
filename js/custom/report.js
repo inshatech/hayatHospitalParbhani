@@ -32,9 +32,66 @@ document.getElementById("date-search-btn").onclick = async () => {
     loadingStatus(false);
     if (type === "opd-report") {
       opdReport(from, to);
-    } else if (to === "ipd-report") {
+    } else if (type === "ipd-report") {
+    }else if(type === "scalp-report"){
+      scalpReport(from, to);
     }
   }
+};
+
+const scalpReport = async (from, to) => {
+  let response = await fetch(`${url}get-scalp`, {
+    method: "POST",
+    headers: {
+      Authorization: localStorage.getItem("jwtTempToken"),
+    },
+    body: JSON.stringify({
+      between_date: {
+        start_date: from,
+        end_date: to,
+      },
+    }),
+  });
+
+  let data = await response.json();
+  let scalpData = data.data;
+  console.log(data);
+  let all_scalp = new Array();
+  if (data.status == "ok") {
+    for (key of Object.keys(scalpData)) {
+      let { scalp_id, srNo, date, doa, patient_details, dod, fees, dateTimeStamp, status} =
+        scalpData[key];
+
+      let scalp = {
+        "Scalp Id": scalp_id,
+        "Sr.No.": srNo,
+        date:date,
+        "DT A": doa,
+        Name: patient_details.name,
+        Age: patient_details.age,
+        Sex: patient_details.sex,
+        Address: patient_details.address,
+        Mobile: patient_details.mobile,
+        "DT D": dod,
+        "Date & Time": dateTimeStamp,
+        status: status,
+        Fees: fees,
+      };
+      all_scalp.push(scalp);
+    }
+    let reportName = `Scalp Report From date: ${from} to ${to} generated on ${date_time}`;
+    let pageName = "Scalp Report";
+    exportExcel(all_scalp, reportName, pageName);
+  } else {
+    Swal.fire({
+      title: "Error Occurred!",
+      text: data.message,
+      icon: "error",
+      confirmButtonColor: "#ea4c62",
+      confirmButtonText: "Okay",
+    });
+  }
+  loadingStatus(true);
 };
 
 const opdReport = async (from, to) => {
@@ -77,8 +134,8 @@ const opdReport = async (from, to) => {
       };
       all_opd.push(opd);
     }
-    let reportName = `IPD Report From date: ${from} to ${to} generated on ${date_time}`;
-    let pageName = "IPD Report";
+    let reportName = `OPD Report From date: ${from} to ${to} generated on ${date_time}`;
+    let pageName = "OPD Report";
     exportExcel(all_opd, reportName, pageName);
   } else {
     Swal.fire({
