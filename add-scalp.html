@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head id="head">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="HMS - Insha Technologies">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <meta name="theme-color" content="#0134d4">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black"></meta>
+
+  <!-- Title -->
+  <title id="title">Add Scalp - HMS</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" id="icon" href="#">
+  <link rel="apple-touch-icon" href="img/icons/icon-96x96.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="img/icons/icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="167x167" href="img/icons/icon-167x167.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="img/icons/icon-180x180.png">
+
+  <!-- Style CSS -->
+  <link rel="stylesheet" href="style.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/custom.css">
+  <style>
+    .bed
+      {
+        display: flex;
+        align-content: space-between;
+        align-self: auto;
+        gap: 3px;
+      }
+  </style>
+</head>
+<body>
+  <!-- Preloader -->
+  <div id="preloader"></div>
+  <!-- Internet Connection Status -->
+  <div class="internet-connection-status" id="internetStatus"></div>
+  <!-- Header Area -->
+  <div class="header-area bg-dark" id="headerArea"></div>
+  <!-- # Sidenav Left -->
+  <div id="sideNav"></div>
+  <div class="page-content-wrapper py-3">
+    <div class="container">
+      <div class="element-heading">
+        <h6>Patient Information</h6>
+      </div>
+    </div>
+    <div class="container">
+      <div class="card">
+        <div class="card-body">
+          <div class="processing-div align-center" id="processing">
+            <div id="spinner" class="spinner-border text-success mx-2"  role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>Processing...
+          </div>
+          <form class="was-validated" name="form" id="form" action="#">
+            <div class="row g-lg-2 mb-0">
+              <div class="col">
+                <div class="form-group mb-3">
+                  <label class="form-label" for="srNo">Sr No</label>
+                  <input name="srNo" id="srNo" pattern="[0-9]{1,5}" class="form-control mb-1" type="text" placeholder="Sr No" required>
+                  <p class="text-danger">No restrictions!</p>
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-group">
+                  <label class="form-label" for="date">Date</label>
+                  <input class="form-control" id="date" type="date" required>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="doa"> Date Time of Admission</label>
+              <input class="form-control" id="doa" type="datetime-local" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="name">Patient Name</label>
+              <input class="form-control" id="name" type="text" placeholder="Patient Name" required>
+            </div>
+            <div class="row g-lg-2 mb-0">
+              <div class="col">
+                <div class="form-group">
+                  <label class="form-label" for="age">Age</label>
+                  <input name="age" id="age" class="form-control" type="number" aria-label="age" placeholder="Age" required>
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-group">
+                  <label class="form-label" for="sex">Gender</label>
+                  <select class="form-select" id="sex" name="sex" aria-label="Sex" placeholder="Sex" required>
+                    <option selected></option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row g-lg-2 mb-0">
+              <div class="col">
+                <div class="form-group">
+                  <label class="form-label" for="city">Address</label>
+                  <input class="form-control" id="city" type="text" placeholder="Address" required>
+                </div>
+              </div>
+              <div class="col" hidden>
+                <div class="form-group">
+                  <input name="address" id="address" class="form-control" type="text" placeholder="Address">
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-group">
+                  <label class="form-label" for="mobile">Mobile</label>
+                  <input name="mobile" id="mobile" class="form-control" type="text" placeholder="Mobile" required>
+                </div>
+              </div>
+            </div>  
+            <div class="form-group">
+              <button class="btn btn-success  w-100  align-items-center justify-content-center" id="add-btn" type="button">Add scalp</button>
+            </div>
+          </form>  
+          <!-- Form end at bottom -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Nav -->
+  <div class="footer-nav-area" id="footerNav"></div>
+  <!-- All JavaScript Files -->
+  <script src="./js/common/preloader.js"></script>
+  <script src="./js/common/headerArea.js"></script>
+  <script src="./js/common/sideNav.js"></script>
+  <script src="./js/common/footerNav.js"></script>
+
+  <script src="js/custom/config.js"></script>
+
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <script src="js/slideToggle.min.js"></script>
+  <script src="js/internet-status.js"></script>
+  <script src="js/tiny-slider.js"></script>
+  <script src="js/venobox.min.js"></script>
+  <script src="js/countdown.js"></script>
+  <script src="js/rangeslider.min.js"></script>
+  <script src="js/vanilla-dataTables.min.js"></script>
+  <script src="js/index.js"></script>
+  <script src="js/imagesloaded.pkgd.min.js"></script>
+  <script src="js/isotope.pkgd.min.js"></script>
+  <script src="js/dark-rtl.js"></script>
+  <script src="js/active.js"></script>
+  <script src="js/form-autocomplete.js"></script>
+  
+  <script src="./js/common/nav.js"></script>
+  <script src="./js/custom/checkLogin.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
+  <script>
+    const icon  = "img/icons/favicon.png";
+    document.getElementById("icon").href = icon;
+    nav();    
+  </script>
+  <script src="./js/custom/scalp.js"></script>
+</body>
+
+</html>

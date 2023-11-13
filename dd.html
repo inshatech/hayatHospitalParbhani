@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head id="head">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="HMS - Insha Technologies">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <meta name="theme-color" content="#0134d4">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black"></meta>
+
+  <!-- Title -->
+  <title>D/D List - HMS</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" id="icon" href="#">
+  <link rel="apple-touch-icon" href="img/icons/icon-96x96.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="img/icons/icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="167x167" href="img/icons/icon-167x167.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="img/icons/icon-180x180.png">
+
+  <!-- Style CSS -->
+  <link rel="stylesheet" href="style.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/custom.css">
+  <style>
+    .otherDetails{
+      font-size: 13px;
+      color: grey;
+    }
+    .timeline-with-icons {
+      border-left: 1px solid hsl(0, 0%, 90%);
+      position: relative;
+      list-style: none;
+    }
+
+    .timeline-with-icons .timeline-item {
+      position: relative;
+    }
+
+    .timeline-with-icons .timeline-item:after {
+      position: absolute;
+      display: block;
+      top: 0;
+    }
+
+    .timeline-with-icons .timeline-icon {
+      position: absolute;
+      left: -48px;
+      background-color: hsl(217, 88.2%, 90%);
+      color: hsl(217, 88.8%, 35.1%);
+      border-radius: 50%;
+      height: 31px;
+      width: 31px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
+  
+</head>
+<body>
+  <!-- Preloader -->
+  <div id="preloader"></div>
+  <!-- Internet Connection Status -->
+  <div class="internet-connection-status" id="internetStatus"></div>
+  <!-- Header Area -->
+  <div class="header-area bg-dark" id="headerArea"></div>
+  <!-- # Sidenav Left -->
+  <div id="sideNav"></div>
+  <div class="page-content-wrapper py-3">
+    <div class="processing-div align-center" id="processing">
+      <div id="spinner" class="spinner-border text-success mx-2"  role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>Processing...
+    </div>
+    <div class="container" id="patient-info">
+      
+    </div>
+    <!-- Heading -->
+    <div class="container">
+      <div class="element-heading mt-3 inline">
+        <h6>Treatment Timeline</h6>
+      </div>
+    </div>
+    <div class="container">
+      <div class="card">
+        <div class="card-body">
+          <!-- Section: Timeline -->
+          <section class="py-5">
+            <ul class="timeline-with-icons" id="recordsPlace">             
+            </ul>
+          </section>
+          <!-- Section: Timeline -->
+        </div>
+      </div>
+    </div>        
+  </div>
+  <!-- Side footer buttons -->
+  <div class="add-new-contact-wrap">
+    <a id="add-sticky-btn" class="shadow" href="#" data-bs-toggle="modal" data-bs-target="#treatmentModel"><i class="bi bi-plus-lg"></i></a>
+  </div>
+
+  <!-- Treatment Modal -->
+  <div class="modal fade" id="treatmentModel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="treatmentModelLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title" id="treatmentModelLabel">IPD Treatment</h6>
+          <button class="btn btn-close p-1 ms-auto" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form class="was-validated" name="form" id="form" action="#">
+            <div class="form-group mb-3">
+              <label class="form-label" for="title">Title</label>
+              <input name="title" id="title" class="form-control mb-1" type="text" required>
+            </div>
+            <div class="form-group mb-3">
+              <label class="form-label" for="byDoctor">By doctor/Nurse</label>
+              <input name="byDoctor" id="byDoctor" class="form-control mb-1" type="text" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="description"> Description</label>
+              <textarea class="form-control" cols="3" rows="5"
+              placeholder="Write something..." id="description" name="description" required></textarea>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-danger" type="button" data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i> Close</button>
+          <button class="btn btn-success" type="button" id="treatment-btn"><i class="fa-solid fa-right-from-bracket"></i> Add! Treatment</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Nav -->
+  <div class="footer-nav-area" id="footerNav"></div>
+  <!-- All JavaScript Files -->
+  <script src="./js/common/preloader.js"></script>
+  <script src="./js/common/headerArea.js"></script>
+  <script src="./js/common/sideNav.js"></script>
+  <script src="./js/common/footerNav.js"></script>
+
+  <script src="js/custom/config.js"></script>
+
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <script src="js/slideToggle.min.js"></script>
+  <script src="js/internet-status.js"></script>
+  <script src="js/tiny-slider.js"></script>
+  <script src="js/venobox.min.js"></script>
+  <script src="js/countdown.js"></script>
+  <script src="js/rangeslider.min.js"></script>
+  <script src="js/vanilla-dataTables.min.js"></script>
+  <script src="js/index.js"></script>
+  <script src="js/imagesloaded.pkgd.min.js"></script>
+  <script src="js/isotope.pkgd.min.js"></script>
+  <script src="js/dark-rtl.js"></script>
+  <script src="js/active.js"></script>
+  <!-- PWA -->
+  <script src="js/pwa.js"></script>
+  
+  <script src="./js/common/nav.js"></script>
+  <script src="./js/custom/checkLogin.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
+  <script>
+    const icon  = "img/icons/favicon.png";
+    document.getElementById("icon").href = icon;
+    nav();
+  </script>
+  <script src="./js/custom/dd.js"></script>
+</body>
+
+</html>

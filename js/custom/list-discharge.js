@@ -38,9 +38,9 @@ function appendRecords(dischargeCertificate) {
             <!-- <span class="text-truncate fw-bold text-black-50">${dischargeCertificate.mobile}</span> -->
           </div>
         </div>
-        <div>
-          <a class="btn m-1 btn-info" href="./add-discharge.html?certId=${dischargeCertificate.cert_id}"><i class="fa-solid fa-pen-to-square"></i> Update</a>
-          <a class="btn m-1 btn-success" href="./templates/discharge-certificate.html?certId=${dischargeCertificate.cert_id}"><i class="fa-solid fa-print"></i> Print</a>
+        <div class="ipd-buttons">
+          <a class="btn btn-info" href="./add-discharge.html?certId=${dischargeCertificate.cert_id}"><i class="fa-solid fa-pen-to-square"></i> Update</a>
+          <a class="btn btn-success" href="./templates/discharge-certificate.html?certId=${dischargeCertificate.cert_id}"><i class="fa-solid fa-print"></i> Print</a>
         </div>
       </div
     </div>

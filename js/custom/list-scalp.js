@@ -1,4 +1,4 @@
-let ipd_list = {};
+let scalp_list = {};
 /**
  * Returns today's date in the format of "YYYY-MM-DD".
  * @returns {string} - today's date in the format of "YYYY-MM-DD".
@@ -13,43 +13,42 @@ const todaysDate = () => {
 
 /**
  * Appends a fitness certificate record to the list of records displayed on the page.
- * @param {Object} ipd - The fitness certificate object to append to the list.
+ * @param {Object} scalp - The fitness certificate object to append to the list.
  * @returns None
  */
-const appendRecords = async (ipd) => {
+const appendRecords = async (scalp) => {
   document.getElementById("recordsPlace").innerHTML += `
     <div class="alert unread custom-alert-1 alert-dark bg-white" >
       <!-- <i class="mt-0"></i> -->
       <div class="alert-text w-100">
         <div class="card-ipd-head">
-          <div class="text-danger fw-bold">${ipd.srNo}</div>
-          <div class="text-black">#${ipd.ipd_id}</div>
-          <div class="text-danger fw-bold">${ipd.bedDetails.description}</div>
-          <div class="badge ${ipd.status == 'admitted' ? 'bg-success' : 'bg-danger'} rounded-pill mb-2 d-inline-block">${ipd.status == "discharge" ? "" : ""}</div>
+          <div class="text-danger fw-bold">${scalp.srNo}</div>
+          <div class="text-black">#${scalp.scalp_id}</div>
+          <div class="badge ${scalp.status == 'admitted' ? 'bg-success' : 'bg-danger'} rounded-pill mb-2 d-inline-block">${scalp.status == "discharge" ? "" : ""}</div>
+          <span class="text-truncate text-info fw-bold">${scalp.patient_details.age}/${scalp.patient_details.sex == 'Female' ? "F" : "M"}</span>
         </div>
         <div class="ipd-body">
           <div class="ipd-body-left">
-            <span class="text-info fw-bold text-truncate">${ipd.patient_details.name}</span>
-            <span class="text-truncate">A: ${ipd.doa}</span>
-            <span>D: ${ipd.dod == null ? '-' : ipd.dod}</span>
+            <span class="text-info fw-bold text-truncate">${scalp.patient_details.name}</span>
+            <span class="text-truncate">A: ${scalp.doa}</span>
+            <span>D: ${scalp.dod == null ? '-' : scalp.dod}</span>
           </div>
           <div class="ipd-body-right">
-            <span class="text-truncate text-info fw-bold">${ipd.patient_details.age}/${ipd.patient_details.sex == 'Female' ? "F" : "M"}</span>
-            <span class="text-truncate fw-bold text-black-50">${ipd.patient_details.mobile}</span>
+            <span class="text-truncate fw-bold text-black-50">${scalp.patient_details.mobile}</span>
+            <span class="text-truncate fw-bolder text-dark">Rs: ${scalp.fees == null ? 0 : scalp.fees}/-</span>
           </div>
         </div>
-        <div class="ipd-buttons">
-          <!-- <a class="btn m-1 btn-sm btn-info" href="./add-ipd.html?ipdID=${ipd.ipd_id}">Edit</a> -->
-          <button class="btn btn-success"${ipd.status == "discharge" ? "hidden" : ""} id="${ipd.ipd_id}" onclick="dischargePopUp(${"id"}, ${"name"});" name="${ipd.patient_details.name}"><i class="fa-solid fa-right-from-bracket"></i> Discharge</button>
-          <a class="btn btn-dark" href="./dd.html?ipdID=${ipd.ipd_id}"> D/D Timeline</a>
+        <div>
+          <!-- <a class="btn m-1 btn-sm btn-info" href="./add-scalp.html?scalpID=${scalp.scalp_id}">Edit</a> -->
+          <button class="btn btn-success"${scalp.status == "discharge" ? "hidden" : ""} id="${scalp.scalp_id}" onclick="dischargePopUp(${"id"}, ${"name"});" name="${scalp.patient_details.name}"><i class="fa-solid fa-right-from-bracket"></i> Discharge</button>
         </div>
       </div
     </div>
   `;
 }
 
-const dischargePopUp = (ipd_id, name) => {
-  document.getElementById("ipd_id").value = ipd_id;
+const dischargePopUp = (scalp_id, name) => {
+  document.getElementById("scalp_id").value = scalp_id;
   document.getElementById("name").value = name;
   $('#dischargeModel').modal('show');
 }
@@ -60,9 +59,10 @@ document.getElementById("discharge-btn").addEventListener("click", async (e) => 
       let valid = document.forms["form"].checkValidity();
       if (valid) {
         e.preventDefault();
-        let ipd_id = document.getElementById("ipd_id").value;
+        let scalp_id = document.getElementById("scalp_id").value;
         let name = document.getElementById("name").value;
         let dod = document.getElementById("dod").value;
+        let fees = document.getElementById("fees").value;
 
         Swal.fire({
           title: 'Are you sure?',
@@ -74,7 +74,7 @@ document.getElementById("discharge-btn").addEventListener("click", async (e) => 
           confirmButtonText: `Yes, Discharge it!`
         }).then((result) => {
           if (result.isConfirmed) {
-            discharge(ipd_id, dod);
+            discharge(scalp_id, dod, fees);
           }
         })
       }
@@ -84,17 +84,18 @@ document.getElementById("discharge-btn").addEventListener("click", async (e) => 
   }
 })
 
-const discharge = async (ipd_id, dod) => {
+const discharge = async (scalp_id, dod, fees) => {
   try {
-    const response = await fetch(`${url}ipd`, {
+    const response = await fetch(`${url}scalp`, {
       method: 'PATCH',
       headers: {
         Accept: "*/*",
         Authorization: localStorage.getItem("jwtTempToken"),
       },
       body: JSON.stringify({
-        ipd_id: ipd_id,
+        scalp_id: scalp_id,
         dod: dod,
+        fees: fees
       }),
     });
     let data = await response.json();
@@ -139,7 +140,7 @@ document.getElementsByTagName("body")[0].onload = async () => {
 
 const loadIPD = async () => {
   try {
-    let response = await fetch(`${url}get-ipd`, {
+    let response = await fetch(`${url}get-scalp`, {
       method: "POST",
       headers: {
         Accept: "*/*",
@@ -152,7 +153,7 @@ const loadIPD = async () => {
 
     let data = await response.json();
     if (data.status == 'ok') {
-      const ipdList = data.data;
+      const scalpList = data.data;
       document.getElementById("recordsPlace").innerHTML = "";
       document.getElementById("recordsPlace").innerHTML = `
         <div class="processing-div align-center" id="processing">
@@ -161,13 +162,16 @@ const loadIPD = async () => {
           </div>Processing...
         </div>
       `;
-      ipd_list = {};
-      for await (const ipd of ipdList) {
-        ipd_list[ipd.ipd_id] = ipd;
-        appendRecords(ipd);
+      scalp_list = {};
+      let totalAmount = 0;
+      for await (const scalp of scalpList) {
+        scalp_list[scalp.scalp_id] = scalp;
+        totalAmount = totalAmount + parseInt(scalp.fees == null ? 0 : scalp.fees);
+        appendRecords(scalp);
       }
       document.getElementById("processing").style.display = "none";
       document.getElementById("totalCounts").innerText = ` ${data.count}`;
+      document.getElementById("collection").innerText = ` ${totalAmount}/-`;
     } else if (data.message != 'Authorization failed!') {
       document.getElementById("processing").style.display = "none";
       document.getElementById("recordsPlace").innerHTML += `
@@ -186,34 +190,33 @@ const loadIPD = async () => {
 
 
 /**
- * Adds an event listener to the search box that filters the ipd_list object based on the user's input.
+ * Adds an event listener to the search box that filters the scalp_list object based on the user's input.
  * @returns None
  */
 document.getElementById("search-box").onkeyup = () => {
   let query = String(document.getElementById("search-box").value).toLowerCase();
   let searched = [];
   if (query != "") {
-    for (key of Object.keys(ipd_list)) {
+    for (key of Object.keys(scalp_list)) {
       if (
-        String(ipd_list[key]['patient_details'].name).toLowerCase().search(query) != -1 ||
-        String(ipd_list[key]['patient_details'].age).search(query) != -1 ||
-        String(ipd_list[key]['patient_details'].sex).toLowerCase().search(query) != -1 ||
-        String(ipd_list[key]['patient_details'].city).toLowerCase().search(query) != -1 ||
-        String(ipd_list[key].date).search(query) != -1 ||
-        String(ipd_list[key].bedNo).toLowerCase().search(query) != -1
+        String(scalp_list[key]['patient_details'].name).toLowerCase().search(query) != -1 ||
+        String(scalp_list[key]['patient_details'].age).search(query) != -1 ||
+        String(scalp_list[key]['patient_details'].sex).toLowerCase().search(query) != -1 ||
+        String(scalp_list[key]['patient_details'].city).toLowerCase().search(query) != -1 ||
+        String(scalp_list[key].date).search(query) != -1
       ) {
-        searched.push(ipd_list[key]);
+        searched.push(scalp_list[key]);
       }
       document.getElementById("recordsPlace").innerHTML = "";
     }
-    for (ipd of searched) {
-      appendRecords(ipd);
+    for (scalp of searched) {
+      appendRecords(scalp);
     }
   } else {
     document.getElementById("recordsPlace").innerHTML = "";
-    for (key of Object.keys(ipd_list)) {
-      let ipd = ipd_list[key];
-      appendRecords(ipd);
+    for (key of Object.keys(scalp_list)) {
+      let scalp = scalp_list[key];
+      appendRecords(scalp);
     }
   }
 }
@@ -240,7 +243,7 @@ document.getElementById("date-search-btn").onclick = async () => {
     document.getElementById("date-search-btn").innerHTML = `<div id="spinner" class="spinner-border spinner-border-sm text-success mx-2"  role="status">
     <span class="visually-hidden">Loading...</span>
     </div>`;
-    let response = await fetch(`${url}get-ipd`, {
+    let response = await fetch(`${url}get-scalp`, {
       method: "POST",
       headers: {
         Authorization: localStorage.getItem("jwtTempToken"),
@@ -254,17 +257,20 @@ document.getElementById("date-search-btn").onclick = async () => {
     });
 
     let data = await response.json();
-    let ipdList = data.data;
+    let scalpList = data.data;
     document.getElementById("date-search-btn").innerHTML = `<i class="fa-solid fa-magnifying-glass  "></i> Search`;
     if (data.status == "ok") {
-      ipd_list = {};
-      for await (key of Object.keys(ipdList)) {
-        let ipd = ipdList[key];
-        ipd_list[ipd.ipd_id] = ipd;
-        appendRecords(ipd);
+      scalp_list = {};
+      let totalAmount = 0;
+      for await (key of Object.keys(scalpList)) {
+        let scalp = scalpList[key];
+        scalp_list[scalp.scalp_id] = scalp;
+        totalAmount = totalAmount + parseInt(scalp.fees == null ? 0 : scalp.fees);
+        appendRecords(scalp);
       }
       document.getElementById("processing").style.display = "none";
       document.getElementById("totalCounts").innerText = ` ${data.count}`;
+      document.getElementById("collection").innerText = ` ${totalAmount}/-`;
     } else {
       Swal.fire({
         title: 'Error Occurred!',
