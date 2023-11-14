@@ -135,6 +135,12 @@ const loadTreatment = async(ipd_id)=>{
   }
 }
 
+const showFooterBtn = (state) => {
+  if (!state){
+    document.getElementById('add-sticky-btn').style.display = 'none';
+  }
+}
+
 const loadPatient = async(ipd_id)=>{
   try {
     let response = await fetch(`${url}get-ipd`, {
@@ -151,6 +157,7 @@ const loadPatient = async(ipd_id)=>{
     let data = await response.json();
     if (data.status == 'ok') {
       const ipd = data.data[0];
+      ipd.status == 'discharge' ? showFooterBtn(false) : showFooterBtn(true);
       document.getElementById('patient-info').innerHTML = `
         <div class="alert unread custom-alert-1 alert-dark bg-white" >
           <!-- <i class="mt-0"></i> -->

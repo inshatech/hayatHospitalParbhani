@@ -31,7 +31,7 @@ if (pathName == 'settings.html' || pathName == 'opd.html' || pathName == 'add-fi
         <!-- Header Content-->
         <div class="header-content header-style-four position-relative d-flex align-items-center justify-content-between">
           <!-- Back Button-->
-          <div class="back-button"><a href="index.html"><i class="bi bi-arrow-left-short"></i></a></div>
+          <div class="back-button"><a href="#back" onclick="history.back()"><i class="bi bi-arrow-left-short"></i></a></div>
           <!-- Page Title-->
           <div class="page-heading">
             <h6 class="mb-0">${title}</h6>
