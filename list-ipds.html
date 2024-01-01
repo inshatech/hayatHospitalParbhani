@@ -9,7 +9,7 @@
 
   <meta name="theme-color" content="#0134d4">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black"></meta>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
   <!-- Title -->
   <title>IPDs List - HMS</title>
@@ -141,7 +141,41 @@
       </div>
     </div>
   </div>
-
+  
+  <!-- Switch Bed Modal -->
+  <div class="modal fade" id="switchBedModel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="switchBedModelLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title" id="switchBedModelLabel">Switch Bed</h6>
+          <button class="btn btn-close p-1 ms-auto" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form class="was-validated" name="form" id="form" action="#">
+            <div class="col">
+              <div class="form-group">
+                <label class="form-label" for="bedReceiver">Bed Receiver</label>
+                <select class="form-select" id="bedReceiver" name="bedReceiver" aria-label="Bed Receiver" placeholder="Bed Receiver" required>
+                  <option selected></option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="patientList">Patients</label>
+                <select class="form-select" id="patientList" name="patientList" aria-label="Patients" placeholder="Patients" required>
+                  <option selected></option>
+                </select>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-danger" type="button" data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i> Close</button>
+          <button class="btn btn-success" type="button" id="switchBed-btn"><i class="fa-solid fa-right-from-bracket"></i> Yes! Switch Bed</button>
+        </div>
+      </div>
+    </div>
+  </div>
   <!-- Footer Nav -->
   <div class="footer-nav-area" id="footerNav"></div>
   <!-- All JavaScript Files -->
@@ -169,9 +203,9 @@
   <script src="js/pwa.js"></script>
   
   <script src="./js/common/nav.js"></script>
-  <script src="./js/custom/checkLogin.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
+  <script src="./js/custom/checkLogin.js"></script>
   <script>
     const icon  = "img/icons/favicon.png";
     document.getElementById("icon").href = icon;

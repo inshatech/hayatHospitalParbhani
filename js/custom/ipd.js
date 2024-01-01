@@ -1,4 +1,6 @@
 let ipd_id;
+// const userRole = localStorage.getItem("userRole");
+console.log(userRole);
 
 document.getElementById("add-btn").addEventListener("click", async (e) => {
   try {
@@ -164,7 +166,17 @@ const update_IPD = async (ipd_id, srNo, name, date, age, sex, address, city, doa
 }
 
 const addBedPopUp = () => {
-  $('#bedModel').modal('show');
+  if (userRole != 2) {
+    $('#bedModel').modal('show');
+  }else{
+    Swal.fire({
+      title: "Access Denied?",
+      text: `You don't have permission to perform this.`,
+      icon: 'error',
+      confirmButtonColor: '#ea4c62',
+      confirmButtonText: 'Okay'
+    })
+  }  
 }
 
 document.getElementById("addBed-btn").addEventListener("click", async (e) => {
@@ -200,19 +212,29 @@ const askDeleteBed = () => {
   try {
     const bed_id = document.getElementById('bedNo').value;
     if (!bed_id == "") {
-      Swal.fire({
-        title: 'Are you sure?',
-        text: `You want to delete this bed?`,
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#E0A800',
-        cancelButtonColor: '#ea4c62',
-        confirmButtonText: `Yes, Add it!`
-      }).then((result) => {
-        if (result.isConfirmed) {
-          deleteBed(bed_id);
-        }
-      })
+      if (userRole != 2) {
+        Swal.fire({
+          title: 'Are you sure?',
+          text: `You want to delete this bed?`,
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#E0A800',
+          cancelButtonColor: '#ea4c62',
+          confirmButtonText: `Yes, Add it!`
+        }).then((result) => {
+          if (result.isConfirmed) {
+            deleteBed(bed_id);
+          }
+        })
+      }else{
+        Swal.fire({
+          title: "Access Denied?",
+          text: `You don't have permission to perform this.`,
+          icon: 'error',
+          confirmButtonColor: '#ea4c62',
+          confirmButtonText: 'Okay'
+        })
+      } 
     } else {
       Swal.fire({
         title: 'Error Occurred!',

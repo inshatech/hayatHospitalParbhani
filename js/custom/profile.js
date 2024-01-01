@@ -15,7 +15,7 @@ document.getElementById("edit-btn").onclick = async (e) => {
                 let email       = document.getElementById("email").value;
                 let mobile      = document.getElementById("mobile").value;
                 let address     = document.getElementById("address").value;
-                let roleCode    = document.getElementById("roleCode").value;
+                let inputRoleCode    = document.getElementById("roleCode").value;
 
                 Swal.fire({
                     title: 'Are you sure?',
@@ -27,7 +27,7 @@ document.getElementById("edit-btn").onclick = async (e) => {
                     confirmButtonText: 'Yes, update it!'
                 }).then ((result) => {
                     if (result.isConfirmed) {
-                        updateNow(username, designation, email, mobile, address, roleCode);
+                        updateNow(username, designation, email, mobile, address, inputRoleCode);
                     }
                 })
             }            
@@ -46,7 +46,7 @@ document.getElementById("edit-btn").onclick = async (e) => {
  * @param {string} address - The user's address.
  * @returns None
  */
-const updateNow = async(username, designation, email, mobile, address) => {
+const updateNow = async(username, designation, email, mobile, address, inputRoleCode) => {
     let editBtn = document.getElementById("edit-btn");
     editBtn.innerHTML = `
         <div id="spinner" class="spinner-border spinner-border-sm text-success mx-2"  role="status">
@@ -67,7 +67,7 @@ const updateNow = async(username, designation, email, mobile, address) => {
             mobile: mobile,
             email: email,
             address: address,
-            role: 0,
+            role: inputRoleCode,
             permissions: { Read: true, Write: true },
         }),
     });

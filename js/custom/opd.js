@@ -35,7 +35,7 @@ function appendOpd(opd) {
           </div>
         </div>
         <div class="ipd-buttons">
-          <button onclick='viewDetails(${opd.opd_id})' id='viewDetailsBtn' type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#addOPD"><i class="fa-regular fa-eye"></i> View OPD</button>
+          <button onclick='viewDetails(${opd.opd_id})' id='viewDetailsBtn'; type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#addOPD"><i class="fa-regular fa-eye"></i> View OPD</button>
           <a onclick='printOpd(${opd.opd_id})' class="btn btn-success"><i class="fa-solid fa-print"></i> Print OPD</a>
         </div>
       </div
@@ -146,8 +146,18 @@ document.getElementsByName('service')[0].addEventListener("change", () => {
  * @returns None
  */
 function removeService() {
-  document.activeElement.parentElement.parentElement.remove();
-  servicesCalculation();
+  if (userRole != 2) {
+    document.activeElement.parentElement.parentElement.remove();
+    servicesCalculation();
+  }else{
+    Swal.fire({
+      title: "Access Denied?",
+      text: `You don't have permission to perform this.`,
+      icon: 'error',
+      confirmButtonColor: '#ea4c62',
+      confirmButtonText: 'Okay'
+    })
+  }
 }
 /**
  * Attaches an onclick event listener to the "add-sticky-btn" element. When clicked, this function
@@ -574,7 +584,6 @@ const dbDateFormatter = async (date) => {
  * @returns None
  */
 const viewDetails = async (opd_id) => {
-
   updateOpdId = opd_id;
   document.getElementById("add-btn").innerHTML = '<i class="fa-regular fa-paper-plane"></i> Update OPD';
   document.getElementById("add-btn").value = "Update OPD";
@@ -610,7 +619,7 @@ const viewDetails = async (opd_id) => {
     let c3 = row.insertCell(2);
     c1.innerText = key
     c2.innerText = jsonServices[key]
-    c3.innerHTML = `<button onclick='removeService()' type="button" id="add-service-btn" class="btn btn-sm m-1 btn-danger"><i class="fa-solid fa-minus"></i></button>`;
+    c3.innerHTML = `<button onclick='removeService()' type="button" id="removeServicesBtn" class="btn btn-sm m-1 btn-danger"><i class="fa-solid fa-minus"></i></button>`;
   }
   servicesCalculation();
 }

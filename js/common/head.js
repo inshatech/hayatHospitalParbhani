@@ -7,7 +7,7 @@ document.getElementById("head").innerHTML = `
 
   <meta name="theme-color" content="#0134d4">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black"></meta>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   <!-- Favicon -->
   <link rel="icon" id="icon" href="#">

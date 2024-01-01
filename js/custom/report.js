@@ -155,6 +155,24 @@ const exportExcel = async (arrayData, reportName, pageName) => {
 };
 
 const loadingStatus = (state) => {
+  if(userRole == 2){
+    document.getElementById('date-search-btn').setAttribute('disabled', true);
+    Swal.fire({
+      title: "Access Denied?",
+      text: `You don't have permission to access this page.`,
+      icon: "warning",
+      showCancelButton: false,
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      confirmButtonColor: "#ea4c62",
+      cancelButtonColor: "#ea4c62",
+      confirmButtonText: `Okay!`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.location = 'index.html';
+      }
+    });
+  }
   if (state) {
     document.getElementById(
       "date-search-btn"

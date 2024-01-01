@@ -24,7 +24,7 @@ document.getElementById("footerNav").innerHTML = `
           </a>
         </li>
 
-        <li  id="reports">
+        <li id="reportFooter">
           <a href="reports.html">
             <i class="fa-solid fa-clipboard-list"></i>
             <span>Reports</span>
@@ -41,3 +41,8 @@ document.getElementById("footerNav").innerHTML = `
     </div>
   </div>
 `;
+const userRole = localStorage.getItem("userRole");
+if (userRole == 2) {
+  document.getElementById("reportFooter").hidden= true;
+  document.getElementById("reportHome").hidden= true;
+}

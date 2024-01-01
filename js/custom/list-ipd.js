@@ -41,7 +41,7 @@ const appendRecords = async (ipd) => {
         <div class="ipd-buttons">
           <!-- <a class="btn m-1 btn-sm btn-info" href="./add-ipd.html?ipdID=${ipd.ipd_id}">Edit</a> -->
           <button class="btn btn-success"${ipd.status == "discharge" ? "hidden" : ""} id="${ipd.ipd_id}" onclick="dischargePopUp(${"id"}, ${"name"});" name="${ipd.patient_details.name}"><i class="fa-solid fa-right-from-bracket"></i> Discharge</button>
-          <a class="btn btn-dark" href="./dd.html?ipdID=${ipd.ipd_id}"><i class="fa-solid fa-file-prescription"></i> D/D Timeline</a>
+          <!-- <button class="btn btn-dark" id="${ipd.ipd_id}" onclick="switchBedPopUp(${"id"});" name="${ipd.bedDetails.bed_id}"><i class="fa-solid fa-arrow-right-arrow-left"></i> Switch Bed</button> -->
         </div>
       </div
     </div>
@@ -53,6 +53,88 @@ const dischargePopUp = (ipd_id, name) => {
   document.getElementById("name").value = name;
   $('#dischargeModel').modal('show');
 }
+
+// const switchBedPopUp = async(ipd_id) => {
+//   $('#switchBedModel').modal('show');
+//   try {
+//     let response = await fetch(`${url}get-icu`, {
+//       method: "POST",
+//       headers: {
+//         Accept: "*/*",
+//         Authorization: localStorage.getItem("jwtTempToken"),
+//       },
+//     });
+//     let data = await response.json();
+//     const bedReceiver = document.getElementById("bedReceiver");
+//     bedReceiver.innerHTML = "<option selected></option>";
+
+//     const patientList = document.getElementById("patientList");
+//     patientList.innerHTML = "<option selected></option>";
+//     if (data.status == "ok") {
+      
+//       data.data.forEach((bed) => {
+//         const bed_id = bed["bed_id"];
+//         const patientOpt = document.createElement('option');
+//         patientOpt.value = bed_id;
+//         const bedStatus = bed['status'];
+//         for (const key in ipd_list) {
+//           if (Object.hasOwnProperty.call(ipd_list, key)) {
+//             const ipd = ipd_list[key];
+//             if (bed_id === ipd.bedDetails.bed_id){
+//               bedStatus == 2 ? patientOpt.innerHTML = `${bed["description"]} - ${ipd.patient_details.name}` : patientOpt.innerHTML = bed["description"]
+//               bedStatus == 2 ? patientOpt.disabled = true : "";
+//               patientList.appendChild(patientOpt);
+//             }else{
+//               bedStatus == 2 ? patientOpt.innerHTML = bed["description"] + " (In Service)" : patientOpt.innerHTML = bed["description"]
+//               bedStatus == 2 ? patientOpt.disabled = true : "";
+//               patientList.appendChild(patientOpt);
+//             }
+//           }
+//         }
+//         // for (const key in ipd_list) {
+//         //   const patientOpt = document.createElement('option');
+//         //   if (Object.hasOwnProperty.call(ipd_list, key)) {
+//         //     const ipd = ipd_list[key];
+//         //     const patient_bed_id = ipd.bedDetails.bed_id;
+//         //     if(bed_id == patient_bed_id) {
+//         //       // if(ipd.ipd_id == ipd_id){
+//         //       //   const bedReceiverOpt = document.createElement('option');
+//         //       //   bedReceiverOpt.value = ipd.ipd_id;
+//         //       //   bedReceiverOpt.name = ipd.bedDetails.bed_id;
+//         //       //   bedReceiverOpt.innerHTML = `${ipd.patient_details.name} - ${ipd.bedDetails.description}` ;
+//         //       //   bedReceiver.appendChild(bedReceiverOpt);
+//         //       // }else{
+//         //       //   patientOpt.value = ipd.ipd_id;
+//         //       //   patientOpt.name = ipd.bedDetails.bed_id;
+//         //       //   patientOpt.innerHTML = `${ipd.patient_details.name} - ${ipd.bedDetails.description}` ;
+//         //       //   patientList.appendChild(patientOpt);
+//         //       // }
+//         //     }else{
+//         //       patientOpt.value = bed_id;
+//         //       patientOpt.name = "";
+//         //       let bedStatus = bed['status'];
+//         //       patientOpt.innerHTML = bed["description"] ;
+//         //       patientList.appendChild(patientOpt);
+//         //     }      
+//         //   }
+//         // }
+        
+//       });
+//     }
+
+//   } catch (error) {
+//     console.log(error);
+//   }
+    
+//   // ipd_list.forEach(ipd => {
+//   //   let patientOpt = document.createElement('option');
+//   //   // let bedStatus = bed['status'];
+//   //   patientOpt.value = ipd["ipd_id"];
+//   //   // patientOpt.name = ipd["ipd"]
+//   //   patientOpt.innerHTML = ipd;
+//   //   patientList.appendChild(patientOpt);
+//   // });
+// }
 
 document.getElementById("discharge-btn").addEventListener("click", async (e) => {
   try {

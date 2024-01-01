@@ -26,7 +26,7 @@ window.onload = async ()=>{
             let mobile      = data.data[0].mobile; 
             let address     = data.data[0].address;            
             let roleCode    = data.data[0].role;
-
+            localStorage.setItem('userRole',roleCode);
             let role;
             if (data.data[0].role == "0") {
                 role = 'Super Admin';
