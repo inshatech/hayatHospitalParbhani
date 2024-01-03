@@ -176,7 +176,7 @@ const updateDischarge = async(cert_id, srNo, name, date, age, sex, address, city
       if (result.isConfirmed) {
         document.getElementById("form").reset();
         // autoComplete(); 
-        location.assign(`./templates/discharge-certificate.html?certId=${cert_id}&action=update`);
+        location.assign(`./list-discharge.html`);
       }
     })   
   }else{
