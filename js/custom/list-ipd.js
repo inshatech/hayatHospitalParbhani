@@ -38,14 +38,143 @@ const appendRecords = async (ipd) => {
             <span class="text-truncate fw-bold text-black-50">${ipd.patient_details.mobile}</span>
           </div>
         </div>
+        <p>D/D: <span class="text-truncate fw-bold text-black-50">${ipd.otherDetails != null ? ipd.otherDetails : ''}</span></p>
         <div class="ipd-buttons">
           <!-- <a class="btn m-1 btn-sm btn-info" href="./add-ipd.html?ipdID=${ipd.ipd_id}">Edit</a> -->
           <button class="btn btn-success"${ipd.status == "discharge" ? "hidden" : ""} id="${ipd.ipd_id}" onclick="dischargePopUp(${"id"}, ${"name"});" name="${ipd.patient_details.name}"><i class="fa-solid fa-right-from-bracket"></i> Discharge</button>
-          <!-- <button class="btn btn-dark" id="${ipd.ipd_id}" onclick="switchBedPopUp(${"id"});" name="${ipd.bedDetails.bed_id}"><i class="fa-solid fa-arrow-right-arrow-left"></i> Switch Bed</button> -->
+          <button class="btn btn-dark" ${ipd.status == "discharge" ? "hidden" : ""} id="${ipd.ipd_id}" onclick="switchBedPopUp(this.id, this.name);" name="${ipd.bedDetails.bed_id}"><i class="fa-solid fa-arrow-right-arrow-left"></i> Switch Bed</button>
+          <button class="btn btn-warning" ${ipd.status == "discharge" ? "hidden" : ""} id="${ipd.ipd_id}" onclick="ddPopUp(this.id, this.name);" name="${ipd.otherDetails != null ? ipd.otherDetails : ''}"><i class="fa-solid fa-comment-dots"></i> D/D</button>
+          <button class="btn btn-danger" id="${ipd.ipd_id}" onclick="ipdDelete(this.id, this.name);" name="${ipd.patient_id}"><i class="fa-solid fa-trash-can"></i> Delete</button>
         </div>
       </div
     </div>
   `;
+}
+
+const ddPopUp = (ipd_id, ddText)=>{
+  $('#ddText').val(ddText);
+  $('#ipd_id').val(ipd_id)
+  $('#ddModel').modal('show');
+} 
+
+document.getElementById('dd-btn').addEventListener('click', async(e)=>{
+  const valid = document.getElementById('formDD').checkValidity();
+  if (valid) {
+    e.preventDefault();
+    const ipd_id = $('#ipd_id').val();
+    const ddText = $('#ddText').val();
+
+    Swal.fire({
+      title: 'Are you sure?',
+      text: `You want to add D/D`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#E0A800',
+      cancelButtonColor: '#ea4c62',
+      confirmButtonText: `Yes, Add D?D!`
+    }).then((result) => {
+      if (result.isConfirmed) {
+        addDD(ipd_id, ddText);
+      }
+    })
+  }
+});
+
+const addDD = async(ipd_id, ddText)=>{
+  try {
+    const response = await fetch(`${url}dd`, {
+      method: 'POST',
+      headers: {
+        Accept: "*/*",
+        Authorization: localStorage.getItem("jwtTempToken"),
+      },
+      body: JSON.stringify({
+        ipd_id: ipd_id,
+        otherDetails: ddText
+      }),
+    });
+    let data = await response.json();
+    if (data.status == 'ok') {
+      Swal.fire({
+        title: 'Success!',
+        text: data.message,
+        icon: 'success',
+        confirmButtonColor: '#00b894',
+        confirmButtonText: 'Okay!',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          loadIPD();
+          $('#ddModel').modal('hide');
+        }
+      })
+    } else {
+      Swal.fire({
+        title: 'Error Occurred!',
+        text: data.message,
+        icon: 'error',
+        confirmButtonColor: '#ea4c62',
+        confirmButtonText: 'Okay'
+      })
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+const ipdDelete = (ipd_id, patient_id) =>{
+  Swal.fire({
+    title: 'Are you sure?',
+    text: `You want to delete`,
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#E0A800',
+    cancelButtonColor: '#ea4c62',
+    confirmButtonText: `Yes, Delete it!`
+  }).then((result) => {
+    if (result.isConfirmed) {
+      deleteIPD(ipd_id, patient_id);
+    }
+  })
+}
+
+const deleteIPD = async(ipd_id, patient_id) => {
+  try {
+    const response = await fetch(`${url}ipd`, {
+      method: 'DELETE',
+      headers: {
+        Accept: "*/*",
+        Authorization: localStorage.getItem("jwtTempToken"),
+      },
+      body: JSON.stringify({
+        ipd_id: ipd_id,
+        patient_id: patient_id
+      }),
+    });
+    let data = await response.json();
+    if (data.status == 'ok') {
+      Swal.fire({
+        title: 'Success!',
+        text: data.message,
+        icon: 'success',
+        confirmButtonColor: '#00b894',
+        confirmButtonText: 'Okay!',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          loadIPD();
+        }
+      })
+    } else {
+      Swal.fire({
+        title: 'Error Occurred!',
+        text: data.message,
+        icon: 'error',
+        confirmButtonColor: '#ea4c62',
+        confirmButtonText: 'Okay'
+      })
+    }
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 const dischargePopUp = (ipd_id, name) => {
@@ -54,87 +183,136 @@ const dischargePopUp = (ipd_id, name) => {
   $('#dischargeModel').modal('show');
 }
 
-// const switchBedPopUp = async(ipd_id) => {
-//   $('#switchBedModel').modal('show');
-//   try {
-//     let response = await fetch(`${url}get-icu`, {
-//       method: "POST",
-//       headers: {
-//         Accept: "*/*",
-//         Authorization: localStorage.getItem("jwtTempToken"),
-//       },
-//     });
-//     let data = await response.json();
-//     const bedReceiver = document.getElementById("bedReceiver");
-//     bedReceiver.innerHTML = "<option selected></option>";
+const filterObjectByIds = async(originalObject, includedIds)=> {
+  return Object.fromEntries(
+    Object.entries(originalObject).filter(([key]) => includedIds.includes(Number(key)))
+  );
+}
 
-//     const patientList = document.getElementById("patientList");
-//     patientList.innerHTML = "<option selected></option>";
-//     if (data.status == "ok") {
-      
-//       data.data.forEach((bed) => {
-//         const bed_id = bed["bed_id"];
-//         const patientOpt = document.createElement('option');
-//         patientOpt.value = bed_id;
-//         const bedStatus = bed['status'];
-//         for (const key in ipd_list) {
-//           if (Object.hasOwnProperty.call(ipd_list, key)) {
-//             const ipd = ipd_list[key];
-//             if (bed_id === ipd.bedDetails.bed_id){
-//               bedStatus == 2 ? patientOpt.innerHTML = `${bed["description"]} - ${ipd.patient_details.name}` : patientOpt.innerHTML = bed["description"]
-//               bedStatus == 2 ? patientOpt.disabled = true : "";
-//               patientList.appendChild(patientOpt);
-//             }else{
-//               bedStatus == 2 ? patientOpt.innerHTML = bed["description"] + " (In Service)" : patientOpt.innerHTML = bed["description"]
-//               bedStatus == 2 ? patientOpt.disabled = true : "";
-//               patientList.appendChild(patientOpt);
-//             }
-//           }
-//         }
-//         // for (const key in ipd_list) {
-//         //   const patientOpt = document.createElement('option');
-//         //   if (Object.hasOwnProperty.call(ipd_list, key)) {
-//         //     const ipd = ipd_list[key];
-//         //     const patient_bed_id = ipd.bedDetails.bed_id;
-//         //     if(bed_id == patient_bed_id) {
-//         //       // if(ipd.ipd_id == ipd_id){
-//         //       //   const bedReceiverOpt = document.createElement('option');
-//         //       //   bedReceiverOpt.value = ipd.ipd_id;
-//         //       //   bedReceiverOpt.name = ipd.bedDetails.bed_id;
-//         //       //   bedReceiverOpt.innerHTML = `${ipd.patient_details.name} - ${ipd.bedDetails.description}` ;
-//         //       //   bedReceiver.appendChild(bedReceiverOpt);
-//         //       // }else{
-//         //       //   patientOpt.value = ipd.ipd_id;
-//         //       //   patientOpt.name = ipd.bedDetails.bed_id;
-//         //       //   patientOpt.innerHTML = `${ipd.patient_details.name} - ${ipd.bedDetails.description}` ;
-//         //       //   patientList.appendChild(patientOpt);
-//         //       // }
-//         //     }else{
-//         //       patientOpt.value = bed_id;
-//         //       patientOpt.name = "";
-//         //       let bedStatus = bed['status'];
-//         //       patientOpt.innerHTML = bed["description"] ;
-//         //       patientList.appendChild(patientOpt);
-//         //     }      
-//         //   }
-//         // }
-        
-//       });
-//     }
+let bedReceiver;
+let donner
 
-//   } catch (error) {
-//     console.log(error);
-//   }
-    
-//   // ipd_list.forEach(ipd => {
-//   //   let patientOpt = document.createElement('option');
-//   //   // let bedStatus = bed['status'];
-//   //   patientOpt.value = ipd["ipd_id"];
-//   //   // patientOpt.name = ipd["ipd"]
-//   //   patientOpt.innerHTML = ipd;
-//   //   patientList.appendChild(patientOpt);
-//   // });
-// }
+const switchBedPopUp = async(ipd_id, name) => {
+  const Patient = await filterObjectByIds(ipd_list, ipd_id);
+  $('#switchBedModel').modal('show');
+  try {
+    let response = await fetch(`${url}get-icu`, {
+      method: "POST",
+      headers: {
+        Accept: "*/*",
+        Authorization: localStorage.getItem("jwtTempToken"),
+      },
+    });
+    let data = await response.json();
+    $('#patientName').val(`${Patient[ipd_id].patient_details.name} - ${Patient[ipd_id].bedDetails.description}`);
+    if (data.status == "ok") {
+      console.log(data.data);
+      data.data.forEach(item => {
+        if (name != item.bed_id) {
+          $('#newBed').append(new Option(item.description, item.bed_id));
+        }        
+      });
+    }
+    bedReceiver = Patient[ipd_id];
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+const filterByBedNo = async(records, bed_id) => {
+  let filteredRecords;
+
+  for (const key in records) {
+    if (records[key].bedNo == bed_id) {
+      // Omit 'key' property in the filteredRecords object
+      const { [key]: omittedKey, ...filteredRecordWithoutKey } = records[key];
+      filteredRecords = filteredRecordWithoutKey;
+    }
+  }
+
+  return filteredRecords;
+};
+
+document.getElementById('newBed').addEventListener('change', async(e)=>{
+  const bed_id = parseInt(e.target.value);
+  console.log(bed_id);
+  const patient = await filterByBedNo(ipd_list, bed_id);
+
+  if (patient != undefined) {
+    donner = {type: 'withPatient', bed_id: bed_id, patient: patient}
+    $('#bedDonner').attr('hidden', false);
+    $('#withPatient').val(`${patient.patient_details.name} - ${patient.bedDetails.description}`)
+  }else{
+    donner = {type: 'withBed', bed_id: bed_id, patient: null}
+    $('#bedDonner').attr('hidden', true);
+  }
+});
+
+document.getElementById('switchBed-btn').addEventListener('click', async(e)=>{
+  try {
+    const valid = document.getElementById('formBedSwitch').checkValidity();
+    if (valid) {
+      e.preventDefault();
+      Swal.fire({
+        title: 'Are you sure?',
+        text: `You want to switch bed`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#E0A800',
+        cancelButtonColor: '#ea4c62',
+        confirmButtonText: `Yes, Switch it!`
+      }).then((result) => {
+        if (result.isConfirmed) {
+          switchBed(bedReceiver, donner);
+        }
+      })
+
+    }
+  } catch (error) {
+    console.log(error);
+  }
+})
+
+const switchBed = async(bedReceiver, donner)=>{
+  try {
+    const response = await fetch(`${url}switchBed`, {
+      method: 'POST',
+      headers: {
+        Accept: "*/*",
+        Authorization: localStorage.getItem("jwtTempToken"),
+      },
+      body: JSON.stringify({
+        receiver: bedReceiver,
+        donner: donner,
+      }),
+    });
+    let data = await response.json();
+    if (data.status == 'ok') {
+      Swal.fire({
+        title: 'Success!',
+        text: data.message,
+        icon: 'success',
+        confirmButtonColor: '#00b894',
+        confirmButtonText: 'Okay!',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          loadIPD();
+          $('#switchBedModel').modal('hide');
+        }
+      })
+    } else {
+      Swal.fire({
+        title: 'Error Occurred!',
+        text: data.message,
+        icon: 'error',
+        confirmButtonColor: '#ea4c62',
+        confirmButtonText: 'Okay'
+      })
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 document.getElementById("discharge-btn").addEventListener("click", async (e) => {
   try {

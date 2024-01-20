@@ -152,30 +152,61 @@
           <button class="btn btn-close p-1 ms-auto" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form class="was-validated" name="form" id="form" action="#">
+          <form class="was-validated" name="form" id="formBedSwitch" action="#">
             <div class="col">
               <div class="form-group">
-                <label class="form-label" for="bedReceiver">Bed Receiver</label>
-                <select class="form-select" id="bedReceiver" name="bedReceiver" aria-label="Bed Receiver" placeholder="Bed Receiver" required>
+                <label class="form-label" for="patientName">Patient Name</label>
+                <input type="text" class="form-control mb-1" id="patientName" readonly required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="newBed">New Bed</label>
+                <select class="form-select" id="newBed" name="newBed" aria-label="New Bed" placeholder="Select bed for shift" required>
                   <option selected></option>
                 </select>
               </div>
-              <div class="form-group">
-                <label class="form-label" for="patientList">Patients</label>
-                <select class="form-select" id="patientList" name="patientList" aria-label="Patients" placeholder="Patients" required>
-                  <option selected></option>
-                </select>
+              <div class="form-group" id="bedDonner" hidden>
+                <label class="form-label" for="withPatient">With Patient</label>
+                <input type="text" class="form-control mb-1" id="withPatient" readonly>
               </div>
             </div>
           </form>
         </div>
         <div class="modal-footer">
           <button class="btn btn-danger" type="button" data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i> Close</button>
-          <button class="btn btn-success" type="button" id="switchBed-btn"><i class="fa-solid fa-right-from-bracket"></i> Yes! Switch Bed</button>
+          <button class="btn btn-success" type="button" id="switchBed-btn"><i class="fa-solid fa-trash-can"></i> Yes! Switch Bed</button>
         </div>
       </div>
     </div>
   </div>
+
+  <!-- D/D Modal -->
+  <div class="modal fade" id="ddModel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="ddModelLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title" id="ddModelLabel">D/D Notes</h6>
+          <button class="btn btn-close p-1 ms-auto" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form class="was-validated" name="form" id="formDD" action="#">
+            <div class="col">
+              <div class="form-group">
+                <label class="form-label" for="dd">D/D Notes</label>
+                <input type="text" id="ipd_id" hidden>
+                <textarea type="text" class="form-control mb-1" id="ddText" required></textarea>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-danger" type="button" data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i> Close</button>
+          <button class="btn btn-success" type="button" id="dd-btn"><i class="fa-solid fa-comment-dots"></i> Yes! D/D</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Footer Nav -->
   <div class="footer-nav-area" id="footerNav"></div>
   <!-- All JavaScript Files -->
