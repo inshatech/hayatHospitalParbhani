@@ -6,7 +6,7 @@ const precacheAssets = [
     '/',
     'js/pwa.js',
     'manifest.json',
-    'page-fallback.html'
+    'fallback.html'
 ];
 
 // Install Event
@@ -42,7 +42,7 @@ self.addEventListener('fetch', function (event) {
             });
         }).catch(function() {
             // Fallback Page, When No Internet Connection
-            return caches.match('page-fallback.html');
-          })
+            return caches.match('fallback.html');
+        })
     );
 });
