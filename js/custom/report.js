@@ -33,10 +33,66 @@ document.getElementById("date-search-btn").onclick = async () => {
     if (type === "opd-report") {
       opdReport(from, to);
     } else if (type === "ipd-report") {
+      ipdReport(from, to);
     }else if(type === "scalp-report"){
       scalpReport(from, to);
     }
   }
+};
+
+const ipdReport = async (from, to) => {
+  let response = await fetch(`${url}get-ipd`, {
+    method: "POST",
+    headers: {
+      Authorization: localStorage.getItem("jwtTempToken"),
+    },
+    body: JSON.stringify({
+      between_date: {
+        start_date: from,
+        end_date: to,
+      },
+    }),
+  });
+
+  let data = await response.json();
+  let ipdData = data.data;
+  console.log(data);
+  let all_ipd = new Array();
+  if (data.status == "ok") {
+    for (key of Object.keys(ipdData)) {
+      let { ipd_id, srNo, date, doa, patient_details, dod, dateTimeStamp, status, bedDetails} =
+        ipdData[key];
+      const bedNo = bedDetails != null ? bedDetails.description : '';
+      let ipd = {
+        "IPD Id": ipd_id,
+        "Sr.No.": srNo,
+        date:date,
+        "DT A": doa,
+        "Bed No": bedNo,
+        Name: patient_details.name,
+        Age: patient_details.age,
+        Sex: patient_details.sex,
+        Address: patient_details.address,
+        Mobile: patient_details.mobile,
+        "DT D": dod,
+        "Date & Time": dateTimeStamp,
+        status: status,
+      };
+      all_ipd.push(ipd);
+    }
+    let reportName = `IPD Report From date: ${from} to ${to} generated on ${date_time}`;
+    let pageName = "IPD Report";
+    exportExcel(all_ipd, reportName, pageName);
+  } else {
+    Swal.fire({
+      title: "Error Occurred!",
+      text: data.message,
+      icon: "error",
+      confirmButtonColor: "#ea4c62",
+      confirmButtonText: "Okay",
+    });
+  }
+  loadingStatus(true);
 };
 
 const scalpReport = async (from, to) => {
