@@ -36,6 +36,7 @@ function appendOpd(opd) {
         </div>
         <div class="ipd-buttons">
           <button onclick='viewDetails(${opd.opd_id})' id='viewDetailsBtn'; type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#addOPD"><i class="fa-regular fa-eye"></i> View OPD</button>
+          <a onclick='printPrescription(${opd.opd_id})' class="btn btn-primary"><i class="fa-solid fa-print"></i> Prescription</a>
           <a onclick='printOpd(${opd.opd_id})' class="btn btn-success"><i class="fa-solid fa-print"></i> Print OPD</a>
         </div>
       </div
@@ -58,6 +59,24 @@ const printOpd = (opd_id) => {
     }
   })
 }
+
+const printPrescription = async(opd_id)=>{
+  const patient = await allOpds[opd_id];
+  Swal.fire({
+    title: 'Are you sure?',
+    text: "You want Print!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#00b894',
+    cancelButtonColor: '#ea4c62',
+    confirmButtonText: 'Okay Print!'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      location.assign(`./templates/prescription.html?patient=${btoa(encodeURIComponent(JSON.stringify(patient)))}`);
+    }
+  })
+}
+
 
 /**
  * Returns today's date in the format of "YYYY-MM-DD".
