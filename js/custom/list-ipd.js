@@ -38,13 +38,13 @@ const appendRecords = async (ipd) => {
             <span class="text-truncate fw-bold text-black-50">${ipd.patient_details.mobile}</span>
           </div>
         </div>
-        <p>D/D: <span class="text-truncate fw-bold text-black-50">${ipd.otherDetails != null ? ipd.otherDetails : ''}</span></p>
+        ${userRole != 2 ? `<p>D/D: <span class="text-truncate fw-bold text-black-50">${ipd.otherDetails != null ? ipd.otherDetails : ''}</span></p>`: ''}
         <div class="ipd-buttons">
           <!-- <a class="btn m-1 btn-sm btn-info" href="./add-ipd.html?ipdID=${ipd.ipd_id}">Edit</a> -->
           <button class="btn btn-success"${ipd.status == "discharge" ? "hidden" : ""} id="${ipd.ipd_id}" onclick="dischargePopUp(${"id"}, ${"name"});" name="${ipd.patient_details.name}">Discharge</button>
           <button class="btn btn-dark" ${ipd.status == "discharge" ? "hidden" : ""} id="${ipd.ipd_id}" onclick="switchBedPopUp(this.id, this.name);" name="${ipd.bedDetails.bed_id}">Switch Bed</button>
-          <button class="btn btn-warning" ${ipd.status == "discharge" ? "hidden" : ""} id="${ipd.ipd_id}" onclick="ddPopUp(this.id, this.name);" name="${ipd.otherDetails != null ? ipd.otherDetails : ''}">D/D</button>
-          <button class="btn btn-danger" id="${ipd.ipd_id}" onclick="ipdDelete(this.id, this.name);" name="${ipd.patient_id}">Delete</button>
+          ${userRole != 2 ? `<button class="btn btn-warning" ${ipd.status == "discharge" ? "hidden" : ""} id="${ipd.ipd_id}" onclick="ddPopUp(this.id, this.name);" name="${ipd.otherDetails != null ? ipd.otherDetails : ''}">D/D</button>` : ''}
+          ${userRole != 2 ? `<button class="btn btn-danger" id="${ipd.ipd_id}" onclick="ipdDelete(this.id, this.name);" name="${ipd.patient_id}">Delete</button>`: ''}
         </div>
       </div
     </div>
