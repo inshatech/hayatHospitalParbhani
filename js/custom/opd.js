@@ -100,6 +100,9 @@ const todaysDate = () => {
  * @returns None
  */
 document.getElementsByTagName("body")[0].onload = () => {
+  if (userRole != 2) {
+    document.getElementById("collection").removeAttribute("hidden");
+  }
   loadData();
 };
 
