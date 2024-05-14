@@ -63,9 +63,9 @@ document.getElementsByTagName("body")[0].onload = async () => {
         Accept: "*/*",
         Authorization: localStorage.getItem("jwtTempToken"),
       },
-      body: JSON.stringify({
-        date: todaysDate(),
-      }),
+      // body: JSON.stringify({
+      //   date: todaysDate(),
+      // }),
     });
 
     let data = await response.json();
