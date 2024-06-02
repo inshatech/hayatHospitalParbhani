@@ -204,7 +204,7 @@ document.getElementById("add-sticky-btn").onclick = () => {
   document.getElementsByName("address")[0].disabled = false;
   document.getElementsByName("mobile")[0].disabled = false;
   let currentDate = new Date();
-  document.getElementById("date").value = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, "0")}-${String(currentDate.getDate()).padStart(2, "0")}`;
+  document.getElementById("date").value = currentDate.toISOString().split('T')[0];
 }
 /**
  * Attaches an event listener to the "add-btn" element that triggers when the button is clicked.
