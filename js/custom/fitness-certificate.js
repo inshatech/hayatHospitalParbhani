@@ -123,8 +123,8 @@ const loadCertificate = async(fitnessId) =>{
     let opinion = `<div class="heading footer">Opinion : ${data.data[0].opinion} <div class="heading sign">DOCTOR'S SIGNATURE</div></div>`;
     addRow(table, opinion, 1, 4);
 
-    let poweredBy = `<div class="powered">Proudly Powered By: <a href="https://www.inshatech.com" class="link-dark" target="_blank">Insha Technologies</a></div>`;
-    addRow(table, poweredBy, 0, 4);
+    // let poweredBy = `<div class="powered">Proudly Powered By: <a href="https://www.inshatech.com" class="link-dark" target="_blank">Insha Technologies</a></div>`;
+    // addRow(table, poweredBy, 0, 4);
 
     print();
 
