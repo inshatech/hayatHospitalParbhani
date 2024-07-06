@@ -157,7 +157,12 @@ document.getElementsByName('service')[0].addEventListener("change", () => {
     amount = 500
   } else if (service == 'OTHERS') {
     amount = '';
+  } else if (service == 'Dr Shahnawaz') {
+    amount = '500';
+  } else if (service == 'Dr Saif Hameed') {
+    amount = '500';
   }
+
   document.getElementsByName('amount')[0].value = amount;
   document.getElementsByName('amount')[0].focus;
 });
