@@ -4,6 +4,11 @@
 let allOpds = {};
 let updateOpdId;
 
+const getDoctorId = () => {
+  return new URLSearchParams(window.location.search).get('doctor_id');
+}
+const doctor_id = getDoctorId();
+console.log(doctor_id)
 /**
  * Appends an OPD (Out-Patient Department) object to the parent div in the HTML document.
  * @param {Object} opd - The OPD object to append to the parent div.
@@ -60,7 +65,7 @@ const printOpd = (opd_id) => {
   })
 }
 
-const printPrescription = async(opd_id)=>{
+const printPrescription = async (opd_id) => {
   const patient = await allOpds[opd_id];
   Swal.fire({
     title: 'Are you sure?',
@@ -90,6 +95,29 @@ const todaysDate = () => {
   return todaysDate;
 }
 
+const loadDoctor = async(doctor_id) =>{
+  try {
+    let response = await fetch(`${url}get-user`, {
+      method: "POST",
+      headers: {
+        Accept: "*/*",
+        Authorization: localStorage.getItem("jwtTempToken"),
+      },
+      body: JSON.stringify({
+        user_id: doctor_id, 
+      }),
+    });
+
+    let data = await response.json();
+    if (data.status != 'false') {
+      console.log(data.data[0].name)
+      document.getElementById("doctor_name").innerText = `${data.data[0].name}'s (OPD)`;
+    }
+  }catch(e){
+    console.log(e.message)
+  }
+}
+
 /**
  * Sets an onload event listener on the body element of the document. When the body is loaded,
  * this function sends a POST request to the server to retrieve OPD data. If the request is successful,
@@ -102,8 +130,10 @@ const todaysDate = () => {
 document.getElementsByTagName("body")[0].onload = () => {
   if (userRole != 2) {
     document.getElementById("collection").removeAttribute("hidden");
+    document.getElementById("accordionStyle3").removeAttribute("hidden");
   }
   loadData();
+  loadDoctor(doctor_id);
 };
 
 /**
@@ -176,7 +206,7 @@ function removeService() {
   if (userRole != 2) {
     document.activeElement.parentElement.parentElement.remove();
     servicesCalculation();
-  }else{
+  } else {
     Swal.fire({
       title: "Access Denied?",
       text: `You don't have permission to perform this.`,
@@ -311,7 +341,7 @@ const addOPD = async (srNo, date, name, age, sex, services, city, address, mobil
         services: services,
         other_info: "",
         employee_id: 1,
-        doctor_id: 1
+        doctor_id: doctor_id
       }),
     });
     let data = await response.json();
@@ -354,7 +384,11 @@ const loadData = async () => {
         Authorization: localStorage.getItem("jwtTempToken"),
       },
       body: JSON.stringify({
-        date: todaysDate(),
+        "advance_search1": {
+          start_date: todaysDate(),
+          end_date: todaysDate(),
+          doctor_id: doctor_id
+        }
       }),
     });
 
@@ -411,7 +445,7 @@ const updateOPD = async (updateOpdId, services) => {
       services: services,
       other_info: "",
       employee_id: "",
-      doctor_id: "",
+      doctor_id: doctor_id,
     }),
   });
   let data = await response.json();
@@ -777,9 +811,10 @@ document.getElementById("date-search-btn").onclick = async () => {
         Authorization: localStorage.getItem("jwtTempToken"),
       },
       body: JSON.stringify({
-        between_dates: {
+        advance_search1: {
           start_date: from,
           end_date: to,
+          doctor_id: doctor_id
         },
       }),
     });

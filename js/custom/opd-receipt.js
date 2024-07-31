@@ -55,6 +55,29 @@ const print = ()=>{
   document.addEventListener("contextmenu", event => event.preventDefault());
 }
 
+const loadDoctor = async(doctor_id) =>{
+  try {
+    let response = await fetch(`${url}get-user`, {
+      method: "POST",
+      headers: {
+        Accept: "*/*",
+        Authorization: localStorage.getItem("jwtTempToken"),
+      },
+      body: JSON.stringify({
+        user_id: doctor_id, 
+      }),
+    });
+
+    let data = await response.json();
+    if (data.status != 'false') {
+      console.log(data.data[0].name)
+      return data.data[0].name
+    }
+  }catch(e){
+    console.log(e.message)
+  }
+}
+
 /**
  * Loads the receipt for the given opdId by making a POST request to the server.
  * @param {string} opdId - The id of the opd for which the receipt is to be loaded.
@@ -74,6 +97,7 @@ const loadReceipt = async(opdId) =>{
 
   let data = await response.json();
   if (data.status == 'ok') {
+    const doctor_name = await loadDoctor(data.data[0].doctor_id);
     document.getElementById('title').innerHTML = `Receipt ${data.data[0].patient_details.name} Date: ${data.data[0].date}`;
     let billNo = await randomString(3, 'A') + data.data[0].opd_id + await randomString(1, '!')  + await randomString(2, '#');
     let patientId = await randomString(3, 'A') + data.data[0].patient_id + await randomString(1, '!')  + await randomString(2, '#');
@@ -96,7 +120,7 @@ const loadReceipt = async(opdId) =>{
     let row2 = {"Payment Method: ": "", "Received Amount: ": `<strong>${finalTotal}/-</strong>`}
     otherRows(row2, tbody, 2);
 
-    let row3 = {"":`<div class="heading sign">SIGNATURE</div>`}
+    let row3 = {"":`<div>Doctor: <strong>${doctor_name}</strong></div><div class="heading sign">SIGNATURE</div>`}
     otherRows(row3, tbody, 4);
 
     let poweredBy = {"" :`<div class="powered">Proudly Powered By: <a href="https://www.inshatech.com" class="link-dark" target="_blank">Insha Technologies</a></div>`};
