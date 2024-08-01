@@ -191,6 +191,8 @@ document.getElementsByName('service')[0].addEventListener("change", () => {
     amount = '500';
   } else if (service == 'Dr Saif Hameed') {
     amount = '500';
+  }else if (service == 'tft'){
+    amount = '100';
   }
 
   document.getElementsByName('amount')[0].value = amount;

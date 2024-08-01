@@ -23,15 +23,62 @@ document.getElementsByTagName("body")[0].onload = async () => {
   loadingStatus(true);
 };
 
+const loadDoctors = async() =>{
+  try {
+    let response = await fetch(`${url}get-user`, {
+      method: "POST",
+      headers: {
+        Accept: "*/*",
+        Authorization: localStorage.getItem("jwtTempToken"),
+      },
+      body: JSON.stringify({
+        designation: "Doctor", 
+      }),
+    });
+
+    let data = await response.json();
+    const select_doctor = document.getElementById("doctor");
+    if (data.status != 'false') {
+      const doctors = data.data;
+      doctors.map(item => {
+        const option = document.createElement('option');
+        option.value = item.user_id;
+        option.text = item.name;
+        select_doctor.appendChild(option);
+      })
+    }
+  }catch(e){
+    console.log(e.message)
+  }
+}
+
+document.getElementById("type").onchange = async (e) => {
+  if (e.target.value === 'opd-report') {
+    document.getElementById("doctorsDiv").removeAttribute("hidden");
+    document.getElementById("doctor").setAttribute("required", true);
+    loadDoctors();
+  }else{
+    document.getElementById("doctorsDiv").setAttribute("hidden", true);
+    document.getElementById("doctor").removeAttribute("required");
+
+  }
+};
+
 document.getElementById("date-search-btn").onclick = async () => {
   let from = document.getElementById("inputDateFrom").value;
   let to = document.getElementById("inputDateTo").value;
   let type = document.getElementById("type").value;
 
+  let select = document.getElementById("doctor") 
+  const { value, selectedOptions: [{ text }] } = select
+
+  let doctor_id = value;
+  let doctor_name = text;
+
   if (from != "" && to != "") {
     loadingStatus(false);
     if (type === "opd-report") {
-      opdReport(from, to);
+      opdReport(from, to, doctor_id, doctor_name);
     } else if (type === "ipd-report") {
       ipdReport(from, to);
     }else if(type === "scalp-report"){
@@ -150,16 +197,17 @@ const scalpReport = async (from, to) => {
   loadingStatus(true);
 };
 
-const opdReport = async (from, to) => {
+const opdReport = async (from, to, doctor_id, doctor_name) => {
   let response = await fetch(`${url}get-opd`, {
     method: "POST",
     headers: {
       Authorization: localStorage.getItem("jwtTempToken"),
     },
     body: JSON.stringify({
-      between_dates: {
+      advance_search1: {
         start_date: from,
         end_date: to,
+        doctor_id: doctor_id
       },
     }),
   });
@@ -190,8 +238,8 @@ const opdReport = async (from, to) => {
       };
       all_opd.push(opd);
     }
-    let reportName = `OPD Report From date: ${from} to ${to} generated on ${date_time}`;
-    let pageName = "OPD Report";
+    let reportName = `${doctor_name}'s OPD Report From date: ${from} to ${to} generated on ${date_time}`;
+    let pageName = `${doctor_name} - OPD Report`
     exportExcel(all_opd, reportName, pageName);
   } else {
     Swal.fire({
