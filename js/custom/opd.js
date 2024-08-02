@@ -3,6 +3,7 @@
  */
 let allOpds = {};
 let updateOpdId;
+let collectionAmount;
 
 const getDoctorId = () => {
   return new URLSearchParams(window.location.search).get('doctor_id');
@@ -112,6 +113,7 @@ const loadDoctor = async(doctor_id) =>{
     if (data.status != 'false') {
       console.log(data.data[0].name)
       document.getElementById("doctor_name").innerText = `${data.data[0].name}'s (OPD)`;
+      document.getElementById("addOpdModalLabel").innerText = `Add new OPD for ${data.data[0].name}`;
     }
   }catch(e){
     console.log(e.message)
@@ -183,18 +185,13 @@ document.getElementsByName('service')[0].addEventListener("change", () => {
     amount = 100
   } else if (service == 'FITNESS RAHAT') {
     amount = 500
-  } else if (service == 'FITNESS SPT') {
-    amount = 500
   } else if (service == 'OTHERS') {
     amount = '';
-  } else if (service == 'Dr Shahnawaz') {
-    amount = '500';
-  } else if (service == 'Dr Saif Hameed') {
-    amount = '500';
   }else if (service == 'tft'){
     amount = '100';
+  }else if (service == 'COLLECTION'){
+    amount = `-0`;
   }
-
   document.getElementsByName('amount')[0].value = amount;
   document.getElementsByName('amount')[0].focus;
 });
@@ -406,6 +403,7 @@ const loadData = async () => {
           let opdServices = JSON.parse(opd.services);
           for (key of Object.keys(opdServices)) {
             totalAmount = totalAmount + parseInt(opdServices[key])
+            collectionAmount = totalAmount
           }
         }
         document.getElementById("totalCounts").innerText = ` ${data.count}`;
