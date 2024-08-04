@@ -11,7 +11,7 @@ document.getElementById("footerNav").innerHTML = `
         </li>
 
         <li  id="opd">
-          <a href="opd.html">
+          <a href="opd.html?doctor_id=1">
           <i class="fa-solid fa-stethoscope"></i>
             <span>OPD</span>
           </a>

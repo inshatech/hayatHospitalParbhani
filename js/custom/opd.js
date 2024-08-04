@@ -134,8 +134,14 @@ document.getElementsByTagName("body")[0].onload = () => {
     document.getElementById("collection").removeAttribute("hidden");
     document.getElementById("accordionStyle3").removeAttribute("hidden");
   }
-  loadData();
-  loadDoctor(doctor_id);
+  if (doctor_id != null) {
+    loadData();
+    loadDoctor(doctor_id);
+  }else{
+    console.log(doctor_id)
+    location.replace("index.html")
+  }
+  
 };
 
 /**
