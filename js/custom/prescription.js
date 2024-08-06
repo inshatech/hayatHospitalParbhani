@@ -72,7 +72,7 @@ const prescription = async(patient)=>{
   document.getElementById('title').text = `${patient.patient_details.name} - ${patient.dateTimeStamp}`;
   document.getElementById('header').innerHTML = `
     <h5>${patient.srNo}: ${patient.patient_details.name} (${patient.patient_details.age}/${patient.patient_details.sex != 'Female' ? 'M':'F'})</h5>
-    <h6>Date: ${patient.date}</h6>
+    <h6>${patient.dateTimeStamp}</h6>
   `;
   print();
 }
